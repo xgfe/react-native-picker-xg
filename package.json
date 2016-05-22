@@ -1,0 +1,15 @@
+{
+  "name": "widgets",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "dependencies": {
+    "react": "^0.14.8",
+    "react-native": "^0.25.1",
+    "react-native-picker": "^2.0.5",
+    "react-native-picker-android": "^0.3.8",
+    "react-native-vector-icons": "^2.0.2"
+  }
+}
