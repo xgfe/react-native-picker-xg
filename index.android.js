@@ -5,12 +5,12 @@
 
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  View,
-  Text,
-  StyleSheet,
-Platform,
-PickerIOS,
+    AppRegistry,
+    View,
+    Text,
+    StyleSheet,
+    Platform,
+    PickerIOS,
     TouchableOpacity,
     TextInput,
     Dimensions,
@@ -57,37 +57,6 @@ let CAR_MAKES_AND_MODELS = {
     },
 };
 
-var Button = React.createClass({
-    getInitialState() {
-        return {
-            active: false,
-        };
-    },
-
-    _onHighlight() {
-        this.setState({active: true});
-    },
-
-    _onUnhighlight() {
-        this.setState({active: false});
-    },
-
-    render() {
-        var colorStyle = {
-            color: this.state.active ? '#fff' : '#000',
-        };
-        return (
-            <TouchableHighlight
-                onHideUnderlay={this._onUnhighlight}
-                onPress={this.props.onPress}
-                onShowUnderlay={this._onHighlight}
-                style={[testStyle.button, this.props.style]}
-                underlayColor="#a9d9d4">
-                <Text style={[testStyle.buttonText, colorStyle]}>{this.props.children}</Text>
-            </TouchableHighlight>
-        );
-    }
-});
 
 let width = Dimensions.get('window').width;
 let height = Dimensions.get('window').height;
@@ -124,9 +93,6 @@ class TpickerEx extends Component {
         var innerContainerTransparentStyle = this.state.transparent
             ? {backgroundColor: '#fff', padding: 20}
             : null;
-        var activeButtonStyle = {
-            backgroundColor: '#ddd'
-        };
 
         return (
             <View style={testStyle.container}>
@@ -191,21 +157,6 @@ const testStyle = StyleSheet.create({
         flex: 1,
         fontWeight: 'bold',
     },
-    button: {
-        borderRadius: 5,
-        flex: 1,
-        height: 44,
-        alignSelf: 'stretch',
-        justifyContent: 'center',
-        overflow: 'hidden',
-    },
-    buttonText: {
-        fontSize: 18,
-        margin: 5,
-        textAlign: 'center',
-    },
-    modalButton: {
-        marginTop: 10,
-    },
+
 })
 AppRegistry.registerComponent('widgets', () => TpickerEx);

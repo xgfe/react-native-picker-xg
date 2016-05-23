@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0"
   },
   "dependencies": {
     "react": "^0.14.8",
@@ -11,5 +12,14 @@
     "react-native-picker": "^2.0.5",
     "react-native-picker-android": "^0.3.8",
     "react-native-vector-icons": "^2.0.2"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "^1.1.6",
+    "ghooks": "^1.2.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
