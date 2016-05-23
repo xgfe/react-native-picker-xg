@@ -119,6 +119,7 @@ class TpickerEx extends Component {
                     ))}
                 </TPicker>
             </View>
+            
         );
     }
 }
