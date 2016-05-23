@@ -29,12 +29,6 @@ class TPicker extends Component {
         this.state = this._stateFromProps(props);
     }
 
-    componentWillReceiveProps(newProps) {
-    if (newProps.visible != this.state.visible) {
-        this.setState({visible: newProps.visible,transparent: newProps.transparent,animationType: newProps.animationType});
-    }
-}
-
     _stateFromProps(props){
         let selectedIndex = 0;
         let items = [];
@@ -44,6 +38,7 @@ class TPicker extends Component {
         let animationType = props.animationType;
         let transparent = props.transparent;
         let visible = props.visible;
+        let inputValue = props.inputValue;
         React.Children.forEach(props.children, (child, index) => {
             child.props.value === props.selectedValue && ( selectedIndex = index );
             items.push({value: child.props.value, label: child.props.label});
@@ -56,7 +51,8 @@ class TPicker extends Component {
             onValueChange,
             animationType,
             transparent,
-            visible
+            visible,
+            inputValue
         };
     }
 
@@ -173,7 +169,7 @@ class TPicker extends Component {
         this.setState({visible: visible});
     }
     _setInputValue(value) {
-        this.props.setInput(value);
+        this.setState({inputValue: value});
     }
     render(){
         let index = this.state.selectedIndex;
@@ -201,6 +197,7 @@ class TPicker extends Component {
             height:  length * 30,
         };
         return (
+            <View style={testStyle.container}>
             <Modal
                 animationType={this.state.animationType}
                 transparent={this.state.transparent}
@@ -245,7 +242,14 @@ class TPicker extends Component {
                     </View>
                 </View>
             </Modal>
-
+                <TextInput
+                    ref = 'test'
+                    onFocus={() => {this._setModalVisible(true)
+                    this.refs.test.blur()}}
+                    placeholder={'this is a test'}
+                    value={this.state.inputValue}
+                />
+</View>
         );
     }
 }

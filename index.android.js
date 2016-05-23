@@ -13,9 +13,7 @@ import {
     PickerIOS,
     TouchableOpacity,
     TextInput,
-    Dimensions,
-    TouchableHighlight,
-    PixelRatio
+    TouchableHighlight
 } from 'react-native';
 import Tpicker from './app/setup';
 
@@ -53,17 +51,25 @@ let CAR_MAKES_AND_MODELS = {
         name: 'Chevrolet',
     },
 };
+let CAR_MAKES_AND_MODELS1 = {
+    amc1: {
+        name: 'AMC1',
+    },
+    alfa1: {
+        name: 'Alfa-Romeo1',
+    },
+    aston1: {
+        name: 'Aston Martin1',
+    },
+    audi1: {
+        name: 'Audi1',
+    },
+};
 
-
-let width = Dimensions.get('window').width;
-let height = Dimensions.get('window').height;
-let top = height - 250;
-let ratio = PixelRatio.get();
 
 class TpickerEx extends Component {
     constructor(props, context){
         super(props, context);
-        this._setInput = this._setInput.bind(this);
         this.state = {
             carMake: 'cadillac',
             modelIndex: 3,
@@ -74,20 +80,12 @@ class TpickerEx extends Component {
         }
     }
 
-    _setTpickerVisible(){
-        this.setState({modalVisible: true});
-    }
-    
 
-    
-    _setInput(value){
-        this.setState({inputValue: value});
-    }
     render() {
         return (
             <View style={testStyle.container}>
                             <TPicker
-                                setInput = {this._setInput}
+                                inital = {this.state.inputValue}
                                 animationType = {this.state.animationType}
                                 transparent = {this.state.transparent}
                                 visible = {this.state.modalVisible}
@@ -102,15 +100,24 @@ class TpickerEx extends Component {
                                         label={CAR_MAKES_AND_MODELS[carMake].name}
                                     />
                                 ))}
-
                             </TPicker>
-                <TextInput
-                    ref = 'test'
-                    onFocus={() => {this._setTpickerVisible(true)
-                    this.refs.test.blur()}}
-                    placeholder={'this is a test'}
-                    value={this.state.inputValue}
-                />
+                <TPicker
+                    inital = {this.state.inputValue}
+                    animationType = {this.state.animationType}
+                    transparent = {this.state.transparent}
+                    visible = {this.state.modalVisible}
+                    selectedValue={this.state.carMake}
+                    onValueChange={(carMake) => this.setState({carMake, modelIndex: 0})}
+                    ref={(picker) => { this.picker = picker }} >
+
+                    {Object.keys(CAR_MAKES_AND_MODELS1).map((carMake) => (
+                        <PickerItem
+                            key={carMake}
+                            value={carMake}
+                            label={CAR_MAKES_AND_MODELS1[carMake].name}
+                        />
+                    ))}
+                </TPicker>
             </View>
         );
     }
