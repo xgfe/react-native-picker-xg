@@ -102,6 +102,7 @@ class TpickerEx extends Component {
                                 ))}
                             </TPicker>
                 <TPicker
+                    inputStyle = {testStyle.inputStyle}
                     inital = {this.state.inputValue}
                     animationType = {this.state.animationType}
                     transparent = {this.state.transparent}
@@ -119,7 +120,7 @@ class TpickerEx extends Component {
                     ))}
                 </TPicker>
             </View>
-            
+
         );
     }
 }
@@ -130,6 +131,10 @@ const testStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
+    },
+    inputStyle: {
+        marginTop: -300,
+        backgroundColor: 'pink',
     }
 
 })

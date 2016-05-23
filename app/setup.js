@@ -243,6 +243,7 @@ class TPicker extends Component {
                 </View>
             </Modal>
                 <TextInput
+                    style = {this.props.inputStyle}
                     ref = 'test'
                     onFocus={() => {this._setModalVisible(true)
                     this.refs.test.blur()}}
