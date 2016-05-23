@@ -77,6 +77,7 @@ class TpickerEx extends Component {
     _setTpickerVisible(){
         this.setState({modalVisible: true});
     }
+    
 
     
     _setInput(value){
