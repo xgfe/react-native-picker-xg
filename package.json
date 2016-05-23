@@ -11,18 +11,22 @@
     "react-native": "^0.25.1",
     "react-native-picker": "^2.0.5",
     "react-native-picker-android": "^0.3.8",
-    "react-native-vector-icons": "^2.0.2"
+    "react-native-vector-icons": "^2.0.2",
+    "validate-commit-msg": "^2.6.1"
   },
   "devDependencies": {
     "cz-conventional-changelog": "^1.1.6",
     "ghooks": "^1.2.1"
   },
   "config": {
+    "validate-commit-msg": {
+      "warnOnFail": true
+    },
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     },
     "ghooks": {
-      "commit-msg": "./validate-commit-msg.js"
+      "commit-msg": "validate-commit-msg"
     }
   }
 }
