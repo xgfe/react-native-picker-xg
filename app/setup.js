@@ -25,14 +25,7 @@ class TPicker extends Component {
 
     constructor(props, context){
         super(props, context);
-        this.pickerShow = this.pickerShow.bind(this);
-        this.renderMask = this.renderMask.bind(this);
-        this.resetMask = this.resetMask.bind(this);
-        this.pickerHidden = this.pickerHidden.bind(this);
-        this.confirmChose = this.confirmChose.bind(this);
         this.state = this._stateFromProps(props);
-        this.state.mask = false;
-        this.state.text = 'chose the item below'
     }
 
 
@@ -43,7 +36,6 @@ class TPicker extends Component {
         let pickerStyle = props.pickerStyle;
         let itemStyle = props.itemStyle;
         let onValueChange = props.onValueChange;
-        let fadeAnim = new Animated.Value(height);
         React.Children.forEach(props.children, (child, index) => {
             child.props.value === props.selectedValue && ( selectedIndex = index );
             items.push({value: child.props.value, label: child.props.label});
@@ -53,8 +45,7 @@ class TPicker extends Component {
             items,
             pickerStyle,
             itemStyle,
-            onValueChange,
-            fadeAnim
+            onValueChange
         };
     }
 
@@ -156,43 +147,18 @@ class TPicker extends Component {
 
     _onValueChange(){
         var curItem = this.state.items[this.index];
+        this.setState({selectedIndex:this.index});
         this.state.onValueChange && this.state.onValueChange(curItem.value, curItem.label);
     }
 
-    pickerShow(){
-        this.setState({mask: true});
-        if (this.myTextInput !== null) {
-            this.myTextInput.blur();
-        }
-        Animated.timing(
-            this.state.fadeAnim,
-            {toValue: top}
-        ).start();
-    }
-    pickerHidden(){
-        Animated.timing(
-            this.state.fadeAnim,
-            {toValue: height}
-        ).start();
-        this.setState({mask: false});
-    }
-    resetMask(){
-        this.pickerHidden();
-    }
-    renderMask(statue){
-        if(statue){
-            return( <View
-                style = {{opacity:0.5,backgroundColor:'black',flex:1,alignItems:'center',justifyContent:'center',width:width}}
-                ></View>
-            ) }
-        else{
-            return;
-        }
-    }
+
+
+
     confirmChose(){
-        this.resetMask();
         this.setState({text: (this.state.items[this.index]).label});
     }
+
+  
     render(){
         let index = this.state.selectedIndex;
         let length = this.state.items.length;
@@ -211,22 +177,17 @@ class TPicker extends Component {
         };
 
         return (
-            <View
-            style={{flex:1,alignItems:'center',justifyContent:'center',width:width}}>
-        <TextInput
-            style={{borderWidth:1, borderColor:'#ccc', padding:10, height:50,position:'absolute',top:10}}
-            onFocus={this.pickerShow}
-            value={this.state.text}
-            ref={(ref) => {this.myTextInput = ref}}
-        />
-                {this.renderMask(this.state.mask)}
-            <Animated.View style={[styles.container, this.state.pickerStyle, {top:this.state.fadeAnim}]} {...this._panResponder.panHandlers}>
+            <View style={[styles.container, this.state.pickerStyle]} {...this._panResponder.panHandlers}>
                 <  View style={styles.nav}>
                     <TouchableOpacity onPress={this.confirmChose}>
-                    <Text style={styles.confirm}>Confirm</Text>
+                    <Text onPress={() => {this.props.setModal(false)
+                            this.props.setContent(this.state.items[this.state.selectedIndex].label)}}
+                          style={styles.confirm}>Confirm</Text>
                         </TouchableOpacity>
-                    <TouchableOpacity onPress={this.resetMask}>
-                    <Text style={styles.cancel} >Cancel</Text>
+                    <TouchableOpacity>
+                    <Text onPress={() => {this.props.setModal(false)
+                    }}
+                          style={styles.cancel} >Cancel</Text>
                         </TouchableOpacity>
                 </View>
                 <View style={styles.up}>
@@ -246,9 +207,8 @@ class TPicker extends Component {
                         { items.downItems }
                     </View>
                 </View>
-            </Animated.View>
+            </View>
 
-                </View>
         );
     }
 }
@@ -261,11 +221,9 @@ let ratio = PixelRatio.get();
 let styles = StyleSheet.create({
 
     container: {
-        position: 'absolute',
-        top: top,
+ 
         justifyContent: 'center',
         alignItems: 'center',
-        //this is very important
         backgroundColor: 'white',
     },
     nav: {
