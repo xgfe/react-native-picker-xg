@@ -9,7 +9,8 @@ import {
     PanResponder,
     TouchableOpacity,
     TextInput,
-    Animated
+    Animated,
+    Modal
 } from 'react-native';
 
 
@@ -28,7 +29,11 @@ class TPicker extends Component {
         this.state = this._stateFromProps(props);
     }
 
-
+    componentWillReceiveProps(newProps) {
+    if (newProps.visible != this.state.visible) {
+        this.setState({visible: newProps.visible,transparent: newProps.transparent,animationType: newProps.animationType});
+    }
+}
 
     _stateFromProps(props){
         let selectedIndex = 0;
@@ -36,6 +41,9 @@ class TPicker extends Component {
         let pickerStyle = props.pickerStyle;
         let itemStyle = props.itemStyle;
         let onValueChange = props.onValueChange;
+        let animationType = props.animationType;
+        let transparent = props.transparent;
+        let visible = props.visible;
         React.Children.forEach(props.children, (child, index) => {
             child.props.value === props.selectedValue && ( selectedIndex = index );
             items.push({value: child.props.value, label: child.props.label});
@@ -45,7 +53,10 @@ class TPicker extends Component {
             items,
             pickerStyle,
             itemStyle,
-            onValueChange
+            onValueChange,
+            animationType,
+            transparent,
+            visible
         };
     }
 
@@ -158,11 +169,25 @@ class TPicker extends Component {
         this.setState({text: (this.state.items[this.index]).label});
     }
 
-  
+    _setModalVisible(visible) {
+        this.setState({visible: visible});
+    }
+    _setInputValue(value) {
+        this.props.setInput(value);
+    }
     render(){
         let index = this.state.selectedIndex;
         let length = this.state.items.length;
         let items = this._renderItems(this.state.items);
+
+
+        console.log("background" + this.state.visible);
+        var modalBackgroundStyle = {
+            backgroundColor: this.state.transparent ? 'rgba(0, 0, 0, 0.5)' : '#f5fcff',
+        };
+        var innerContainerTransparentStyle = this.state.transparent
+            ? {backgroundColor: '#fff', padding: 20}
+            : null;
 
         let upViewStyle = {
             marginTop: (3 - index) * 30,
@@ -175,17 +200,25 @@ class TPicker extends Component {
             marginTop: (-index - 1) * 30,
             height:  length * 30,
         };
-
         return (
+            <Modal
+                animationType={this.state.animationType}
+                transparent={this.state.transparent}
+                visible={this.state.visible}
+                onRequestClose={() => {this._setModalVisible(false)}}
+            >
+                <View style={[testStyle.container, modalBackgroundStyle]}>
+                    <View style={[testStyle.innerContainer, innerContainerTransparentStyle]}>
+
             <View style={[styles.container, this.state.pickerStyle]} {...this._panResponder.panHandlers}>
                 <  View style={styles.nav}>
                     <TouchableOpacity onPress={this.confirmChose}>
-                    <Text onPress={() => {this.props.setModal(false)
-                            this.props.setContent(this.state.items[this.state.selectedIndex].label)}}
+                    <Text onPress={() => {this._setInputValue(this.state.items[this.state.selectedIndex].label)
+                    this._setModalVisible(false)}}
                           style={styles.confirm}>Confirm</Text>
                         </TouchableOpacity>
                     <TouchableOpacity>
-                    <Text onPress={() => {this.props.setModal(false)
+                    <Text onPress={() => {this._setModalVisible(false)
                     }}
                           style={styles.cancel} >Cancel</Text>
                         </TouchableOpacity>
@@ -208,6 +241,10 @@ class TPicker extends Component {
                     </View>
                 </View>
             </View>
+
+                    </View>
+                </View>
+            </Modal>
 
         );
     }
@@ -302,5 +339,30 @@ let styles = StyleSheet.create({
     }
 
 });
+
+const testStyle = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+    },
+    innerContainer: {
+        marginTop:top,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+    },
+    row: {
+        alignItems: 'center',
+        flex: 1,
+        flexDirection: 'row',
+        marginBottom: 20,
+    },
+    rowTitle: {
+        flex: 1,
+        fontWeight: 'bold',
+    },
+
+})
 
 export default TPicker;
