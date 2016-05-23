@@ -18,8 +18,11 @@ import {
 class TPicker extends Component {
 
     static propTypes = {
-        pickerStyle: PropTypes.any,
-        itemStyle: PropTypes.any,
+        inputValue: PropTypes.string || PropTypes.number,
+        animationType: PropTypes.string,
+        transparent: PropTypes.bool,
+        visible: PropTypes.bool,
+        inputStyle: PropTypes.any,
         onValueChange: PropTypes.func,
         selectedValue: PropTypes.any
     };
@@ -177,7 +180,6 @@ class TPicker extends Component {
         let items = this._renderItems(this.state.items);
 
 
-        console.log("background" + this.state.visible);
         var modalBackgroundStyle = {
             backgroundColor: this.state.transparent ? 'rgba(0, 0, 0, 0.5)' : '#f5fcff',
         };
@@ -247,7 +249,7 @@ class TPicker extends Component {
                     ref = 'test'
                     onFocus={() => {this._setModalVisible(true)
                     this.refs.test.blur()}}
-                    placeholder={'this is a test'}
+                    placeholder={this.state.inputValue}
                     value={this.state.inputValue}
                 />
 </View>

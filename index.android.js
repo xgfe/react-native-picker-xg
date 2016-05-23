@@ -85,7 +85,7 @@ class TpickerEx extends Component {
         return (
             <View style={testStyle.container}>
                             <TPicker
-                                inital = {this.state.inputValue}
+                                inputValue = {this.state.inputValue}
                                 animationType = {this.state.animationType}
                                 transparent = {this.state.transparent}
                                 visible = {this.state.modalVisible}
@@ -103,7 +103,7 @@ class TpickerEx extends Component {
                             </TPicker>
                 <TPicker
                     inputStyle = {testStyle.inputStyle}
-                    inital = {this.state.inputValue}
+                    inputValue = {this.state.inputValue}
                     animationType = {this.state.animationType}
                     transparent = {this.state.transparent}
                     visible = {this.state.modalVisible}
