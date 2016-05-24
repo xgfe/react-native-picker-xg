@@ -17,15 +17,14 @@ import {
 
 import Pickroll from './roll';
 
-let PickRoll = Platform.OS === 'ios' ? PickerIOS : Pickroll;
-let PickerItem = PickRoll.Item;
+let TPicker = Platform.OS === 'ios' ? PickerIOS : Pickroll;
+let PickerItem = TPicker.Item;
 
 let width = Dimensions.get('window').width;
 let height = Dimensions.get('window').height;
 let top = height - 250;
 let ratio = PixelRatio.get();
 let valueCount = [];
-let indexCount = [];
 let str = '';
 
 class TMPicker extends Component {
@@ -41,14 +40,6 @@ class TMPicker extends Component {
     }
 
     _stateFromProps(props){
-        let selectIndex = [];
-        if(typeof this.props.selectIndex==='undefined'){
-            console.log("yes")
-            for(let item of this.props.data){
-                selectIndex.push(0);
-            }
-        }else{
-            selectIndex = props.selectIndex;}
         let selfStyle = props.selfStyle;
         let inputStyle = props.inputStyle;
         let animationType = props.animationType||'none';
@@ -63,8 +54,6 @@ class TMPicker extends Component {
             animationType,
             enable,
             inputValue,
-            selectIndex,
-            inputStyle,
         };
     }
     _confirmChose(){
@@ -74,11 +63,7 @@ class TMPicker extends Component {
                 for(let item of valueCount){
                     str = str + item + ' ';
                 }
-                let tempArray =[];
-                for(let temp of index){
-                    tempArray.push(temp);
-                }
-                this.setState({inputValue: str,selectIndex: indexCount});
+                this.setState({inputValue: str});
                 break;
             }
         }
@@ -87,20 +72,16 @@ class TMPicker extends Component {
         if(this.state.enable){
             this._setModalVisible(true)
             this.refs.test.blur()
-            console.log(this.state.selectIndex);
             valueCount.length = 0;
-            indexCount.length = 0;
             str = '';
-            console.log(indexCount);
             this.setState({getValue: false});
         }
     }
     _setModalVisible(visible) {
         this.setState({visible: visible});
     }
-    _handleValue(value,index){
+    _handleValue(value){
         valueCount.push(value);
-        indexCount.push(index);
     }
     render(){
 
@@ -120,29 +101,27 @@ class TMPicker extends Component {
                 >
                     <View style={[testStyle.container, modalBackgroundStyle]}>
                         <View style={[testStyle.innerContainer, innerContainerTransparentStyle]}>
-                            <  View style={styles.nav}>
+                            <View style={styles.nav}>
                                 <TouchableOpacity  style={styles.confirm}>
                                     <Text onPress={() => {this. _confirmChose()
                     this._setModalVisible(false)}}
-                                        style={{textAlign:'left',marginLeft:10}} >Confirm</Text>
+                                          style={{textAlign:'left',marginLeft:10}} >Confirm</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.cancel} >
                                     <Text
                                         style={{textAlign:'right',marginRight:10}}
                                         onPress={() => {this._setModalVisible(false)
                     }}
-                                          >Cancel</Text>
+                                    >Cancel</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={[styles.pickContainer, this.state.selfStyle]}>
 
                                 {
                                     this.props.data.map((row,index) =>{
-
                                         return (
-                                            <PickRoll
+                                            <Pickroll
                                                 key = {index}
-                                                selectIndex = {this.state.selectIndex[index]}
                                                 getValue = {this.state.getValue}
                                                 handleValue = {this._handleValue}
                                                 pickerStyle = {{flex:1}}
@@ -157,12 +136,12 @@ class TMPicker extends Component {
                                                         label={this.props.data[index][carMake].name}
                                                     />
                                                 ))}
-                                            </PickRoll>)
+                                            </Pickroll>)
                                     })
                                 }
                             </View>
 
-                    </View>
+                        </View>
                     </View>
                 </Modal>
                 <TextInput
@@ -175,7 +154,7 @@ class TMPicker extends Component {
                     value={this.state.inputValue}
                 />
             </View>
-           
+
         );
     }
 }
@@ -201,11 +180,11 @@ let styles = StyleSheet.create({
     },
     cancel: {
         flex:1,
+
     },
     pickContainer:{
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection:'row',
+        flex: 1,
+        backgroundColor: 'red'
     },
 
 });
@@ -213,14 +192,15 @@ let styles = StyleSheet.create({
 const testStyle = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: 'gray',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
     },
     innerContainer: {
         flex:1,
+        backgroundColor: 'blue',
         marginTop:top,
-        alignItems: 'center',
         justifyContent: 'flex-end',
         flexDirection: 'column',
     },

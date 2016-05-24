@@ -32,12 +32,12 @@ class Pickroll extends Component {
 
     componentWillReceiveProps(newProps){
         if(newProps.getValue!==this.props.getValue&&newProps.getValue===true){
-            this.props.handleValue(this.state.items[this.index].label);
+            this.props.handleValue(this.state.items[this.index].label,this.index);
         }
     }
     
     _stateFromProps(props){
-        let selectedIndex = 0;
+        let selectedIndex = this.props.selectIndex;
         let items = [];
         let pickerStyle = props.pickerStyle;
         let itemStyle = props.itemStyle;
@@ -176,7 +176,7 @@ class Pickroll extends Component {
 
         return (
 
-                            <View style={[styles.container, this.state.pickerStyle,{width:width/this.props.itemCount}]} {...this._panResponder.panHandlers}>
+                            <View style={[styles.container, this.state.pickerStyle]} {...this._panResponder.panHandlers}>
 
                                 <View style={styles.up}>
                                     <View style={[styles.upView, upViewStyle]} ref={(up) => { this.up = up }} >
@@ -210,8 +210,7 @@ let ratio = PixelRatio.get();
 let styles = StyleSheet.create({
 
     container: {
-        
-        justifyContent: 'center',
+        flex: 1,
         alignItems: 'center',
     },
     up: {
@@ -233,8 +232,9 @@ let styles = StyleSheet.create({
         marginBottom: 0
     },
     middle: {
+        flex: 1,
+
         height: 40,
-        width: width,
         overflow: 'hidden',
         borderColor: '#aaa',
         borderTopWidth: 1/ratio,

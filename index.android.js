@@ -65,14 +65,6 @@ let CAR_MAKES_AND_MODELS = [
             name: '4月',
         },
     },
-    {
-        cadillac2: {
-            name: '1号',
-        },
-        chevrolet2: {
-            name: '2号',
-        },
-    }
 
 ];
 
@@ -90,6 +82,7 @@ class TpickerEx extends Component {
         return (
             <View style={testStyle.container}>
                             <TMPicker
+
                                 data = {CAR_MAKES_AND_MODELS}
                                 visible = {false}
                                 transparent = {true}

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "changelogsee": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0"
   },
   "dependencies": {
     "react": "^0.14.8",
