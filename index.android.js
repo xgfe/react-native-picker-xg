@@ -15,7 +15,7 @@ import {
     TextInput,
     TouchableHighlight
 } from 'react-native';
-import Tpicker from './app/setup';
+import Tpicker from './app/setup3';
 
 
 let TPicker = Platform.OS === 'ios' ? PickerIOS : Tpicker;
@@ -73,10 +73,6 @@ class TpickerEx extends Component {
         this.state = {
             carMake: 'cadillac',
             modelIndex: 3,
-            animationType: 'none',
-            modalVisible: false,
-            transparent: true,
-            inputValue: 'please chose'
         }
     }
 
@@ -85,10 +81,6 @@ class TpickerEx extends Component {
         return (
             <View style={testStyle.container}>
                             <TPicker
-                                inputValue = {this.state.inputValue}
-                                animationType = {this.state.animationType}
-                                transparent = {this.state.transparent}
-                                visible = {this.state.modalVisible}
                                 selectedValue={this.state.carMake}
                                 onValueChange={(carMake) => this.setState({carMake, modelIndex: 0})}
                                 ref={(picker) => { this.picker = picker }} >
@@ -103,10 +95,22 @@ class TpickerEx extends Component {
                             </TPicker>
                 <TPicker
                     inputStyle = {testStyle.inputStyle}
-                    inputValue = {this.state.inputValue}
-                    animationType = {this.state.animationType}
-                    transparent = {this.state.transparent}
-                    visible = {this.state.modalVisible}
+                    selectedValue={'audi1'}
+                    onValueChange={(carMake) => this.setState({carMake, modelIndex: 0})}
+                    ref={(picker) => { this.picker = picker }} >
+
+                    {Object.keys(CAR_MAKES_AND_MODELS1).map((carMake) => (
+                        <PickerItem
+                            key={carMake}
+                            value={carMake}
+                            label={CAR_MAKES_AND_MODELS1[carMake].name}
+                        />
+                    ))}
+                </TPicker>
+                <TPicker
+                    enable = {false}
+                    inputValue = {'暂时不可选择'}
+                    inputStyle = {testStyle.inputStyle2}
                     selectedValue={this.state.carMake}
                     onValueChange={(carMake) => this.setState({carMake, modelIndex: 0})}
                     ref={(picker) => { this.picker = picker }} >
@@ -133,8 +137,12 @@ const testStyle = StyleSheet.create({
         flexDirection: 'column',
     },
     inputStyle: {
-        marginTop: -300,
+        marginTop: -200,
         backgroundColor: 'pink',
+    },
+    inputStyle2: {
+        marginTop: -400,
+        backgroundColor: 'lightblue',
     }
 
 })
