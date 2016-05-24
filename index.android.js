@@ -15,14 +15,14 @@ import {
     TextInput,
     TouchableHighlight
 } from 'react-native';
-import Tpicker from './app/setup3';
+import TMpicker from './app/setup3';
 
 
-let TPicker = Platform.OS === 'ios' ? PickerIOS : Tpicker;
-let PickerItem = TPicker.Item;
+let TMPicker = Platform.OS === 'ios' ? PickerIOS : TMpicker;
 
 
-let CAR_MAKES_AND_MODELS = {
+let CAR_MAKES_AND_MODELS = [
+    {
     amc: {
         name: 'AMC',
     },
@@ -50,22 +50,23 @@ let CAR_MAKES_AND_MODELS = {
     chevrolet: {
         name: 'Chevrolet',
     },
-};
-let CAR_MAKES_AND_MODELS1 = {
-    amc1: {
-        name: 'AMC1',
-    },
-    alfa1: {
-        name: 'Alfa-Romeo1',
-    },
-    aston1: {
-        name: 'Aston Martin1',
-    },
-    audi1: {
-        name: 'Audi1',
-    },
-};
+},
+    {
+        amc1: {
+            name: 'AMC1',
+        },
+        alfa1: {
+            name: 'Alfa-Romeo1',
+        },
+        aston1: {
+            name: 'Aston Martin1',
+        },
+        audi1: {
+            name: 'Audi1',
+        },
+    }
 
+];
 
 class TpickerEx extends Component {
     constructor(props, context){
@@ -80,49 +81,12 @@ class TpickerEx extends Component {
     render() {
         return (
             <View style={testStyle.container}>
-                            <TPicker
-                                selectedValue={this.state.carMake}
-                                onValueChange={(carMake) => this.setState({carMake, modelIndex: 0})}
-                                ref={(picker) => { this.picker = picker }} >
-
-                                {Object.keys(CAR_MAKES_AND_MODELS).map((carMake) => (
-                                    <PickerItem
-                                        key={carMake}
-                                        value={carMake}
-                                        label={CAR_MAKES_AND_MODELS[carMake].name}
-                                    />
-                                ))}
-                            </TPicker>
-                <TPicker
-                    inputStyle = {testStyle.inputStyle}
-                    selectedValue={'audi1'}
-                    onValueChange={(carMake) => this.setState({carMake, modelIndex: 0})}
-                    ref={(picker) => { this.picker = picker }} >
-
-                    {Object.keys(CAR_MAKES_AND_MODELS1).map((carMake) => (
-                        <PickerItem
-                            key={carMake}
-                            value={carMake}
-                            label={CAR_MAKES_AND_MODELS1[carMake].name}
-                        />
-                    ))}
-                </TPicker>
-                <TPicker
-                    enable = {false}
-                    inputValue = {'暂时不可选择'}
-                    inputStyle = {testStyle.inputStyle2}
-                    selectedValue={this.state.carMake}
-                    onValueChange={(carMake) => this.setState({carMake, modelIndex: 0})}
-                    ref={(picker) => { this.picker = picker }} >
-
-                    {Object.keys(CAR_MAKES_AND_MODELS1).map((carMake) => (
-                        <PickerItem
-                            key={carMake}
-                            value={carMake}
-                            label={CAR_MAKES_AND_MODELS1[carMake].name}
-                        />
-                    ))}
-                </TPicker>
+                            <TMPicker
+                                data = {CAR_MAKES_AND_MODELS}
+                                visible = {false}
+                                transparent = {true}
+                                >
+                            </TMPicker>
             </View>
 
         );
@@ -134,7 +98,6 @@ const testStyle = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: 'column',
     },
     inputStyle: {
         marginTop: -200,

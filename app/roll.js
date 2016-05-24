@@ -15,12 +15,10 @@ import {
 
 
 
-class TPicker extends Component {
+class Pickroll extends Component {
 
     static propTypes = {
         inputValue: PropTypes.string || PropTypes.number,
-        animationType: PropTypes.string,
-        transparent: PropTypes.bool,
         visible: PropTypes.bool,
         inputStyle: PropTypes.any,
         onValueChange: PropTypes.func,
@@ -32,17 +30,18 @@ class TPicker extends Component {
         this.state = this._stateFromProps(props);
     }
 
+    componentWillReceiveProps(newProps){
+        if(newProps.getValue!==this.props.getValue&&newProps.getValue===true){
+            this.props.handleValue(this.state.items[this.index].label);
+        }
+    }
+    
     _stateFromProps(props){
         let selectedIndex = 0;
         let items = [];
         let pickerStyle = props.pickerStyle;
         let itemStyle = props.itemStyle;
         let onValueChange = props.onValueChange;
-        let animationType = props.animationType||'none';
-        let transparent = typeof props.transparent==='undefined'?true:props.transparent;
-        let visible = typeof props.visible==='undefined'?false:props.visible;
-        let inputValue = props.inputValue||'please chose';
-        let enable = typeof props.enable==='undefined'?true:props.enable;
         React.Children.forEach(props.children, (child, index) => {
             child.props.value === props.selectedValue && ( selectedIndex = index );
             items.push({value: child.props.value, label: child.props.label});
@@ -53,11 +52,6 @@ class TPicker extends Component {
             pickerStyle,
             itemStyle,
             onValueChange,
-            animationType,
-            transparent,
-            visible,
-            inputValue,
-            enable
         };
     }
 
@@ -162,37 +156,11 @@ class TPicker extends Component {
         this.setState({selectedIndex:this.index});
         this.state.onValueChange && this.state.onValueChange(curItem.value, curItem.label);
     }
-
-
-
-
-    confirmChose(){
-        this.setState({text: (this.state.items[this.index]).label});
-    }
-
-    _setModalVisible(visible) {
-        this.setState({visible: visible});
-    }
-    _setInputValue(value) {
-        this.setState({inputValue: value});
-    }
-    _setEventBegin(){
-        if(this.state.enable){
-        this._setModalVisible(true)
-        this.refs.test.blur()}
-    }
+    
     render(){
         let index = this.state.selectedIndex;
         let length = this.state.items.length;
         let items = this._renderItems(this.state.items);
-
-
-        var modalBackgroundStyle = {
-            backgroundColor: this.state.transparent ? 'rgba(0, 0, 0, 0.5)' : '#f5fcff',
-        };
-        var innerContainerTransparentStyle = this.state.transparent
-            ? {backgroundColor: '#fff', padding: 20}
-            : null;
 
         let upViewStyle = {
             marginTop: (3 - index) * 30,
@@ -206,29 +174,9 @@ class TPicker extends Component {
             height:  length * 30,
         };
         return (
-            <View style={testStyle.container}>
-                <Modal
-                    animationType={this.state.animationType}
-                    transparent={this.state.transparent}
-                    visible={this.state.visible}
-                    onRequestClose={() => {this._setModalVisible(false)}}
-                >
-                    <View style={[testStyle.container, modalBackgroundStyle]}>
-                        <View style={[testStyle.innerContainer, innerContainerTransparentStyle]}>
 
                             <View style={[styles.container, this.state.pickerStyle]} {...this._panResponder.panHandlers}>
-                                <  View style={styles.nav}>
-                                    <TouchableOpacity onPress={this.confirmChose}>
-                                        <Text onPress={() => {this._setInputValue(this.state.items[this.state.selectedIndex].label)
-                    this._setModalVisible(false)}}
-                                              style={styles.confirm}>Confirm</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity>
-                                        <Text onPress={() => {this._setModalVisible(false)
-                    }}
-                                              style={styles.cancel} >Cancel</Text>
-                                    </TouchableOpacity>
-                                </View>
+
                                 <View style={styles.up}>
                                     <View style={[styles.upView, upViewStyle]} ref={(up) => { this.up = up }} >
                                         { items.upItems }
@@ -247,19 +195,8 @@ class TPicker extends Component {
                                     </View>
                                 </View>
                             </View>
-                        </View>
-                    </View>
-                </Modal>
-                <TextInput
-                    editable = {this.state.enable}
-                    style = {this.props.inputStyle}
-                    ref = 'test'
-                    onFocus={() => { this._setEventBegin()
-                   }}
-                    placeholder={this.state.inputValue}
-                    value={this.state.inputValue}
-                />
-            </View>
+                      
+
         );
     }
 }
@@ -272,25 +209,9 @@ let ratio = PixelRatio.get();
 let styles = StyleSheet.create({
 
     container: {
-
+        width: width/2,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
-    },
-    nav: {
-        paddingLeft:10,
-        paddingRight:10,
-        width: width,
-        flex: 1,
-        flexDirection: 'row',
-        height: 28,
-        justifyContent: 'space-between'
-    },
-    confirm: {
-        alignSelf: 'center',
-    },
-    cancel: {
-        alignSelf: 'center',
     },
     up: {
         height: 90,
@@ -354,29 +275,6 @@ let styles = StyleSheet.create({
 
 });
 
-const testStyle = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-    },
-    innerContainer: {
-        marginTop:top,
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-    },
-    row: {
-        alignItems: 'center',
-        flex: 1,
-        flexDirection: 'row',
-        marginBottom: 20,
-    },
-    rowTitle: {
-        flex: 1,
-        fontWeight: 'bold',
-    },
 
-})
 
-export default TPicker;
+export default Pickroll;
