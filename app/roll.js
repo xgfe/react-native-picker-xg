@@ -210,12 +210,14 @@ let ratio = PixelRatio.get();
 let styles = StyleSheet.create({
 
     container: {
-        flex: 1,
+        flex:1,
+        justifyContent: 'center',
         alignItems: 'center',
     },
     up: {
         height: 90,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        alignSelf:'stretch',
     },
     upView: {
         justifyContent: 'flex-start',
@@ -232,13 +234,12 @@ let styles = StyleSheet.create({
         marginBottom: 0
     },
     middle: {
-        flex: 1,
-
+        alignSelf:'stretch',
         height: 40,
         overflow: 'hidden',
         borderColor: '#aaa',
         borderTopWidth: 1/ratio,
-        borderBottomWidth: 1/ratio
+        borderBottomWidth: 1/ratio,
     },
     middleView: {
         height: 40,
@@ -256,7 +257,8 @@ let styles = StyleSheet.create({
     },
     down: {
         height: 90,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        alignSelf:'stretch',
     },
     downView: {
         overflow: 'hidden',

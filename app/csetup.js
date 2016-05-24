@@ -192,15 +192,14 @@ let styles = StyleSheet.create({
 const testStyle = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'gray',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
     },
     innerContainer: {
         flex:1,
-        backgroundColor: 'blue',
         marginTop:top,
+        alignItems: 'center',
         justifyContent: 'flex-end',
         flexDirection: 'column',
     },

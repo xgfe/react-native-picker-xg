@@ -65,6 +65,14 @@ let CAR_MAKES_AND_MODELS = [
             name: '4月',
         },
     },
+    {
+        cadillac2: {
+            name: '1号',
+        },
+        chevrolet2: {
+            name: '2号',
+        },
+    }
 
 ];
 

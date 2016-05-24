@@ -75,10 +75,10 @@ class TMPicker extends Component {
                     str = str + item + ' ';
                 }
                 let tempArray =[];
-                for(let temp of index){
+                for(let temp of indexCount){
                     tempArray.push(temp);
                 }
-                this.setState({inputValue: str,selectIndex: indexCount});
+                this.setState({inputValue: str,selectIndex: tempArray});
                 break;
             }
         }
@@ -108,7 +108,7 @@ class TMPicker extends Component {
             backgroundColor: this.state.transparent ? 'rgba(0, 0, 0, 0.5)' : '#f5fcff',
         };
         let innerContainerTransparentStyle = this.state.transparent
-            ? {backgroundColor: '#fff', padding: 20}
+            ? {backgroundColor: '#fff'}
             : null;
         return (
             <View style={styles.container}>
@@ -190,10 +190,10 @@ let styles = StyleSheet.create({
     },
     nav: {
         flex: 1,
-        width:width,
+        marginTop:10,
         flexDirection: 'row',
         height: 28,
-        alignItems: 'center',
+        alignSelf: 'stretch',
         backgroundColor:'white',
     },
     confirm: {
@@ -203,8 +203,9 @@ let styles = StyleSheet.create({
         flex:1,
     },
     pickContainer:{
+        flex:1,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignSelf:'stretch',
         flexDirection:'row',
     },
 
