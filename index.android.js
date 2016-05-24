@@ -24,45 +24,53 @@ let TMPicker = Platform.OS === 'ios' ? PickerIOS : TMpicker;
 let CAR_MAKES_AND_MODELS = [
     {
     amc: {
-        name: 'AMC',
+        name: '2011年',
     },
     alfa: {
-        name: 'Alfa-Romeo',
+        name: '2012年',
     },
     aston: {
-        name: 'Aston Martin',
+        name: '2013年',
     },
     audi: {
-        name: 'Audi',
+        name: '2014年',
     },
     austin: {
-        name: 'Austin',
+        name: '2015年',
     },
     borgward: {
-        name: 'Borgward',
+        name: '2016年',
     },
     buick: {
-        name: 'Buick',
+        name: '2017年',
     },
     cadillac: {
-        name: 'Cadillac',
+        name: '2018年',
     },
     chevrolet: {
-        name: 'Chevrolet',
+        name: '2019年',
     },
 },
     {
         amc1: {
-            name: 'AMC1',
+            name: '1月',
         },
         alfa1: {
-            name: 'Alfa-Romeo1',
+            name: '2月',
         },
         aston1: {
-            name: 'Aston Martin1',
+            name: '3月',
         },
         audi1: {
-            name: 'Audi1',
+            name: '4月',
+        },
+    },
+    {
+        cadillac2: {
+            name: '1号',
+        },
+        chevrolet2: {
+            name: '2号',
         },
     }
 
@@ -99,14 +107,5 @@ const testStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    inputStyle: {
-        marginTop: -200,
-        backgroundColor: 'pink',
-    },
-    inputStyle2: {
-        marginTop: -400,
-        backgroundColor: 'lightblue',
-    }
-
 })
 AppRegistry.registerComponent('widgets', () => TpickerEx);

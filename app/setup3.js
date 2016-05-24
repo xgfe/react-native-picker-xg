@@ -14,10 +14,10 @@ import {
     Modal
 } from 'react-native';
 
-import Tpicker from './setup';
+
 import Pickroll from './roll';
 
-let TPicker = Platform.OS === 'ios' ? PickerIOS : Tpicker;
+let TPicker = Platform.OS === 'ios' ? PickerIOS : Pickroll;
 let PickerItem = TPicker.Item;
 
 let width = Dimensions.get('window').width;
@@ -88,7 +88,6 @@ class TMPicker extends Component {
         let innerContainerTransparentStyle = this.state.transparent
             ? {backgroundColor: '#fff', padding: 20}
             : null;
-
         return (
             <View style={styles.container}>
                 <Modal
@@ -124,6 +123,7 @@ class TMPicker extends Component {
                                                 handleValue = {this._handleValue}
                                                 pickerStyle = {{flex:1}}
                                                 data = {this.props.data[index]}
+                                                itemCount = {this.props.data.length}
                                                 onValueChange={(carMake) => this.setState({carMake, modelIndex: 0})}
                                             >
                                                 {Object.keys(this.props.data[index]).map((carMake) => (
@@ -150,7 +150,6 @@ class TMPicker extends Component {
                     placeholder={this.state.inputValue}
                     value={this.state.inputValue}
                 />
-               <Pickroll />
             </View>
            
         );

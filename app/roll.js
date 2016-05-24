@@ -173,9 +173,10 @@ class Pickroll extends Component {
             marginTop: (-index - 1) * 30,
             height:  length * 30,
         };
+
         return (
 
-                            <View style={[styles.container, this.state.pickerStyle]} {...this._panResponder.panHandlers}>
+                            <View style={[styles.container, this.state.pickerStyle,{width:width/this.props.itemCount}]} {...this._panResponder.panHandlers}>
 
                                 <View style={styles.up}>
                                     <View style={[styles.upView, upViewStyle]} ref={(up) => { this.up = up }} >
@@ -201,15 +202,15 @@ class Pickroll extends Component {
     }
 }
 
-
 let width = Dimensions.get('window').width;
 let height = Dimensions.get('window').height;
 let top = height - 250;
 let ratio = PixelRatio.get();
+
 let styles = StyleSheet.create({
 
     container: {
-        width: width/2,
+        
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -242,7 +243,7 @@ let styles = StyleSheet.create({
     middleView: {
         height: 40,
         justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     middleText: {
         paddingTop: 0,
