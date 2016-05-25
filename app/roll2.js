@@ -34,6 +34,7 @@ class CPickroll extends Component {
         if(newProps.getValue!==this.props.getValue&&newProps.getValue===true){
             this.props.handleValue(this.state.items[this.index].label,this.index);
         }
+        this.setState(this._stateFromProps(newProps));
     }
 
     _stateFromProps(props){
@@ -42,10 +43,10 @@ class CPickroll extends Component {
         let pickerStyle = props.pickerStyle;
         let itemStyle = props.itemStyle;
         let onValueChange = props.onValueChange;
-        React.Children.forEach(props.children, (child, index) => {
-            child.props.value === props.selectedValue && ( selectedIndex = index );
-            items.push({value: child.props.value, label: child.props.label});
-        });
+        this.props.data.map((child,index) =>{
+            child === props.selectedValue && ( selectedIndex = index );
+            items.push({value: child, label: child});
+        })
         return {
             selectedIndex,
             items,

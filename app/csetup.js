@@ -107,10 +107,12 @@ class CPicker extends Component {
         passData.length = 1;
         let secondValue = choseValue[0];
         passData.push(Object.keys(this.props.data[secondValue]));
-        // let thirdValue = Object.keys(this.props.data[secondValue])[0];
-        // passData.push(this.props.data[secondValue][thirdValue]);
-        this.setState({passData:passData});
-        this.forceUpdate();
+        let thirdValue = Object.keys(this.props.data[secondValue])[0];
+        passData.push(this.props.data[secondValue][thirdValue]);
+        this.setState({passData:passData}, () =>{
+            this.forceUpdate();
+        });
+
     }
     render(){
 
@@ -146,7 +148,6 @@ class CPicker extends Component {
                             </View>
                             <View style={[styles.pickContainer, this.state.selfStyle]} >
                                 {this.state.passData.map((item,index) =>{
-                                    console.log(this.state.passData);
                                     return(
                                             <CPickroll
                                                 key = {index}
@@ -160,13 +161,7 @@ class CPicker extends Component {
                                                 itemCount = {this.props.data.length}
                                                 onValueChange={this._changeLayout.bind(this)}
                                             >
-                                                {this.state.passData[index].map((carMake) => (
-                                                    <PickerItem
-                                                        key={carMake}
-                                                        value={carMake}
-                                                        label={carMake}
-                                                    />
-                                                ))}
+                                             
                                             </CPickroll>)})}
                             </View>
 
