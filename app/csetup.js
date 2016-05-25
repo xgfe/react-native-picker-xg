@@ -15,10 +15,10 @@ import {
 } from 'react-native';
 
 
-import Pickroll from './roll';
+import CPickroll from './roll2';
 
-let TPicker = Platform.OS === 'ios' ? PickerIOS : Pickroll;
-let PickerItem = TPicker.Item;
+let CPickerroll = Platform.OS === 'ios' ? PickerIOS : CPickroll;
+let PickerItem = CPickerroll.Item;
 
 let width = Dimensions.get('window').width;
 let height = Dimensions.get('window').height;
@@ -26,16 +26,32 @@ let top = height - 250;
 let ratio = PixelRatio.get();
 let valueCount = [];
 let str = '';
-
-class TMPicker extends Component {
+let initData = [];
+let choseValue = [];
+class CPicker extends Component {
 
     static propTypes = {
-        data: PropTypes.array,
+        data: PropTypes.object,
     };
 
+
+    componentWillMount(){
+        let tempData = Object.assign({},this.props.data);
+        let firstData = Object.keys(tempData);
+        let key1 = firstData[0];
+        let secondData = Object.keys(tempData[key1]);
+        let key2 = secondData[0];
+        let thirdData = tempData[key1][key2];
+        initData.push(firstData,secondData,thirdData);
+        choseValue.push(key1,key2,thirdData[0]);
+       }
+    shouldComponentUpdate(nextProps, nextState, context){
+        return true;
+    }
     constructor(props, context){
         super(props, context);
-        this.state = this._stateFromProps(props);
+        this._changeLayout = this._changeLayout.bind(this);
+        this.state = this._stateFromProps(this.props);
         this.state.getValue = false;
     }
 
@@ -47,6 +63,7 @@ class TMPicker extends Component {
         let visible = typeof props.visible==='undefined'?false:props.visible;
         let enable = typeof props.enable==='undefined'?true:props.enable;
         let inputValue = props.inputValue||'please chose';
+        let passData = initData;
         return {
             selfStyle,
             visible,
@@ -54,12 +71,14 @@ class TMPicker extends Component {
             animationType,
             enable,
             inputValue,
+            inputStyle,
+            passData,
         };
     }
     _confirmChose(){
         this.setState({getValue: true});
         while(true){
-            if(valueCount.length === this.props.data.length){
+            if(valueCount.length === 3){
                 for(let item of valueCount){
                     str = str + item + ' ';
                 }
@@ -82,6 +101,16 @@ class TMPicker extends Component {
     }
     _handleValue(value){
         valueCount.push(value);
+    }
+    _changeLayout(value,index,passData){
+        choseValue.splice(index,1,value);
+        passData.length = 1;
+        let secondValue = choseValue[0];
+        passData.push(Object.keys(this.props.data[secondValue]));
+        // let thirdValue = Object.keys(this.props.data[secondValue])[0];
+        // passData.push(this.props.data[secondValue][thirdValue]);
+        this.setState({passData:passData});
+        this.forceUpdate();
     }
     render(){
 
@@ -115,30 +144,30 @@ class TMPicker extends Component {
                                     >Cancel</Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={[styles.pickContainer, this.state.selfStyle]}>
-
-                                {
-                                    this.props.data.map((row,index) =>{
-                                        return (
-                                            <Pickroll
+                            <View style={[styles.pickContainer, this.state.selfStyle]} >
+                                {this.state.passData.map((item,index) =>{
+                                    console.log(this.state.passData);
+                                    return(
+                                            <CPickroll
                                                 key = {index}
+                                                pickIndex = {index}
+                                                selectIndex = {0}
                                                 getValue = {this.state.getValue}
                                                 handleValue = {this._handleValue}
                                                 pickerStyle = {{flex:1}}
-                                                data = {this.props.data[index]}
+                                                data = {this.state.passData[index]}
+                                                passData = {this.state.passData}
                                                 itemCount = {this.props.data.length}
-                                                onValueChange={(carMake) => this.setState({carMake, modelIndex: 0})}
+                                                onValueChange={this._changeLayout.bind(this)}
                                             >
-                                                {Object.keys(this.props.data[index]).map((carMake) => (
+                                                {this.state.passData[index].map((carMake) => (
                                                     <PickerItem
                                                         key={carMake}
                                                         value={carMake}
-                                                        label={this.props.data[index][carMake].name}
+                                                        label={carMake}
                                                     />
                                                 ))}
-                                            </Pickroll>)
-                                    })
-                                }
+                                            </CPickroll>)})}
                             </View>
 
                         </View>
@@ -169,10 +198,10 @@ let styles = StyleSheet.create({
     },
     nav: {
         flex: 1,
-        width:width,
+        marginTop:10,
         flexDirection: 'row',
         height: 28,
-        alignItems: 'center',
+        alignSelf: 'stretch',
         backgroundColor:'white',
     },
     confirm: {
@@ -183,8 +212,10 @@ let styles = StyleSheet.create({
 
     },
     pickContainer:{
-        flex: 1,
-        backgroundColor: 'red'
+        flex:1,
+        justifyContent: 'center',
+        alignSelf:'stretch',
+        flexDirection:'row',
     },
 
 });
@@ -219,4 +250,4 @@ const testStyle = StyleSheet.create({
 
 
 
-export default TMPicker;
+export default CPicker;

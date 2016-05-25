@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dd50495d-aec4-4ec8-8382-b9a3e468c19e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/csetup.js" afterPath="$PROJECT_DIR$/app/csetup.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/roll.js" afterPath="$PROJECT_DIR$/app/roll.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/setup3.js" afterPath="$PROJECT_DIR$/app/setup3.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.android.js" afterPath="$PROJECT_DIR$/index.android.js" />
     </list>
@@ -26,9 +24,21 @@
     <favorites_list name="react-native-tpicker" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5109546">
+    <splitter split-orientation="horizontal" split-proportion="0.6220657">
       <split-first>
         <leaf>
+          <file leaf-file-name="roll.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/app/roll.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="2108">
+                  <caret line="124" column="27" selection-start-line="0" selection-start-column="0" selection-end-line="283" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#41#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file leaf-file-name="setup.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/setup.js">
               <provider selected="true" editor-type-id="text-editor">
@@ -41,38 +51,48 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="roll.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/roll.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="429">
-                  <caret line="260" column="28" selection-start-line="260" selection-start-column="28" selection-end-line="260" selection-end-column="28" />
-                  <folding>
-                    <element signature="e#0#41#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="csetup.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/csetup.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="17">
-                  <caret line="103" column="29" selection-start-line="103" selection-start-column="29" selection-end-line="103" selection-end-column="29" />
-                  <folding>
-                    <element signature="e#0#41#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="setup3.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="setup3.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/setup3.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="259">
-                  <caret line="74" column="43" selection-start-line="74" selection-start-column="43" selection-end-line="74" selection-end-column="43" />
+                <state relative-caret-position="1173">
+                  <caret line="144" column="53" selection-start-line="144" selection-start-column="53" selection-end-line="144" selection-end-column="53" />
                   <folding>
                     <element signature="e#0#41#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="roll2.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/app/roll2.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="216">
+                  <caret line="156" column="116" selection-start-line="156" selection-start-column="108" selection-end-line="156" selection-end-column="116" />
+                  <folding>
+                    <element signature="e#0#41#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="csetup.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/app/csetup.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="497">
+                  <caret line="170" column="35" selection-start-line="170" selection-start-column="35" selection-end-line="170" selection-end-column="35" />
+                  <folding>
+                    <element signature="e#0#41#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/package.json">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="187">
+                  <caret line="11" column="26" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="26" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -84,8 +104,8 @@
           <file leaf-file-name="index.android.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/index.android.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="17">
-                  <caret line="66" column="6" selection-start-line="66" selection-start-column="6" selection-end-line="74" selection-end-column="5" />
+                <state relative-caret-position="170">
+                  <caret line="42" column="35" selection-start-line="42" selection-start-column="35" selection-end-line="42" selection-end-column="35" />
                   <folding>
                     <element signature="n#!!doc" expanded="true" />
                     <element signature="e#80#121#0" expanded="true" />
@@ -111,10 +131,11 @@
         <option value="$PROJECT_DIR$/app/README.md" />
         <option value="$PROJECT_DIR$/app/setup.js" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/app/csetup.js" />
-        <option value="$PROJECT_DIR$/index.android.js" />
         <option value="$PROJECT_DIR$/app/roll.js" />
         <option value="$PROJECT_DIR$/app/setup3.js" />
+        <option value="$PROJECT_DIR$/index.android.js" />
+        <option value="$PROJECT_DIR$/app/roll2.js" />
+        <option value="$PROJECT_DIR$/app/csetup.js" />
       </list>
     </option>
   </component>
@@ -194,13 +215,13 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/setup.js" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../fugu_app_pelecanus" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.TypeScript" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/app/setup.js" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/app/roll.js" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -259,6 +280,9 @@
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="dd50495d-aec4-4ec8-8382-b9a3e468c19e" name="Default" comment="" />
@@ -266,12 +290,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1463934694553</updated>
-      <workItem from="1463934695802" duration="54617000" />
+      <workItem from="1463934695802" duration="74045000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54617000" />
+    <option name="totallyTimeSpent" value="74045000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="6" />
@@ -295,6 +319,14 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -368,35 +400,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="77" selection-start-line="6" selection-start-column="77" selection-end-line="6" selection-end-column="77" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.android.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="66" column="6" selection-start-line="66" selection-start-column="6" selection-end-line="74" selection-end-column="5" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#80#121#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/csetup.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="103" column="29" selection-start-line="103" selection-start-column="29" selection-end-line="103" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/setup.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
@@ -409,18 +412,57 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/roll.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="260" column="28" selection-start-line="260" selection-start-column="28" selection-end-line="260" selection-end-column="28" />
+        <state relative-caret-position="2108">
+          <caret line="124" column="27" selection-start-line="0" selection-start-column="0" selection-end-line="283" selection-end-column="0" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.android.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="42" column="35" selection-start-line="42" selection-start-column="35" selection-end-line="42" selection-end-column="35" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#80#121#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="26" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/setup3.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="74" column="43" selection-start-line="74" selection-start-column="43" selection-end-line="74" selection-end-column="43" />
+        <state relative-caret-position="1173">
+          <caret line="144" column="53" selection-start-line="144" selection-start-column="53" selection-end-line="144" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/roll2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="156" column="116" selection-start-line="156" selection-start-column="108" selection-end-line="156" selection-end-column="116" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/csetup.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="497">
+          <caret line="170" column="35" selection-start-line="170" selection-start-column="35" selection-end-line="170" selection-end-column="35" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>

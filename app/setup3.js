@@ -43,7 +43,6 @@ class TMPicker extends Component {
     _stateFromProps(props){
         let selectIndex = [];
         if(typeof this.props.selectIndex==='undefined'){
-            console.log("yes")
             for(let item of this.props.data){
                 selectIndex.push(0);
             }
@@ -87,11 +86,9 @@ class TMPicker extends Component {
         if(this.state.enable){
             this._setModalVisible(true)
             this.refs.test.blur()
-            console.log(this.state.selectIndex);
             valueCount.length = 0;
             indexCount.length = 0;
             str = '';
-            console.log(indexCount);
             this.setState({getValue: false});
         }
     }
@@ -148,7 +145,7 @@ class TMPicker extends Component {
                                                 pickerStyle = {{flex:1}}
                                                 data = {this.props.data[index]}
                                                 itemCount = {this.props.data.length}
-                                                onValueChange={(carMake) => this.setState({carMake, modelIndex: 0})}
+                                                onValueChange={(carMake) => this.setState({carMake})}
                                             >
                                                 {Object.keys(this.props.data[index]).map((carMake) => (
                                                     <PickerItem
