@@ -23,7 +23,7 @@
     <favorites_list name="react-native-tpicker" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6158059">
+    <splitter split-orientation="horizontal" split-proportion="0.58294207">
       <split-first>
         <leaf>
           <file leaf-file-name="roll.js" pinned="false" current-in-tab="false">
@@ -65,8 +65,8 @@
           <file leaf-file-name="roll2.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/roll2.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="505">
-                  <caret line="36" column="54" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
+                <state relative-caret-position="442">
+                  <caret line="53" column="24" selection-start-line="53" selection-start-column="24" selection-end-line="53" selection-end-column="24" />
                   <folding>
                     <element signature="e#0#41#0" expanded="true" />
                   </folding>
@@ -91,8 +91,8 @@
           <file leaf-file-name="csetup.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/csetup.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="378">
-                  <caret line="125" column="126" selection-start-line="125" selection-start-column="126" selection-end-line="125" selection-end-column="126" />
+                <state relative-caret-position="361">
+                  <caret line="99" column="19" selection-start-line="99" selection-start-column="19" selection-end-line="99" selection-end-column="19" />
                   <folding>
                     <element signature="e#0#41#0" expanded="true" />
                   </folding>
@@ -289,12 +289,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1463934694553</updated>
-      <workItem from="1463934695802" duration="88075000" />
+      <workItem from="1463934695802" duration="91300000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88075000" />
+    <option name="totallyTimeSpent" value="91300000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="0" />
@@ -450,8 +450,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/csetup.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="125" column="126" selection-start-line="125" selection-start-column="126" selection-end-line="125" selection-end-column="126" />
+        <state relative-caret-position="361">
+          <caret line="99" column="19" selection-start-line="99" selection-start-column="19" selection-end-line="99" selection-end-column="19" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
@@ -460,8 +460,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/roll2.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="505">
-          <caret line="36" column="54" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
+        <state relative-caret-position="442">
+          <caret line="53" column="24" selection-start-line="53" selection-start-column="24" selection-end-line="53" selection-end-column="24" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>

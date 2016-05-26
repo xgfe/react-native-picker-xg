@@ -47,9 +47,7 @@ class CPicker extends Component {
         initData.push(firstData,secondData,thirdData);
         choseValue.push(key1,key2,thirdData[0]);
        }
-    shouldComponentUpdate(nextProps, nextState, context){
-        return true;
-    }
+
     constructor(props, context){
         super(props, context);
         this._setEventBegin = this._setEventBegin.bind(this);
@@ -86,16 +84,18 @@ class CPicker extends Component {
         };
     }
     _confirmChose(){
-        this.setState({getValue: true});
+        this.setState({getValue: true,selectIndex:[this.state.passData[0].indexOf(saveChoseValue[0]),
+            this.state.passData[1].indexOf(saveChoseValue[1]),
+            this.state.passData[2].indexOf(saveChoseValue[2])]});
         while(true){
             if(valueCount.length === 3){
                 for(let item of valueCount){
                     str = str + item + ' ';
                 }
-                this.setState({inputValue: str});
                 break;
             }
         }
+        this.setState({inputValue:str,visible: false});
     }
     _cancelChose(){
         choseValue.length=0;
@@ -106,9 +106,8 @@ class CPicker extends Component {
         for(let item1 of saveData){
             this.state.passData.push(item1);
         }
-        console.log(saveData+"  "+saveChoseValue);
 
-        this.setState({passData: this.state.passData,selectIndex:choseValue});
+        this.setState({passData: this.state.passData,selectIndex:choseValue,visible:false});
     }
     _setEventBegin(){
         if(this.state.enable){
@@ -120,7 +119,6 @@ class CPicker extends Component {
             for(let item1 of this.state.passData){
                 saveData.push(item1);
             }
-            console.log(saveData);
             this.setState({passData:this.state.passData,selectIndex:[this.state.passData[0].indexOf(saveChoseValue[0]),
                                                                      this.state.passData[1].indexOf(saveChoseValue[1]),
                                                                          this.state.passData[2].indexOf(saveChoseValue[2])]});
@@ -138,33 +136,39 @@ class CPicker extends Component {
     _handleValue(value){
         valueCount.push(value);
     }
-    _changeLayout(value,index,passData){
+    _changeLayout(value,index){
         choseValue.splice(index,1,value);
         if(index===0){
-            passData.length = 1;
+            //重新获取passData和selectIndex的值
+            this.state.passData.length = 1;
         let secondValue = choseValue[0];
-        passData.push(Object.keys(this.props.data[secondValue]));
+        this.state.passData.push(Object.keys(this.props.data[secondValue]));
         let thirdValue = Object.keys(this.props.data[secondValue])[0];
-        passData.push(this.props.data[secondValue][thirdValue]);
+        this.state.passData.push(this.props.data[secondValue][thirdValue]);
             let selectValue1 = this.state.passData[0].indexOf(value);
-        this.setState({passData:passData,selectIndex:[selectValue1,0,0]});
+        this.setState({passData:this.state.passData,selectIndex:[selectValue1,0,0]});
+            //更新choseValue,即每个轮子选中的值
             choseValue.length = 0;
-            choseValue.push(passData[0][selectValue1],passData[1][0],passData[2][0]);
+            choseValue.push(this.state.passData[0][selectValue1],this.state.passData[1][0],this.state.passData[2][0]);
     }else if(index===1){
-            passData.length = 2;
-            passData.push(this.props.data[choseValue[0]][choseValue[1]]);
+            //重新获取passData和selectIndex的值
+            this.state.passData.length = 2;
+            this.state.passData.push(this.props.data[choseValue[0]][choseValue[1]]);
             let selectValue2 = this.state.passData[1].indexOf(value);
             let temp = this.state.selectIndex[0];
-            this.setState({passData:passData,selectIndex:[temp,selectValue2,0]});
+            this.setState({passData:this.state.passData,selectIndex:[temp,selectValue2,0]});
+            //更新choseValue,即每个轮子选中的值
             choseValue.length = 0;
-            choseValue.push(passData[0][temp],passData[1][selectValue2],passData[2][0]);
+            choseValue.push(this.state.passData[0][temp],this.state.passData[1][selectValue2],this.state.passData[2][0]);
         }else{
+            //获取selectIndex的值,因为passData的值不会变
             let temp1 = this.state.selectIndex[0];
             let temp2 = this.state.selectIndex[1];
             let selectValue3 = this.state.passData[2].indexOf(value);
-            this.setState({passData:passData,selectIndex:[temp1,temp2,selectValue3]});
+            this.setState({passData:this.state.passData,selectIndex:[temp1,temp2,selectValue3]});
+            //更新choseValue,即每个轮子选中的值
             choseValue.length = 0;
-            choseValue.push(passData[0][temp1],passData[1][temp2],passData[2][selectValue3]);
+            choseValue.push(this.state.passData[0][temp1],this.state.passData[1][temp2],this.state.passData[2][selectValue3]);
         }}
     render(){
 
@@ -187,14 +191,13 @@ class CPicker extends Component {
                             <View style={styles.nav}>
                                 <TouchableOpacity  style={styles.confirm}>
                                     <Text onPress={() => {this. _confirmChose()
-                    this._setModalVisible(false)}}
+                    }}
                                           style={{textAlign:'left',marginLeft:10}} >Confirm</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.cancel} >
                                     <Text
                                         style={{textAlign:'right',marginRight:10}}
                                         onPress={() => {this._cancelChose()
-                                        this._setModalVisible(false)
                     }}
                                     >Cancel</Text>
                                 </TouchableOpacity>
@@ -211,7 +214,6 @@ class CPicker extends Component {
                                                 pickerStyle = {{flex:1}}
                                                 data = {this.state.passData[index]}
                                                 passData = {this.state.passData}
-                                                itemCount = {this.props.data.length}
                                                 onValueChange={this._changeLayout.bind(this)}
                                             >
 

@@ -32,6 +32,7 @@ class CPickroll extends Component {
 
     componentWillReceiveProps(newProps){
         if(newProps.getValue!==this.props.getValue&&newProps.getValue===true){
+            this.index = this.state.selectedIndex;
             this.props.handleValue(this.state.items[this.index].label,this.index);
         }
         this.setState(this._stateFromProps(newProps));
@@ -155,7 +156,7 @@ class CPickroll extends Component {
     _onValueChange(){
         var curItem = this.state.items[this.index];
         // this.setState({selectedIndex:this.index});
-        this.state.onValueChange && this.state.onValueChange(curItem.value, this.props.pickIndex,this.props.passData);
+        this.state.onValueChange && this.state.onValueChange(curItem.value, this.props.pickIndex);
     }
 
     render(){
