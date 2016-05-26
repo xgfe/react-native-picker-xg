@@ -34,19 +34,21 @@ class CPickroll extends Component {
         if(newProps.getValue!==this.props.getValue&&newProps.getValue===true){
             this.props.handleValue(this.state.items[this.index].label,this.index);
         }
+        console.log(newProps.data);
         this.setState(this._stateFromProps(newProps));
     }
 
     _stateFromProps(props){
-        let selectedIndex = this.props.selectIndex;
+        let selectedIndex = props.selectIndex;
         let items = [];
         let pickerStyle = props.pickerStyle;
         let itemStyle = props.itemStyle;
         let onValueChange = props.onValueChange;
-        this.props.data.map((child,index) =>{
+        props.data.map((child,index) =>{
             child === props.selectedValue && ( selectedIndex = index );
             items.push({value: child, label: child});
         })
+        console.log(items);
         return {
             selectedIndex,
             items,
@@ -154,7 +156,7 @@ class CPickroll extends Component {
 
     _onValueChange(){
         var curItem = this.state.items[this.index];
-        this.setState({selectedIndex:this.index});
+        // this.setState({selectedIndex:this.index});
         this.state.onValueChange && this.state.onValueChange(curItem.value, this.props.pickIndex,this.props.passData);
     }
 

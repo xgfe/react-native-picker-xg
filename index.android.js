@@ -29,7 +29,7 @@ let CAR_MAKES_AND_MODELS =
         "广安":["容县","武胜"]
     },
     "浙江":{
-        "杭州":["西湖","城西银泰","玉泉"],
+        "杭州":["西湖","银泰","玉泉"],
         "绍兴":["X1","X2","X3"],
         "place":["Y1","Y2","Y3","Y4","Y5"],
     },
@@ -53,6 +53,7 @@ class TpickerEx extends Component {
         return (
             <View style={testStyle.container}>
                             <TCPicker
+
                                 data = {CAR_MAKES_AND_MODELS}
                                 visible = {false}
                                 transparent = {true}

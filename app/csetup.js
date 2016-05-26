@@ -56,6 +56,11 @@ class CPicker extends Component {
     }
 
     _stateFromProps(props){
+        let selectIndex = [];
+        if(typeof this.props.selectIndex==='undefined'){
+                selectIndex.push(0,0,0);
+        }else{
+            selectIndex = props.selectIndex;}
         let selfStyle = props.selfStyle;
         let inputStyle = props.inputStyle;
         let animationType = props.animationType||'none';
@@ -73,6 +78,7 @@ class CPicker extends Component {
             inputValue,
             inputStyle,
             passData,
+            selectIndex,
         };
     }
     _confirmChose(){
@@ -104,16 +110,27 @@ class CPicker extends Component {
     }
     _changeLayout(value,index,passData){
         choseValue.splice(index,1,value);
-        passData.length = 1;
+        if(index===0){
+            passData.length = 1;
         let secondValue = choseValue[0];
         passData.push(Object.keys(this.props.data[secondValue]));
         let thirdValue = Object.keys(this.props.data[secondValue])[0];
         passData.push(this.props.data[secondValue][thirdValue]);
-        this.setState({passData:passData}, () =>{
-            this.forceUpdate();
-        });
-
-    }
+            let selectValue1 = this.state.passData[0].indexOf(value);
+        this.setState({passData:passData,selectIndex:[selectValue1,0,0]});
+    }else if(index===1){
+            passData.length = 2;
+            passData.push(this.props.data[choseValue[0]][choseValue[1]]);
+            let selectValue2 = this.state.passData[1].indexOf(value);
+            let temp = this.state.selectIndex[0];
+            this.setState({passData:passData,selectIndex:[temp,selectValue2,0]});
+            console.log("what");
+        }else{
+            let temp1 = this.state.selectIndex[0];
+            let temp2 = this.state.selectIndex[1];
+            let selectValue3 = this.state.passData[2].indexOf(value);
+            this.setState({passData:passData,selectIndex:[temp1,temp2,selectValue3]});
+        }}
     render(){
 
         let modalBackgroundStyle = {
@@ -152,7 +169,7 @@ class CPicker extends Component {
                                             <CPickroll
                                                 key = {index}
                                                 pickIndex = {index}
-                                                selectIndex = {0}
+                                                selectIndex = {this.state.selectIndex[index]}
                                                 getValue = {this.state.getValue}
                                                 handleValue = {this._handleValue}
                                                 pickerStyle = {{flex:1}}
@@ -161,7 +178,7 @@ class CPicker extends Component {
                                                 itemCount = {this.props.data.length}
                                                 onValueChange={this._changeLayout.bind(this)}
                                             >
-                                             
+
                                             </CPickroll>)})}
                             </View>
 
