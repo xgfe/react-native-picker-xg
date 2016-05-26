@@ -34,7 +34,6 @@ class CPickroll extends Component {
         if(newProps.getValue!==this.props.getValue&&newProps.getValue===true){
             this.props.handleValue(this.state.items[this.index].label,this.index);
         }
-        console.log(newProps.data);
         this.setState(this._stateFromProps(newProps));
     }
 
@@ -48,7 +47,6 @@ class CPickroll extends Component {
             child === props.selectedValue && ( selectedIndex = index );
             items.push({value: child, label: child});
         })
-        console.log(items);
         return {
             selectedIndex,
             items,

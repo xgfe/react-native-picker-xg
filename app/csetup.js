@@ -28,6 +28,8 @@ let valueCount = [];
 let str = '';
 let initData = [];
 let choseValue = [];
+let saveChoseValue = [];
+let saveData = [];
 class CPicker extends Component {
 
     static propTypes = {
@@ -50,7 +52,9 @@ class CPicker extends Component {
     }
     constructor(props, context){
         super(props, context);
+        this._setEventBegin = this._setEventBegin.bind(this);
         this._changeLayout = this._changeLayout.bind(this);
+        this._cancelChose = this._cancelChose.bind(this);
         this.state = this._stateFromProps(this.props);
         this.state.getValue = false;
     }
@@ -93,14 +97,40 @@ class CPicker extends Component {
             }
         }
     }
+    _cancelChose(){
+        choseValue.length=0;
+        this.state.passData.length = 0;
+        for(let item of saveChoseValue){
+            choseValue.push(item);
+        }
+        for(let item1 of saveData){
+            this.state.passData.push(item1);
+        }
+        console.log(saveData+"  "+saveChoseValue);
+
+        this.setState({passData: this.state.passData,selectIndex:choseValue});
+    }
     _setEventBegin(){
         if(this.state.enable){
+            saveChoseValue.length = 0;
+            saveData.length = 0;
+            for(let item of choseValue){
+                saveChoseValue.push(item);
+            }
+            for(let item1 of this.state.passData){
+                saveData.push(item1);
+            }
+            console.log(saveData);
+            this.setState({passData:this.state.passData,selectIndex:[this.state.passData[0].indexOf(saveChoseValue[0]),
+                                                                     this.state.passData[1].indexOf(saveChoseValue[1]),
+                                                                         this.state.passData[2].indexOf(saveChoseValue[2])]});
             this._setModalVisible(true)
             this.refs.test.blur()
             valueCount.length = 0;
             str = '';
             this.setState({getValue: false});
         }
+
     }
     _setModalVisible(visible) {
         this.setState({visible: visible});
@@ -118,18 +148,23 @@ class CPicker extends Component {
         passData.push(this.props.data[secondValue][thirdValue]);
             let selectValue1 = this.state.passData[0].indexOf(value);
         this.setState({passData:passData,selectIndex:[selectValue1,0,0]});
+            choseValue.length = 0;
+            choseValue.push(passData[0][selectValue1],passData[1][0],passData[2][0]);
     }else if(index===1){
             passData.length = 2;
             passData.push(this.props.data[choseValue[0]][choseValue[1]]);
             let selectValue2 = this.state.passData[1].indexOf(value);
             let temp = this.state.selectIndex[0];
             this.setState({passData:passData,selectIndex:[temp,selectValue2,0]});
-            console.log("what");
+            choseValue.length = 0;
+            choseValue.push(passData[0][temp],passData[1][selectValue2],passData[2][0]);
         }else{
             let temp1 = this.state.selectIndex[0];
             let temp2 = this.state.selectIndex[1];
             let selectValue3 = this.state.passData[2].indexOf(value);
             this.setState({passData:passData,selectIndex:[temp1,temp2,selectValue3]});
+            choseValue.length = 0;
+            choseValue.push(passData[0][temp1],passData[1][temp2],passData[2][selectValue3]);
         }}
     render(){
 
@@ -158,7 +193,8 @@ class CPicker extends Component {
                                 <TouchableOpacity style={styles.cancel} >
                                     <Text
                                         style={{textAlign:'right',marginRight:10}}
-                                        onPress={() => {this._setModalVisible(false)
+                                        onPress={() => {this._cancelChose()
+                                        this._setModalVisible(false)
                     }}
                                     >Cancel</Text>
                                 </TouchableOpacity>
