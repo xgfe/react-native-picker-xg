@@ -88,6 +88,8 @@ class TpickerEx extends Component {
     return (
       <View style={testStyle.container}>
         <TMPicker
+          confirmBtnText = {"confirm"}
+          cancelBtnText = {"cancel"}
           data = {CAR_MAKES_AND_MODELS}
           selectIndex = {[0,2,1]}
           visible = {false}

@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="dd50495d-aec4-4ec8-8382-b9a3e468c19e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/roll.js" afterPath="$PROJECT_DIR$/app/roll.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/setup3.js" afterPath="$PROJECT_DIR$/app/setup3.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.android.js" afterPath="$PROJECT_DIR$/index.android.js" />
     </list>
@@ -25,15 +24,14 @@
     <favorites_list name="react-native-tpicker" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6064163">
+    <splitter split-orientation="horizontal" split-proportion="0.52112675">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="roll.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="roll.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/roll.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1547">
-                  <caret line="7" column="10" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="14" />
-                  <caret line="206" column="18" selection-start-line="206" selection-start-column="12" selection-end-line="206" selection-end-column="22" />
+                <state relative-caret-position="323">
+                  <caret line="32" column="40" selection-start-line="32" selection-start-column="40" selection-end-line="32" selection-end-column="40" />
                   <folding>
                     <element signature="e#0#41#0" expanded="true" />
                   </folding>
@@ -41,12 +39,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="setup3.js" pinned="false" current-in-tab="false">
+          <file leaf-file-name="setup3.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/setup3.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="354">
-                  <caret line="150" column="67" selection-start-line="150" selection-start-column="64" selection-end-line="150" selection-end-column="71" />
-                  <caret line="150" column="94" selection-start-line="150" selection-start-column="91" selection-end-line="150" selection-end-column="98" />
+                <state relative-caret-position="-2342">
+                  <caret line="73" column="10" selection-start-line="73" selection-start-column="10" selection-end-line="73" selection-end-column="10" />
                   <folding>
                     <element signature="e#0#41#0" expanded="true" />
                   </folding>
@@ -73,8 +70,8 @@
           <file leaf-file-name="index.android.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/index.android.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="476">
-                  <caret line="91" column="31" selection-start-line="91" selection-start-column="31" selection-end-line="91" selection-end-column="31" />
+                <state relative-caret-position="357">
+                  <caret line="89" column="17" selection-start-line="89" selection-start-column="17" selection-end-line="89" selection-end-column="17" />
                   <folding>
                     <element signature="n#!!doc" expanded="true" />
                     <element signature="e#80#121#0" expanded="true" />
@@ -117,9 +114,9 @@
         <option value="$PROJECT_DIR$/LICENSE" />
         <option value="$PROJECT_DIR$/.npmignore" />
         <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/app/roll.js" />
         <option value="$PROJECT_DIR$/app/setup3.js" />
         <option value="$PROJECT_DIR$/index.android.js" />
-        <option value="$PROJECT_DIR$/app/roll.js" />
       </list>
     </option>
   </component>
@@ -200,7 +197,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../fugu_app_pelecanus" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../widgets" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
@@ -286,12 +283,12 @@
       <workItem from="1463934695802" duration="92094000" />
       <workItem from="1464495913921" duration="437000" />
       <workItem from="1464496431192" duration="70000" />
-      <workItem from="1464496518678" duration="3328000" />
+      <workItem from="1464496518678" duration="14008000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="95929000" />
+    <option name="totallyTimeSpent" value="106609000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="0" />
@@ -347,7 +344,7 @@
         <state relative-caret-position="3060">
           <caret line="193" column="32" selection-start-line="193" selection-start-column="32" selection-end-line="193" selection-end-column="38" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -432,7 +429,7 @@
         <state relative-caret-position="3060">
           <caret line="193" column="32" selection-start-line="193" selection-start-column="32" selection-end-line="193" selection-end-column="38" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -517,7 +514,7 @@
         <state relative-caret-position="3060">
           <caret line="193" column="32" selection-start-line="193" selection-start-column="32" selection-end-line="193" selection-end-column="38" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -637,7 +634,7 @@
         <state relative-caret-position="643">
           <caret line="193" column="32" selection-start-line="193" selection-start-column="32" selection-end-line="193" selection-end-column="38" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -689,10 +686,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/roll.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="32" column="40" selection-start-line="32" selection-start-column="40" selection-end-line="32" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.android.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="91" column="31" selection-start-line="91" selection-start-column="31" selection-end-line="91" selection-end-column="31" />
+        <state relative-caret-position="357">
+          <caret line="89" column="17" selection-start-line="89" selection-start-column="17" selection-end-line="89" selection-end-column="17" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="e#80#121#0" expanded="true" />
@@ -702,20 +709,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/setup3.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="150" column="67" selection-start-line="150" selection-start-column="64" selection-end-line="150" selection-end-column="71" />
-          <caret line="150" column="94" selection-start-line="150" selection-start-column="91" selection-end-line="150" selection-end-column="98" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/roll.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1547">
-          <caret line="7" column="10" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="14" />
-          <caret line="206" column="18" selection-start-line="206" selection-start-column="12" selection-end-line="206" selection-end-column="22" />
+        <state relative-caret-position="-2342">
+          <caret line="73" column="10" selection-start-line="73" selection-start-column="10" selection-end-line="73" selection-end-column="10" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
