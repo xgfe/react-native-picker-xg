@@ -1,0 +1,7 @@
+android
+ios
+.*
+app/csetup.js
+app/roll2.js
+app/setup.js
+node_modules

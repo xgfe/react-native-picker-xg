@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "changelogsee": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0"
+    "changelogsee": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0",
+    "lint": "eslint ."
   },
   "dependencies": {
     "react": "^0.14.8",
@@ -31,5 +32,8 @@
     "ghooks": {
       "commit-msg": "validate-commit-msg"
     }
-  }
+  },
+  "pre-commit": [
+    "lint"
+  ]
 }

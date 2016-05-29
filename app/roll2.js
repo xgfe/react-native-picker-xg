@@ -204,9 +204,7 @@ class CPickroll extends Component {
     }
 }
 
-let width = Dimensions.get('window').width;
 let height = Dimensions.get('window').height;
-let top = height - 250;
 let ratio = PixelRatio.get();
 
 let styles = StyleSheet.create({
