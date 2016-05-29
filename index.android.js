@@ -80,8 +80,6 @@ class TpickerEx extends Component {
   constructor(props, context){
     super(props, context);
     this.state = {
-      carMake: 'cadillac',
-      modelIndex: 3,
     }
   }
 
@@ -90,8 +88,8 @@ class TpickerEx extends Component {
     return (
       <View style={testStyle.container}>
         <TMPicker
-
           data = {CAR_MAKES_AND_MODELS}
+          selectIndex = {[0,2,1]}
           visible = {false}
           transparent = {true}
         >

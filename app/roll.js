@@ -35,17 +35,18 @@ class Pickroll extends Component {
             this.props.handleValue(this.state.items[this.index].label,this.index);
         }
     }
-    
+
     _stateFromProps(props){
         let selectedIndex = this.props.selectIndex;
         let items = [];
         let pickerStyle = props.pickerStyle;
         let itemStyle = props.itemStyle;
         let onValueChange = props.onValueChange;
-        React.Children.forEach(props.children, (child, index) => {
-            child.props.value === props.selectedValue && ( selectedIndex = index );
-            items.push({value: child.props.value, label: child.props.label});
-        });
+        Object.keys(props.data).map((child,index) =>{
+          child === props.selectedValue && ( selectedIndex = index );
+          items.push({value: child, label: props.data[child].name});
+        })
+
         return {
             selectedIndex,
             items,
@@ -156,7 +157,7 @@ class Pickroll extends Component {
         this.setState({selectedIndex:this.index});
         this.state.onValueChange && this.state.onValueChange(curItem.value, curItem.label);
     }
-    
+
     render(){
         let index = this.state.selectedIndex;
         let length = this.state.items.length;
@@ -196,15 +197,13 @@ class Pickroll extends Component {
                                     </View>
                                 </View>
                             </View>
-                      
+
 
         );
     }
 }
 
-let width = Dimensions.get('window').width;
 let height = Dimensions.get('window').height;
-let top = height - 250;
 let ratio = PixelRatio.get();
 
 let styles = StyleSheet.create({

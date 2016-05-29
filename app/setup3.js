@@ -20,10 +20,8 @@ import Pickroll from './roll';
 let PickRoll = Platform.OS === 'ios' ? PickerIOS : Pickroll;
 let PickerItem = PickRoll.Item;
 
-let width = Dimensions.get('window').width;
 let height = Dimensions.get('window').height;
 let top = height - 250;
-let ratio = PixelRatio.get();
 let valueCount = [];
 let indexCount = [];
 let str = '';
@@ -32,6 +30,11 @@ class TMPicker extends Component {
 
     static propTypes = {
         data: PropTypes.array,
+        visible: PropTypes.bool,
+        transparent: PropTypes.bool,
+        animationType: PropTypes.string,
+        enable: PropTypes.bool,
+        inputValue: PropTypes.string,
     };
 
     constructor(props, context){
@@ -147,13 +150,7 @@ class TMPicker extends Component {
                                                 itemCount = {this.props.data.length}
                                                 onValueChange={(carMake) => this.setState({carMake})}
                                             >
-                                                {Object.keys(this.props.data[index]).map((carMake) => (
-                                                    <PickerItem
-                                                        key={carMake}
-                                                        value={carMake}
-                                                        label={this.props.data[index][carMake].name}
-                                                    />
-                                                ))}
+
                                             </PickRoll>)
                                     })
                                 }
@@ -172,7 +169,7 @@ class TMPicker extends Component {
                     value={this.state.inputValue}
                 />
             </View>
-           
+
         );
     }
 }
