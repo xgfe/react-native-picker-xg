@@ -5,104 +5,97 @@
 
 import React, { Component } from 'react';
 import {
-    AppRegistry,
-    View,
-    Text,
-    StyleSheet,
-    Platform,
-    PickerIOS,
-    TouchableOpacity,
-    TextInput,
-    TouchableHighlight
+  AppRegistry,
+  View,
+  Text,
+  StyleSheet,
+  Platform,
+  PickerIOS,
+  TouchableOpacity,
+  TextInput,
+  TouchableHighlight
 } from 'react-native';
-import Tpicker from './app/setup';
+import TMpicker from './app/setup3';
 
 
-let TPicker = Platform.OS === 'ios' ? PickerIOS : Tpicker;
-let PickerItem = TPicker.Item;
+let CAR_MAKES_AND_MODELS = [
+  {
+    amc: {
+      name: '2011年',
+    },
+    alfa: {
+      name: '2012年',
+    },
+    aston: {
+      name: '2013年',
+    },
+    audi: {
+      name: '2014年',
+    },
+    austin: {
+      name: '2015年',
+    },
+    borgward: {
+      name: '2016年',
+    },
+    buick: {
+      name: '2017年',
+    },
+    cadillac: {
+      name: '2018年',
+    },
+    chevrolet: {
+      name: '2019年',
+    },
+  },
+  {
+    amc1: {
+      name: '1月',
+    },
+    alfa1: {
+      name: '2月',
+    },
+    aston1: {
+      name: '3月',
+    },
+    audi1: {
+      name: '4月',
+    },
+  },
+  {
+    cadillac2: {
+      name: '1号',
+    },
+    chevrolet2: {
+      name: '2号',
+    },
+  }
 
-
-let CAR_MAKES_AND_MODELS = {
-  amc: {
-    name: 'AMC',
-  },
-  alfa: {
-    name: 'Alfa-Romeo',
-  },
-  aston: {
-    name: 'Aston Martin',
-  },
-  audi: {
-    name: 'Audi',
-  },
-  austin: {
-    name: 'Austin',
-  },
-  borgward: {
-    name: 'Borgward',
-  },
-  buick: {
-    name: 'Buick',
-  },
-  cadillac: {
-    name: 'Cadillac',
-  },
-  chevrolet: {
-    name: 'Chevrolet',
-  },
-};
-
+];
 
 class TpickerEx extends Component {
   constructor(props, context){
     super(props, context);
-    this._setInput = this._setInput.bind(this);
     this.state = {
-      carMake: 'cadillac',
-      modelIndex: 3,
-      animationType: 'none',
-      modalVisible: false,
-      transparent: true,
-      inputValue: 'please chose'
     }
   }
 
-  _setTpickerVisible(){
-    this.setState({modalVisible: true});
-  }
 
-  _setInput(value){
-    this.setState({inputValue: value});
-  }
   render() {
     return (
-        <View style={testStyle.container}>
-          <TPicker
-              setInput = {this._setInput}
-              animationType = {this.state.animationType}
-              transparent = {this.state.transparent}
-              visible = {this.state.modalVisible}
-              selectedValue={this.state.carMake}
-              onValueChange={(carMake) => this.setState({carMake, modelIndex: 0})}
-              ref={(picker) => { this.picker = picker }} >
+      <View style={testStyle.container}>
+        <TMpicker
+          inputStyle ={testStyle.inputText}
+          confirmBtnText = {"confirm"}
+          cancelBtnText = {"cancel"}
+          data = {CAR_MAKES_AND_MODELS}
+          selectIndex = {[0,2,1]}
+          visible = {false}
+          transparent = {true}
+        >
+        </TMpicker>
+      </View>
 
-            {Object.keys(CAR_MAKES_AND_MODELS).map((carMake) => (
-                <PickerItem
-                    key={carMake}
-                    value={carMake}
-                    label={CAR_MAKES_AND_MODELS[carMake].name}
-                />
-            ))}
-
-          </TPicker>
-          <TextInput
-              ref = 'test'
-              onFocus={() => {this._setTpickerVisible(true)
-                    this.refs.test.blur()}}
-              placeholder={'this is a test'}
-              value={this.state.inputValue}
-          />
-        </View>
     );
   }
 }
@@ -111,9 +104,10 @@ const testStyle = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
+    alignSelf: 'stretch',
+  },
+  inputText:{
+    height: 40, borderColor: 'gray', borderWidth: 1
   }
-
 })
 AppRegistry.registerComponent('widgets', () => TpickerEx);

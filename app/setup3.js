@@ -11,6 +11,7 @@ import {
     TextInput,
     Animated,
     Platform,
+    PickerIOS,
     Modal
 } from 'react-native';
 
@@ -18,7 +19,6 @@ import {
 import Pickroll from './roll';
 
 let PickRoll = Platform.OS === 'ios' ? PickerIOS : Pickroll;
-
 let height = Dimensions.get('window').height;
 let top = height - 250;
 let valueCount = [];
@@ -53,6 +53,8 @@ class TMPicker extends Component {
             selectIndex = props.selectIndex;}
         let selfStyle = props.selfStyle;
         let inputStyle = props.inputStyle;
+        let confirmBtnStyle = props.confirmBtnStyle;
+        let cancelBtnStyle = props.cancelBtnStyle;
         let animationType = props.animationType||'fade';
         let transparent = typeof props.transparent==='undefined'?true:props.transparent;
         let visible = typeof props.visible==='undefined'?false:props.visible;
@@ -71,6 +73,8 @@ class TMPicker extends Component {
             inputStyle,
             confirmBtnText,
             cancelBtnText,
+            confirmBtnStyle,
+            cancelBtnStyle,
         };
     }
     _confirmChose(callback){
@@ -122,7 +126,6 @@ class TMPicker extends Component {
     }
 
     render(){
-
         let modalBackgroundStyle = {
             backgroundColor: this.state.transparent ? 'rgba(0, 0, 0, 0.5)' : '#f5fcff',
         };
@@ -139,7 +142,7 @@ class TMPicker extends Component {
                                            }}
                 >
                     <View style={[styles.modalContainer, modalBackgroundStyle]}>
-                        <Animated.View style={[styles.innerContainer, innerContainerTransparentStyle,{marginTop:this.state.animatedHeight}]}>
+                        <Animated.View style={[styles.innerContainer, innerContainerTransparentStyle, this.state.selfStyle,{marginTop:this.state.animatedHeight}]}>
                             <  View style={styles.nav}>
                                 <TouchableOpacity  style={styles.confirm}>
                                     <Text onPress={() => {
@@ -147,22 +150,19 @@ class TMPicker extends Component {
                       this. _setModalVisible(false,'confirm')
                     })
                     }}
-                                        style={{textAlign:'left',marginLeft:10}} >{this.state.confirmBtnText}</Text>
+                                        style={[{textAlign:'left',marginLeft:10},this.state.confirmBtnStyle]} >{this.state.confirmBtnText}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.cancel} >
                                     <Text
-                                        style={{textAlign:'right',marginRight:10}}
+                                        style={[{textAlign:'right',marginRight:10},this.state.cancelBtnStyle]}
                                         onPress={() => {this._setModalVisible(false,'cancel')
-
                     }}
                                           >{this.state.cancelBtnText}</Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={[styles.pickContainer, this.state.selfStyle]}>
-
+                            <View style={styles.pickContainer}>
                                 {
                                     this.props.data.map((row,index) =>{
-
                                         return (
                                             <PickRoll
                                                 key = {index}
@@ -174,12 +174,10 @@ class TMPicker extends Component {
                                                 itemCount = {this.props.data.length}
                                                 onValueChange={(carMake) => this.setState({carMake})}
                                             >
-
                                             </PickRoll>)
                                     })
                                 }
                             </View>
-
                     </Animated.View>
                     </View>
                 </Modal>
@@ -193,7 +191,6 @@ class TMPicker extends Component {
                     value={this.state.inputValue}
                 />
             </View>
-
         );
     }
 }
@@ -237,7 +234,6 @@ let styles = StyleSheet.create({
       justifyContent: 'flex-end',
       flexDirection: 'column',
   }
-
 });
 
 export default TMPicker;
