@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component,PropTypes } from 'react';
 import {
     View,
     Text,
     StyleSheet,
-    PropTypes,
     Dimensions,
     PixelRatio,
     PanResponder,
@@ -202,7 +201,8 @@ class TMPicker extends Component {
                 </Modal>
                 <TextInput
                     editable = {this.state.enable}
-                    style = {this.props.inputStyle}
+                    multiline={ true }
+                    style = {[{height: 40},this.props.inputStyle]}
                     ref = 'test'
                     onFocus={() => { this._setEventBegin()
                    }}

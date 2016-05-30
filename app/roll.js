@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
     View,
     Text,
     StyleSheet,
-    PropTypes,
     Dimensions,
     PixelRatio,
     PanResponder,

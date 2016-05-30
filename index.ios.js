@@ -107,9 +107,10 @@ const testStyle = StyleSheet.create({
     alignItems: 'stretch',
   },
   textInput:{
-    borderWidth:1,
+    padding:20,
+    borderBottomWidth:1,
+    borderBottomColor: 'grey',
     height: 40,
-    borderColor:'grey',
   }
 })
 AppRegistry.registerComponent('widgets', () => TpickerEx);
