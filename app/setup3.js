@@ -19,6 +19,8 @@ import {
 import Pickroll from './roll';
 
 let PickRoll = Platform.OS === 'ios' ? PickerIOS : Pickroll;
+let PickerItem = PickRoll.Item;
+
 let height = Dimensions.get('window').height;
 let top = height - 250;
 let valueCount = [];
@@ -39,18 +41,23 @@ class TMPicker extends Component {
     constructor(props, context){
         super(props, context);
         this.state = this._stateFromProps(props);
-        this.state.getValue = false;
         this.state.animatedHeight = new Animated.Value(height);
     }
 
     _stateFromProps(props){
         let selectIndex = [];
+        let selectedValue = [];
         if(typeof this.props.selectIndex==='undefined'){
             for(let item of this.props.data){
                 selectIndex.push(0);
+                selectedValue.push(Object.keys(item)[0]);
             }
         }else{
-            selectIndex = props.selectIndex;}
+            selectIndex = props.selectIndex;
+            this.props.data.map((item,index) =>{
+              selectedValue.push(Object.keys(item)[selectIndex[index]]);
+            })
+            }
         let selfStyle = props.selfStyle;
         let inputStyle = props.inputStyle;
         let confirmBtnStyle = props.confirmBtnStyle;
@@ -70,6 +77,7 @@ class TMPicker extends Component {
             enable,
             inputValue,
             selectIndex,
+            selectedValue,
             inputStyle,
             confirmBtnText,
             cancelBtnText,
@@ -78,22 +86,10 @@ class TMPicker extends Component {
         };
     }
     _confirmChose(callback){
-        this.setState({getValue: true}, ()=>{
-          while(true){
-            if(valueCount.length === this.props.data.length){
-              for(let item of valueCount){
-                str = str + item + ' ';
-              }
-              let tempArray =[];
-              for(let temp of indexCount){
-                tempArray.push(temp);
-              }
-              this.setState({selectIndex: tempArray});
-              break;
-            }
-          }
-          callback();
-        });
+      this.props.data.map((item,index) =>{
+        str = str +  this.props.data[index][this.state.selectedValue[index]].name;
+      })
+      callback();
     }
     _setEventBegin(){
         if(this.state.enable){
@@ -101,8 +97,13 @@ class TMPicker extends Component {
             this.refs.test.blur()
             valueCount.length = 0;
             indexCount.length = 0;
+            for (let item of this.state.selectIndex){
+              indexCount.push(item);
+            }
+            for(let temp of this.state.selectedValue){
+              valueCount.push(temp);
+            }
             str = '';
-            this.setState({getValue: false});
         }
     }
     _setModalVisible(visible,type) {
@@ -117,13 +118,20 @@ class TMPicker extends Component {
             this.state.animatedHeight,
             {toValue: height}
           ).start(() => {if(type==='confirm'){this.setState({visible:visible,inputValue: str})}
-                          else{this.setState({visible:visible})}});
+                          else{
+            this.state.selectIndex.length = 0;
+            this.state.selectedValue.length = 0;
+            for(let item of indexCount){
+                this.state.selectIndex.push(item);
+            }
+            for(let temp of valueCount){
+                this.state.selectedValue.push(temp);
+            }
+            this.setState({visible:visible})
+          }});
         }
     }
-    _handleValue(value,index){
-        valueCount.push(value);
-        indexCount.push(index);
-    }
+
 
     render(){
         let modalBackgroundStyle = {
@@ -166,14 +174,25 @@ class TMPicker extends Component {
                                         return (
                                             <PickRoll
                                                 key = {index}
+                                                style = {{flex:1}}
                                                 selectIndex = {this.state.selectIndex[index]}
-                                                getValue = {this.state.getValue}
-                                                handleValue = {this._handleValue}
+                                                selectedValue={this.state.selectedValue[index]}
                                                 pickerStyle = {{flex:1}}
                                                 data = {this.props.data[index]}
                                                 itemCount = {this.props.data.length}
-                                                onValueChange={(carMake) => this.setState({carMake})}
+                                                onValueChange={(newValue,newIndex) => {
+                                                      this.state.selectIndex.splice(index,1,newIndex);
+                                                      this.state.selectedValue.splice(index,1,newValue);
+                                                      this.setState({selectIndex:this.state.selectIndex,selectedValue:this.state.selectedValue});
+                                                }}
                                             >
+                                              {Object.keys(this.props.data[index]).map((carMake) => (
+                                                <PickerItem
+                                                  key={carMake}
+                                                  value={carMake}
+                                                  label={this.props.data[index][carMake].name}
+                                                />
+                                              ))}
                                             </PickRoll>)
                                     })
                                 }

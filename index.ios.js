@@ -85,7 +85,7 @@ class TpickerEx extends Component {
     return (
       <View style={testStyle.container}>
         <TMpicker
-          inputStyle ={testStyle.inputText}
+          inputStyle = {testStyle.textInput}
           confirmBtnText = {"confirm"}
           cancelBtnText = {"cancel"}
           data = {CAR_MAKES_AND_MODELS}
@@ -104,10 +104,12 @@ const testStyle = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignSelf: 'stretch',
+    alignItems: 'stretch',
   },
-  inputText:{
-    height: 40, borderColor: 'gray', borderWidth: 1
+  textInput:{
+    borderWidth:1,
+    height: 40,
+    borderColor:'grey',
   }
 })
 AppRegistry.registerComponent('widgets', () => TpickerEx);

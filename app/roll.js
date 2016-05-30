@@ -31,9 +31,7 @@ class Pickroll extends Component {
     }
 
     componentWillReceiveProps(newProps){
-        if(newProps.getValue!==this.props.getValue&&newProps.getValue===true){
-            this.props.handleValue(this.state.items[this.index].label,this.index);
-        }
+
     }
 
     _stateFromProps(props){
@@ -155,7 +153,7 @@ class Pickroll extends Component {
     _onValueChange(){
         var curItem = this.state.items[this.index];
         this.setState({selectedIndex:this.index});
-        this.state.onValueChange && this.state.onValueChange(curItem.value, curItem.label);
+        this.state.onValueChange && this.state.onValueChange(curItem.value, this.index);
     }
 
     render(){

@@ -17,10 +17,6 @@ import {
 } from 'react-native';
 import TMpicker from './app/setup3';
 
-
-let TMPicker = Platform.OS === 'ios' ? PickerIOS : TMpicker;
-
-
 let CAR_MAKES_AND_MODELS = [
   {
     amc: {
@@ -87,8 +83,8 @@ class TpickerEx extends Component {
   render() {
     return (
       <View style={testStyle.container}>
-        <TMPicker
-          
+        <TMpicker
+          inputStyle = {testStyle.textInput}
           confirmBtnText = {"confirm"}
           cancelBtnText = {"cancel"}
           data = {CAR_MAKES_AND_MODELS}
@@ -96,7 +92,7 @@ class TpickerEx extends Component {
           visible = {false}
           transparent = {true}
         >
-        </TMPicker>
+        </TMpicker>
       </View>
 
     );
