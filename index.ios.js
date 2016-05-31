@@ -15,34 +15,68 @@ import {
   TextInput,
   TouchableHighlight
 } from 'react-native';
-import CPicker from './app/csetup';
+import TMpicker from './app/setup3';
 
 
-
-let CAR_MAKES_AND_MODELS =
-{
-  "四川":{
-    "成都":["青羊区","武侯区","温江区"],
-    "绵阳":["绵阳中","核弹"],
-    "广安":["容县","武胜"]
+let CAR_MAKES_AND_MODELS = [
+  {
+    amc: {
+      name: '2011年',
+    },
+    alfa: {
+      name: '2012年',
+    },
+    aston: {
+      name: '2013年',
+    },
+    audi: {
+      name: '2014年',
+    },
+    austin: {
+      name: '2015年',
+    },
+    borgward: {
+      name: '2016年',
+    },
+    buick: {
+      name: '2017年',
+    },
+    cadillac: {
+      name: '2018年',
+    },
+    chevrolet: {
+      name: '2019年',
+    },
   },
-  "浙江":{
-    "杭州":["西湖","银泰","玉泉"],
-    "绍兴":["X1","X2","X3"],
-    "place":["Y1","Y2","Y3","Y4","Y5"],
+  {
+    amc1: {
+      name: '1月',
+    },
+    alfa1: {
+      name: '2月',
+    },
+    aston1: {
+      name: '3月',
+    },
+    audi1: {
+      name: '4月',
+    },
   },
-  "some":{
-    "place1":["Z1","Z2","Z3"],
-    "place2":["Z4","Z5","Z6","Z7"],
-    "place3":["A1","A2","A3","A4","A5","A6"],
+  {
+    cadillac2: {
+      name: '1号',
+    },
+    chevrolet2: {
+      name: '2号',
+    },
   }
-}
+
+];
 
 class TpickerEx extends Component {
   constructor(props, context){
     super(props, context);
     this.state = {
-
     }
   }
 
@@ -50,14 +84,16 @@ class TpickerEx extends Component {
   render() {
     return (
       <View style={testStyle.container}>
-        <CPicker
+        <TMpicker
           inputStyle = {testStyle.textInput}
-          selectIndex = {[0,1,1]}
+          confirmBtnText = {"confirm"}
+          cancelBtnText = {"cancel"}
           data = {CAR_MAKES_AND_MODELS}
+          selectIndex = {[0,2,1]}
           visible = {false}
           transparent = {true}
         >
-        </CPicker>
+        </TMpicker>
       </View>
 
     );
@@ -68,7 +104,7 @@ const testStyle = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignSelf: 'stretch',
+    alignItems: 'stretch',
   },
   textInput:{
     padding:20,
