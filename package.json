@@ -1,8 +1,7 @@
 {
   "name": "react-native-tpicker",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": false,
-  "main": "app/setup3.js",
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
@@ -10,6 +9,9 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "react": "^15.0.2",
+    "react-native": "^0.26.2",
+    "react-native-vector-icons": "^2.0.3",
     "validate-commit-msg": "^2.6.1"
   },
   "devDependencies": {

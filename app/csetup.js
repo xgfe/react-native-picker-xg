@@ -1,303 +1,300 @@
-import React, { Component } from 'react';
+import React, { Component,  PropTypes} from 'react';
 import {
-    View,
-    Text,
-    StyleSheet,
-    PropTypes,
-    Dimensions,
-    PixelRatio,
-    PanResponder,
-    TouchableOpacity,
-    TextInput,
-    Animated,
-    Platform,
-    Modal
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  PixelRatio,
+  PanResponder,
+  TouchableOpacity,
+  TextInput,
+  Animated,
+  PickerIOS,
+  Platform,
+  Modal,
 } from 'react-native';
 
 
 import CPickroll from './roll2';
-
-let CPickerroll = Platform.OS === 'ios' ? PickerIOS : CPickroll;
-let PickerItem = CPickerroll.Item;
-
-let width = Dimensions.get('window').width;
+let CPicker = Platform.OS === 'ios' ? PickerIOS : CPickroll;
+let PickerItem = CPicker.Item;
 let height = Dimensions.get('window').height;
 let top = height - 250;
-let ratio = PixelRatio.get();
-let valueCount = [];
 let str = '';
-let initData = [];
-let choseValue = [];
 let saveChoseValue = [];
 let saveData = [];
-class CPicker extends Component {
+let saveIndex = [];
+class CPickerroll extends Component {
 
-    static propTypes = {
-        data: PropTypes.object,
+  static propTypes = {
+    data: PropTypes.object,
+  };
+
+
+  constructor(props, context){
+    super(props, context);
+    this._setEventBegin = this._setEventBegin.bind(this);
+    this._changeLayout = this._changeLayout.bind(this);
+    this._cancelChose = this._cancelChose.bind(this);
+    this.state = this._stateFromProps(this.props);
+  }
+
+  _stateFromProps(props){
+    let selectIndex = [];
+    let selectedValue = [];
+    let passData = [];
+    if(typeof props.selectIndex==='undefined'){
+      for(let temp=0;temp<props.level;temp++){
+        selectIndex.push(0);
+      }
+    }else{
+      selectIndex = props.selectIndex;
+    }
+
+    let tempData = props.data;
+    let finalData = props.data;
+   for(let temp=0;temp<props.level;temp++){
+     if(temp!==props.level-1){
+      let data = Object.keys(tempData);
+      let key = data[selectIndex[temp]];
+      selectedValue.push(key);
+      passData.push(data);
+      tempData = tempData[key];
+       finalData = finalData[key];
+     }
+     else{
+       passData.push(finalData);
+       selectedValue.push(finalData[selectIndex[temp]]);
+     }
+    }
+
+    let selfStyle = props.selfStyle;
+    let inputStyle = props.inputStyle;
+    let animationType = props.animationType||'none';
+    let transparent = typeof props.transparent==='undefined'?true:props.transparent;
+    let visible = typeof props.visible==='undefined'?false:props.visible;
+    let enable = typeof props.enable==='undefined'?true:props.enable;
+    let inputValue = props.inputValue||'please chose';
+    return {
+      selfStyle,
+      visible,
+      transparent,
+      animationType,
+      enable,
+      inputValue,
+      inputStyle,
+      passData,
+      selectIndex,
+      selectedValue,
     };
-
-
-    componentWillMount(){
-        let tempData = Object.assign({},this.props.data);
-        let firstData = Object.keys(tempData);
-        let key1 = firstData[0];
-        let secondData = Object.keys(tempData[key1]);
-        let key2 = secondData[0];
-        let thirdData = tempData[key1][key2];
-        initData.push(firstData,secondData,thirdData);
-        choseValue.push(key1,key2,thirdData[0]);
-       }
-
-    constructor(props, context){
-        super(props, context);
-        this._setEventBegin = this._setEventBegin.bind(this);
-        this._changeLayout = this._changeLayout.bind(this);
-        this._cancelChose = this._cancelChose.bind(this);
-        this.state = this._stateFromProps(this.props);
-        this.state.getValue = false;
+  }
+  _confirmChose(){
+    for(let item of this.state.selectedValue){
+      str = str + item + ' ';
+    }
+    this.setState({inputValue:str,visible: false});
+  }
+  _cancelChose(){
+    this.state.selectIndex.length=0;
+    this.state.passData.length = 0;
+    this.state.selectedValue.length = 0;
+    for(let item of saveChoseValue){
+      this.state.selectedValue.push(item);
+    }
+    for(let item1 of saveData){
+      this.state.passData.push(item1);
+    }
+    for(let item2 of saveIndex){
+      this.state.selectIndex.push(item2);
+    }
+    this.setState({passData: this.state.passData,selectIndex:this.state.selectIndex,selectedValue: this.state.selectedValue, visible:false});
+  }
+  _setEventBegin(){
+    if(this.state.enable){
+      saveChoseValue.length = 0;
+      saveData.length = 0;
+      saveIndex.length =0;
+      for(let item of this.state.selectedValue){
+        saveChoseValue.push(item);
+      }
+      for(let item1 of this.state.passData){
+        saveData.push(item1);
+      }
+      for(let item2 of this.state.selectIndex){
+        saveIndex.push(item2);
+      }
+      this.setState({passData:this.state.passData,selectIndex:this.state.selectIndex,selectedValue: this.state.selectedValue});
+      this._setModalVisible(true)
+      this.refs.test.blur()
+      str = '';
     }
 
-    _stateFromProps(props){
-        let selectIndex = [];
-        if(typeof this.props.selectIndex==='undefined'){
-                selectIndex.push(0,0,0);
-        }else{
-            selectIndex = props.selectIndex;}
-        let selfStyle = props.selfStyle;
-        let inputStyle = props.inputStyle;
-        let animationType = props.animationType||'none';
-        let transparent = typeof props.transparent==='undefined'?true:props.transparent;
-        let visible = typeof props.visible==='undefined'?false:props.visible;
-        let enable = typeof props.enable==='undefined'?true:props.enable;
-        let inputValue = props.inputValue||'please chose';
-        let passData = initData;
-        return {
-            selfStyle,
-            visible,
-            transparent,
-            animationType,
-            enable,
-            inputValue,
-            inputStyle,
-            passData,
-            selectIndex,
-        };
-    }
-    _confirmChose(){
-        this.setState({getValue: true,selectIndex:[this.state.passData[0].indexOf(saveChoseValue[0]),
-            this.state.passData[1].indexOf(saveChoseValue[1]),
-            this.state.passData[2].indexOf(saveChoseValue[2])]});
-        while(true){
-            if(valueCount.length === 3){
-                for(let item of valueCount){
-                    str = str + item + ' ';
-                }
-                break;
-            }
-        }
-        this.setState({inputValue:str,visible: false});
-    }
-    _cancelChose(){
-        choseValue.length=0;
-        this.state.passData.length = 0;
-        for(let item of saveChoseValue){
-            choseValue.push(item);
-        }
-        for(let item1 of saveData){
-            this.state.passData.push(item1);
-        }
+  }
+  _setModalVisible(visible) {
+    this.setState({visible: visible});
+  }
 
-        this.setState({passData: this.state.passData,selectIndex:choseValue,visible:false});
+  _changeLayout(value,index){
+    this.state.selectedValue.splice(index,1,value);
+    this.state.passData.length = index+1;
+    this.state.selectIndex.length = index;
+    this.state.selectedValue.length = index;
+    this.state.selectedValue.push(value);
+    this.state.selectIndex.push(this.state.passData[this.state.passData.length-1].indexOf(value));
+    if(this.props.level-index>1){
+      let data = this.props.data;
+      for(let temp=0; temp<=index;temp++){
+        data = data[this.state.selectedValue[temp]];
+      }
+    for(let item=0;item<this.props.level-index-2;item++){
+        let dataKeys = Object.keys(data);
+        this.state.passData.push(dataKeys);
+        this.state.selectIndex.push(0);
+        this.state.selectedValue.push(dataKeys[0]);
+        data = data[dataKeys[0]];
     }
-    _setEventBegin(){
-        if(this.state.enable){
-            saveChoseValue.length = 0;
-            saveData.length = 0;
-            for(let item of choseValue){
-                saveChoseValue.push(item);
-            }
-            for(let item1 of this.state.passData){
-                saveData.push(item1);
-            }
-            this.setState({passData:this.state.passData,selectIndex:[this.state.passData[0].indexOf(saveChoseValue[0]),
-                                                                     this.state.passData[1].indexOf(saveChoseValue[1]),
-                                                                         this.state.passData[2].indexOf(saveChoseValue[2])]});
-            this._setModalVisible(true)
-            this.refs.test.blur()
-            valueCount.length = 0;
-            str = '';
-            this.setState({getValue: false});
-        }
+      this.state.passData.push(data);
+      this.state.selectIndex.push(0);
+      this.state.selectedValue.push(data[0]);
+    }
+    this.setState({passData:this.state.passData,selectedValue:this.state.selectedValue,selectIndex:this.state.selectIndex});
+  }
+  render(){
 
-    }
-    _setModalVisible(visible) {
-        this.setState({visible: visible});
-    }
-    _handleValue(value){
-        valueCount.push(value);
-    }
-    _changeLayout(value,index){
-        choseValue.splice(index,1,value);
-        if(index===0){
-            //重新获取passData和selectIndex的值
-            this.state.passData.length = 1;
-        let secondValue = choseValue[0];
-        this.state.passData.push(Object.keys(this.props.data[secondValue]));
-        let thirdValue = Object.keys(this.props.data[secondValue])[0];
-        this.state.passData.push(this.props.data[secondValue][thirdValue]);
-            let selectValue1 = this.state.passData[0].indexOf(value);
-        this.setState({passData:this.state.passData,selectIndex:[selectValue1,0,0]});
-            //更新choseValue,即每个轮子选中的值
-            choseValue.length = 0;
-            choseValue.push(this.state.passData[0][selectValue1],this.state.passData[1][0],this.state.passData[2][0]);
-    }else if(index===1){
-            //重新获取passData和selectIndex的值
-            this.state.passData.length = 2;
-            this.state.passData.push(this.props.data[choseValue[0]][choseValue[1]]);
-            let selectValue2 = this.state.passData[1].indexOf(value);
-            let temp = this.state.selectIndex[0];
-            this.setState({passData:this.state.passData,selectIndex:[temp,selectValue2,0]});
-            //更新choseValue,即每个轮子选中的值
-            choseValue.length = 0;
-            choseValue.push(this.state.passData[0][temp],this.state.passData[1][selectValue2],this.state.passData[2][0]);
-        }else{
-            //获取selectIndex的值,因为passData的值不会变
-            let temp1 = this.state.selectIndex[0];
-            let temp2 = this.state.selectIndex[1];
-            let selectValue3 = this.state.passData[2].indexOf(value);
-            this.setState({passData:this.state.passData,selectIndex:[temp1,temp2,selectValue3]});
-            //更新choseValue,即每个轮子选中的值
-            choseValue.length = 0;
-            choseValue.push(this.state.passData[0][temp1],this.state.passData[1][temp2],this.state.passData[2][selectValue3]);
-        }}
-    render(){
-
-        let modalBackgroundStyle = {
-            backgroundColor: this.state.transparent ? 'rgba(0, 0, 0, 0.5)' : '#f5fcff',
-        };
-        let innerContainerTransparentStyle = this.state.transparent
-            ? {backgroundColor: '#fff', padding: 20}
-            : null;
-        return (
-            <View style={styles.container}>
-                <Modal
-                    animationType={this.state.animationType}
-                    transparent={this.state.transparent}
-                    visible={this.state.visible}
-                    onRequestClose={() => {this._setModalVisible(false)}}
-                >
-                    <View style={[testStyle.container, modalBackgroundStyle]}>
-                        <View style={[testStyle.innerContainer, innerContainerTransparentStyle]}>
-                            <View style={styles.nav}>
-                                <TouchableOpacity  style={styles.confirm}>
-                                    <Text onPress={() => {this. _confirmChose()
+    let modalBackgroundStyle = {
+      backgroundColor: this.state.transparent ? 'rgba(0, 0, 0, 0.5)' : '#f5fcff',
+    };
+    let innerContainerTransparentStyle = this.state.transparent
+      ? {backgroundColor: '#fff', padding: 20}
+      : null;
+    return (
+      <View style={styles.container}>
+        <Modal
+          animationType={this.state.animationType}
+          transparent={this.state.transparent}
+          visible={this.state.visible}
+          onRequestClose={() => {this._setModalVisible(false)}}
+        >
+          <View style={[testStyle.container, modalBackgroundStyle]}>
+            <View style={[testStyle.innerContainer, innerContainerTransparentStyle]}>
+              <View style={styles.nav}>
+                <TouchableOpacity  style={styles.confirm}>
+                  <Text onPress={() => {this. _confirmChose()
                     }}
-                                          style={{textAlign:'left',marginLeft:10}} >Confirm</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.cancel} >
-                                    <Text
-                                        style={{textAlign:'right',marginRight:10}}
-                                        onPress={() => {this._cancelChose()
+                        style={{textAlign:'left',marginLeft:10}} >Confirm</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.cancel} >
+                  <Text
+                    style={{textAlign:'right',marginRight:10}}
+                    onPress={() => {this._cancelChose()
                     }}
-                                    >Cancel</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={[styles.pickContainer, this.state.selfStyle]} >
-                                {this.state.passData.map((item,index) =>{
-                                    return(
-                                            <CPickroll
-                                                key = {index}
-                                                pickIndex = {index}
-                                                selectIndex = {this.state.selectIndex[index]}
-                                                getValue = {this.state.getValue}
-                                                handleValue = {this._handleValue}
-                                                pickerStyle = {{flex:1}}
-                                                data = {this.state.passData[index]}
-                                                passData = {this.state.passData}
-                                                onValueChange={this._changeLayout.bind(this)}
-                                            >
+                  >Cancel</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={[styles.pickContainer, this.state.selfStyle]} >
+                {this.state.passData.map((item,index) =>{
+                  return(
+                    <CPicker
+                      key = {index}
+                      style = {{flex:1}}
+                      selectIndex = {this.state.selectIndex[index]}
+                      selectedValue = {this.state.selectedValue[index]}
+                      pickerStyle = {{flex:1}}
+                      data = {this.state.passData[index]}
+                      passData = {this.state.passData}
+                      onValueChange={(newValue,newIndex) => {
+                                            this._changeLayout(newValue,index)}}
+                    >
+                      {(this.state.passData[index]).map((carMake) => (
+                        <PickerItem
+                          key={carMake}
+                          value={carMake}
+                          label={carMake}
+                        />
+                      ))}
 
-                                            </CPickroll>)})}
-                            </View>
+                    </CPicker>)})}
+              </View>
 
-                        </View>
-                    </View>
-                </Modal>
-                <TextInput
-                    editable = {this.state.enable}
-                    style = {this.props.inputStyle}
-                    ref = 'test'
-                    onFocus={() => { this._setEventBegin()
-                   }}
-                    placeholder={this.state.inputValue}
-                    value={this.state.inputValue}
-                />
             </View>
+          </View>
+        </Modal>
+        <TextInput
+          editable = {this.state.enable}
+          style = {this.props.inputStyle}
+          ref = 'test'
+          multiline={ true }
+          onFocus={() => { this._setEventBegin()
+                   }}
+          placeholder={this.state.inputValue}
+          value={this.state.inputValue}
+        />
+      </View>
 
-        );
-    }
+    );
+  }
 }
 
 
 
 let styles = StyleSheet.create({
 
-    container: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    nav: {
-        flex: 1,
-        marginTop:10,
-        flexDirection: 'row',
-        height: 28,
-        alignSelf: 'stretch',
-        backgroundColor:'white',
-    },
-    confirm: {
-        flex:1,
-    },
-    cancel: {
-        flex:1,
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  nav: {
+    flex: 1,
+    marginTop:10,
+    flexDirection: 'row',
+    height: 28,
+    alignSelf: 'stretch',
+    backgroundColor:'white',
+  },
+  confirm: {
+    flex:1,
+  },
+  cancel: {
+    flex:1,
 
-    },
-    pickContainer:{
-        flex:1,
-        justifyContent: 'center',
-        alignSelf:'stretch',
-        flexDirection:'row',
-    },
+  },
+  pickContainer:{
+    flex:1,
+    justifyContent: 'center',
+    alignSelf:'stretch',
+    flexDirection:'row',
+  },
 
 });
 
 const testStyle = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row',
-    },
-    innerContainer: {
-        flex:1,
-        marginTop:top,
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        flexDirection: 'column',
-    },
-    row: {
-        alignItems: 'center',
-        flex: 1,
-        flexDirection: 'row',
-        marginBottom: 20,
-    },
-    rowTitle: {
-        flex: 1,
-        fontWeight: 'bold',
-    },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  innerContainer: {
+    flex:1,
+    marginTop:top,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flexDirection: 'column',
+  },
+  row: {
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'row',
+    marginBottom: 20,
+  },
+  rowTitle: {
+    flex: 1,
+    fontWeight: 'bold',
+  },
 
 })
 
 
 
 
-export default CPicker;
+export default CPickerroll;

@@ -138,11 +138,12 @@ Two ways:
  AppRegistry.registerComponent('pubtest', () => TpickerEx);
 
   ```
-  * the second one
+  * the second one(in this way, *please* make sure the version of the react matches the need of the react-native)
     * download the zip from the github
     ```
     npm install react --save
     npm install react-native --save
+    npm install react-native-vector-icons --save
     
     ```
     * the example has already in the index.android.js and index.ios.js

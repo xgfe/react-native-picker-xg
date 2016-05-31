@@ -46,14 +46,14 @@ class TMPicker extends Component {
     _stateFromProps(props){
         let selectIndex = [];
         let selectedValue = [];
-        if(typeof this.props.selectIndex==='undefined'){
-            for(let item of this.props.data){
+        if(typeof props.selectIndex==='undefined'){
+            for(let item of props.data){
                 selectIndex.push(0);
                 selectedValue.push(Object.keys(item)[0]);
             }
         }else{
             selectIndex = props.selectIndex;
-            this.props.data.map((item,index) =>{
+            props.data.map((item,index) =>{
               selectedValue.push(Object.keys(item)[selectIndex[index]]);
             })
             }
@@ -66,8 +66,8 @@ class TMPicker extends Component {
         let visible = typeof props.visible==='undefined'?false:props.visible;
         let enable = typeof props.enable==='undefined'?true:props.enable;
         let inputValue = props.inputValue||'please chose';
-        let confirmBtnText = this.props.confirmBtnText || '确定';
-        let cancelBtnText = this.props.cancelBtnText || '取消';
+        let confirmBtnText = props.confirmBtnText || '确定';
+        let cancelBtnText = props.cancelBtnText || '取消';
         return {
             selfStyle,
             visible,
