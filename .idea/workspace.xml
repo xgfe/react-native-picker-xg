@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dd50495d-aec4-4ec8-8382-b9a3e468c19e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/show.gif" afterPath="$PROJECT_DIR$/show.gif" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
     </list>
     <ignored path="react-native-tpicker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,7 +24,7 @@
     <favorites_list name="react-native-tpicker" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.62520325">
+    <splitter split-orientation="horizontal" split-proportion="0.50487804">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="csetup.js" pinned="false" current-in-tab="false">
@@ -42,8 +43,8 @@
             <entry file="file://$PROJECT_DIR$/README.md">
               <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
                 <state split_layout="SPLIT">
-                  <first_editor relative-caret-position="556">
-                    <caret line="382" column="0" selection-start-line="382" selection-start-column="0" selection-end-line="382" selection-end-column="0" />
+                  <first_editor relative-caret-position="357">
+                    <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
                     <folding />
                   </first_editor>
                   <second_editor />
@@ -101,7 +102,7 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="index.ios.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="index.ios.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/index.ios.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="425">
@@ -109,6 +110,34 @@
                   <folding>
                     <element signature="n#!!doc" expanded="true" />
                     <element signature="e#80#121#0" expanded="true" />
+                    <marker date="1464765123000" expanded="true" signature="902:1545" ph="[...]" />
+                    <marker date="1464765123000" expanded="true" signature="906:1287" ph="{...}" />
+                    <marker date="1464765123000" expanded="true" signature="917:945" ph="{&quot;name&quot;: '2011年'...}" />
+                    <marker date="1464765123000" expanded="true" signature="957:985" ph="{&quot;name&quot;: '2012年'...}" />
+                    <marker date="1464765123000" expanded="true" signature="998:1026" ph="{&quot;name&quot;: '2013年'...}" />
+                    <marker date="1464765123000" expanded="true" signature="1038:1066" ph="{&quot;name&quot;: '2014年'...}" />
+                    <marker date="1464765123000" expanded="true" signature="1080:1108" ph="{&quot;name&quot;: '2015年'...}" />
+                    <marker date="1464765123000" expanded="true" signature="1124:1152" ph="{&quot;name&quot;: '2016年'...}" />
+                    <marker date="1464765123000" expanded="true" signature="1165:1193" ph="{&quot;name&quot;: '2017年'...}" />
+                    <marker date="1464765123000" expanded="true" signature="1209:1237" ph="{&quot;name&quot;: '2018年'...}" />
+                    <marker date="1464765123000" expanded="true" signature="1254:1282" ph="{&quot;name&quot;: '2019年'...}" />
+                    <marker date="1464765123000" expanded="true" signature="1291:1448" ph="{...}" />
+                    <marker date="1464765123000" expanded="true" signature="1303:1328" ph="{&quot;name&quot;: '1月'...}" />
+                    <marker date="1464765123000" expanded="true" signature="1341:1366" ph="{&quot;name&quot;: '2月'...}" />
+                    <marker date="1464765123000" expanded="true" signature="1380:1405" ph="{&quot;name&quot;: '3月'...}" />
+                    <marker date="1464765123000" expanded="true" signature="1452:1542" ph="{...}" />
+                    <marker date="1464765123000" expanded="true" signature="1512:1537" ph="{&quot;name&quot;: '2号'...}" />
+                    <marker date="1464765123000" expanded="true" signature="1565:1895" ph="{...}" />
+                    <marker date="1464765123000" expanded="true" signature="1574:1656" ph="{...}" />
+                    <marker date="1464765123000" expanded="true" signature="1665:1764" ph="{...}" />
+                    <marker date="1464765123000" expanded="true" signature="1775:1893" ph="{...}" />
+                    <marker date="1464765123000" expanded="true" signature="1913:1963" ph="{...}" />
+                    <marker date="1464765123000" expanded="true" signature="1979:2293" ph="{...}" />
+                    <marker date="1464765123000" expanded="true" signature="2139:2291" ph="{...}" />
+                    <marker date="1464765123000" expanded="true" signature="2225:2287" ph="{...}" />
+                    <marker date="1464765123000" expanded="true" signature="2329:4251" ph="{...}" />
+                    <marker date="1464765123000" expanded="true" signature="4289:4383" ph="{...}" />
+                    <marker date="1464765123000" expanded="true" signature="4304:4379" ph="{&quot;flex&quot;: 1...}" />
                   </folding>
                 </state>
               </provider>
@@ -117,8 +146,8 @@
           <file leaf-file-name="index.android.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/index.android.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="541">
-                  <caret line="228" column="22" selection-start-line="228" selection-start-column="22" selection-end-line="228" selection-end-column="22" />
+                <state relative-caret-position="167">
+                  <caret line="206" column="35" selection-start-line="0" selection-start-column="0" selection-end-line="251" selection-end-column="0" />
                   <folding>
                     <element signature="n#!!doc" expanded="true" />
                     <element signature="e#80#121#0" expanded="true" />
@@ -142,9 +171,22 @@
           <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/package.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="391">
-                  <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+                <state relative-caret-position="119">
+                  <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="14" />
                   <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="CHANGELOG.md" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/CHANGELOG.md">
+              <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+                <state split_layout="SPLIT">
+                  <first_editor relative-caret-position="374">
+                    <caret line="22" column="107" selection-start-line="22" selection-start-column="107" selection-end-line="22" selection-end-column="107" />
+                    <folding />
+                  </first_editor>
+                  <second_editor />
                 </state>
               </provider>
             </entry>
@@ -172,11 +214,11 @@
         <option value="$PROJECT_DIR$/app/roll2.js" />
         <option value="$PROJECT_DIR$/app/picker.js" />
         <option value="$PROJECT_DIR$/.npmignore" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/index.ios.js" />
         <option value="$PROJECT_DIR$/app/setup3.js" />
         <option value="$PROJECT_DIR$/app/csetup.js" />
         <option value="$PROJECT_DIR$/index.android.js" />
+        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
@@ -258,7 +300,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../widgets" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ptest" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
@@ -346,12 +388,12 @@
       <workItem from="1464496431192" duration="70000" />
       <workItem from="1464496518678" duration="61480000" />
       <workItem from="1464691544230" duration="4930000" />
-      <workItem from="1464751097586" duration="7933000" />
+      <workItem from="1464751097586" duration="9087000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="166944000" />
+    <option name="totallyTimeSpent" value="168098000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="6" />
@@ -673,17 +715,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CHANGELOG.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="374">
-            <caret line="22" column="107" selection-start-line="22" selection-start-column="107" selection-end-line="22" selection-end-column="107" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -785,25 +816,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.android.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="541">
-          <caret line="228" column="22" selection-start-line="228" selection-start-column="22" selection-end-line="228" selection-end-column="22" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#80#121#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.ios.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
@@ -811,6 +823,34 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="e#80#121#0" expanded="true" />
+            <marker date="1464765123000" expanded="true" signature="902:1545" ph="[...]" />
+            <marker date="1464765123000" expanded="true" signature="906:1287" ph="{...}" />
+            <marker date="1464765123000" expanded="true" signature="917:945" ph="{&quot;name&quot;: '2011年'...}" />
+            <marker date="1464765123000" expanded="true" signature="957:985" ph="{&quot;name&quot;: '2012年'...}" />
+            <marker date="1464765123000" expanded="true" signature="998:1026" ph="{&quot;name&quot;: '2013年'...}" />
+            <marker date="1464765123000" expanded="true" signature="1038:1066" ph="{&quot;name&quot;: '2014年'...}" />
+            <marker date="1464765123000" expanded="true" signature="1080:1108" ph="{&quot;name&quot;: '2015年'...}" />
+            <marker date="1464765123000" expanded="true" signature="1124:1152" ph="{&quot;name&quot;: '2016年'...}" />
+            <marker date="1464765123000" expanded="true" signature="1165:1193" ph="{&quot;name&quot;: '2017年'...}" />
+            <marker date="1464765123000" expanded="true" signature="1209:1237" ph="{&quot;name&quot;: '2018年'...}" />
+            <marker date="1464765123000" expanded="true" signature="1254:1282" ph="{&quot;name&quot;: '2019年'...}" />
+            <marker date="1464765123000" expanded="true" signature="1291:1448" ph="{...}" />
+            <marker date="1464765123000" expanded="true" signature="1303:1328" ph="{&quot;name&quot;: '1月'...}" />
+            <marker date="1464765123000" expanded="true" signature="1341:1366" ph="{&quot;name&quot;: '2月'...}" />
+            <marker date="1464765123000" expanded="true" signature="1380:1405" ph="{&quot;name&quot;: '3月'...}" />
+            <marker date="1464765123000" expanded="true" signature="1452:1542" ph="{...}" />
+            <marker date="1464765123000" expanded="true" signature="1512:1537" ph="{&quot;name&quot;: '2号'...}" />
+            <marker date="1464765123000" expanded="true" signature="1565:1895" ph="{...}" />
+            <marker date="1464765123000" expanded="true" signature="1574:1656" ph="{...}" />
+            <marker date="1464765123000" expanded="true" signature="1665:1764" ph="{...}" />
+            <marker date="1464765123000" expanded="true" signature="1775:1893" ph="{...}" />
+            <marker date="1464765123000" expanded="true" signature="1913:1963" ph="{...}" />
+            <marker date="1464765123000" expanded="true" signature="1979:2293" ph="{...}" />
+            <marker date="1464765123000" expanded="true" signature="2139:2291" ph="{...}" />
+            <marker date="1464765123000" expanded="true" signature="2225:2287" ph="{...}" />
+            <marker date="1464765123000" expanded="true" signature="2329:4251" ph="{...}" />
+            <marker date="1464765123000" expanded="true" signature="4289:4383" ph="{...}" />
+            <marker date="1464765123000" expanded="true" signature="4304:4379" ph="{&quot;flex&quot;: 1...}" />
           </folding>
         </state>
       </provider>
@@ -818,8 +858,38 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="556">
-            <caret line="382" column="0" selection-start-line="382" selection-start-column="0" selection-end-line="382" selection-end-column="0" />
+          <first_editor relative-caret-position="357">
+            <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.android.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="206" column="35" selection-start-line="0" selection-start-column="0" selection-end-line="251" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#80#121#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CHANGELOG.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="374">
+            <caret line="22" column="107" selection-start-line="22" selection-start-column="107" selection-end-line="22" selection-end-column="107" />
             <folding />
           </first_editor>
           <second_editor />

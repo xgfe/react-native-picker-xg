@@ -17,7 +17,8 @@ npm install react-native-tpicker --save
 ```
 
 ### Example
-![image](https://github.com/lulutia/react-native-tpicker/blob/master/show.gif)
+![image](https://raw.githubusercontent.com/lulutia/react-native-tpicker/master/show.gif)
+
 Two ways:
   * the first one
   

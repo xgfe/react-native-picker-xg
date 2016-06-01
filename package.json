@@ -1,6 +1,6 @@
 {
   "name": "react-native-tpicker",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": false,
   "main": "app/picker.js",
   "scripts": {
