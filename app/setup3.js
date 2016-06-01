@@ -116,7 +116,10 @@ class TMPicker extends Component {
           Animated.timing(
             this.state.animatedHeight,
             {toValue: height}
-          ).start(() => {if(type==='confirm'){this.setState({visible:visible,inputValue: str})}
+          ).start(() => {if(type==='confirm'){this.setState({visible:visible,inputValue: str});
+            if(this.props.onResult){
+              this.props.onResult(str);
+            }}
                           else{
             this.state.selectIndex.length = 0;
             this.state.selectedValue.length = 0;
@@ -184,14 +187,17 @@ class TMPicker extends Component {
                                                       this.state.selectedValue.splice(index,1,newValue);
                                                       this.setState({selectIndex:this.state.selectIndex,selectedValue:this.state.selectedValue});
                                                 }}
-                                            >
-                                              {Object.keys(this.props.data[index]).map((carMake) => (
+                                            >{
+                                              Platform.OS === 'ios' &&(
+                                              Object.keys(this.props.data[index]).map((carMake) => (
                                                 <PickerItem
                                                   key={carMake}
                                                   value={carMake}
                                                   label={this.props.data[index][carMake].name}
                                                 />
-                                              ))}
+                                              )))
+                                            }
+
                                             </PickRoll>)
                                     })
                                 }

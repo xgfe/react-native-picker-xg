@@ -147,6 +147,9 @@ class CPickerroll extends Component {
         if(type==='confirm'){
           this.setState({visible:visible},()=>{
             this.setState({inputValue: str});
+            if(this.props.onResult){
+              this.props.onResult(str);
+            }
           })
         }
         else{
@@ -219,7 +222,6 @@ class CPickerroll extends Component {
               </View>
               <View style={[styles.pickContainer, this.state.selfStyle]} >
                 {this.state.passData.map((item,index) =>{
-                  console.log(index);
                   return(
                     <CPicker
                       key = {index}
@@ -232,13 +234,13 @@ class CPickerroll extends Component {
                       onValueChange={(newValue,newIndex) => {
                                             this._changeLayout(newValue,index)}}
                     >
-                      {(this.state.passData[index]).map((carMake) => (
+                      { Platform.OS === 'ios' &&((this.state.passData[index]).map((carMake) => (
                         <PickerItem
                           key={carMake}
                           value={carMake}
                           label={carMake}
                         />
-                      ))}
+                      )))}
 
                     </CPicker>)})}
               </View>

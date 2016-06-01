@@ -167,7 +167,8 @@ class TpickerEx extends Component {
     constructor(props, context){
         super(props, context);
         this.state = {
-
+            str:"just a test",
+            str1: "just a test",
         }
     }
 
@@ -175,6 +176,7 @@ class TpickerEx extends Component {
     render() {
         return (
             <View style={testStyle.container}>
+              <Text style={{margin:10}}>{this.state.str}</Text>
                             <Cpicker
                               inputValue={"4 level picker"}
                                 level = {4}
@@ -182,6 +184,10 @@ class TpickerEx extends Component {
                                 data = {level4Data}
                                 visible = {false}
                                 transparent = {true}
+                                onResult = {(str)=>{
+                                this.setState({str:str});
+
+                                }}
                                 >
                             </Cpicker>
               <Cpicker
@@ -220,10 +226,14 @@ class TpickerEx extends Component {
                   cancelBtnText = {"cancel"}
                   data = {wheel2}
                   selectIndex = {[0,2]}
+                  onResult ={(str) => {
+                  this.setState({str1:str});
+                  }}
                   visible = {false}
                   transparent = {true}
                 >
               </Tpicker>
+              <Text style={{margin:10}}>{this.state.str1}</Text>
             </View>
 
         );

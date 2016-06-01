@@ -2,6 +2,7 @@
   "name": "react-native-tpicker",
   "version": "0.0.3",
   "private": false,
+  "main": "app/picker.js",
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
@@ -13,8 +14,8 @@
     "validate-commit-msg": "^2.6.1"
   },
   "devDependencies": {
-    "react": "^15.0.2",
-    "react-native": "^0.26.2",
+    "react": "15.0.2",
+    "react-native": "0.26.2",
     "cz-conventional-changelog": "^1.1.6",
     "eslint": "^2.10.2",
     "eslint-plugin-react": "^5.1.1",
