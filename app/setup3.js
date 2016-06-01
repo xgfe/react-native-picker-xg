@@ -202,7 +202,7 @@ class TMPicker extends Component {
                 <TextInput
                     editable = {this.state.enable}
                     multiline={ true }
-                    style = {[{height: 40},this.props.inputStyle]}
+                    style = {[styles.textInput,this.props.inputStyle]}
                     ref = 'test'
                     onFocus={() => { this._setEventBegin()
                    }}
@@ -252,6 +252,12 @@ let styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'flex-end',
       flexDirection: 'column',
+  },
+  textInput:{
+    padding:10,
+    borderBottomWidth:1,
+    borderBottomColor: 'grey',
+    height: 40,
   }
 });
 

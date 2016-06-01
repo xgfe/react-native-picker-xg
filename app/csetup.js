@@ -37,6 +37,7 @@ class CPickerroll extends Component {
     this._changeLayout = this._changeLayout.bind(this);
     this._cancelChose = this._cancelChose.bind(this);
     this.state = this._stateFromProps(this.props);
+    this.state.animatedHeight = new Animated.Value(height);
   }
 
   _stateFromProps(props){
@@ -53,19 +54,19 @@ class CPickerroll extends Component {
 
     let tempData = props.data;
     let finalData = props.data;
-   for(let temp=0;temp<props.level;temp++){
-     if(temp!==props.level-1){
-      let data = Object.keys(tempData);
-      let key = data[selectIndex[temp]];
-      selectedValue.push(key);
-      passData.push(data);
-      tempData = tempData[key];
-       finalData = finalData[key];
-     }
-     else{
-       passData.push(finalData);
-       selectedValue.push(finalData[selectIndex[temp]]);
-     }
+    for(let temp=0;temp<props.level;temp++){
+      if(temp!==props.level-1){
+        let data = Object.keys(tempData);
+        let key = data[selectIndex[temp]];
+        selectedValue.push(key);
+        passData.push(data);
+        tempData = tempData[key];
+        finalData = finalData[key];
+      }
+      else{
+        passData.push(finalData);
+        selectedValue.push(finalData[selectIndex[temp]]);
+      }
     }
 
     let selfStyle = props.selfStyle;
@@ -92,7 +93,8 @@ class CPickerroll extends Component {
     for(let item of this.state.selectedValue){
       str = str + item + ' ';
     }
-    this.setState({inputValue:str,visible: false});
+    this.state.inputValue = str;
+    this._setModalVisible(false,'confirm');
   }
   _cancelChose(){
     this.state.selectIndex.length=0;
@@ -107,7 +109,7 @@ class CPickerroll extends Component {
     for(let item2 of saveIndex){
       this.state.selectIndex.push(item2);
     }
-    this.setState({passData: this.state.passData,selectIndex:this.state.selectIndex,selectedValue: this.state.selectedValue, visible:false});
+    this._setModalVisible(false,'cancel');
   }
   _setEventBegin(){
     if(this.state.enable){
@@ -130,8 +132,31 @@ class CPickerroll extends Component {
     }
 
   }
-  _setModalVisible(visible) {
-    this.setState({visible: visible});
+  _setModalVisible(visible,type) {
+    if(visible){
+      this.setState({visible: visible});
+      Animated.timing(
+        this.state.animatedHeight,
+        {toValue: top}
+      ).start();
+    }else{
+      Animated.timing(
+        this.state.animatedHeight,
+        {toValue: height}
+      ).start(() => {
+        if(type==='confirm'){
+          this.setState({visible:visible},()=>{
+            this.setState({inputValue: str});
+          })
+        }
+        else{
+          this.setState({visible:visible});
+          this.setState({passData: this.state.passData,selectIndex:this.state.selectIndex,selectedValue: this.state.selectedValue});
+        }
+      })
+
+    }
+
   }
 
   _changeLayout(value,index){
@@ -146,13 +171,13 @@ class CPickerroll extends Component {
       for(let temp=0; temp<=index;temp++){
         data = data[this.state.selectedValue[temp]];
       }
-    for(let item=0;item<this.props.level-index-2;item++){
+      for(let item=0;item<this.props.level-index-2;item++){
         let dataKeys = Object.keys(data);
         this.state.passData.push(dataKeys);
         this.state.selectIndex.push(0);
         this.state.selectedValue.push(dataKeys[0]);
         data = data[dataKeys[0]];
-    }
+      }
       this.state.passData.push(data);
       this.state.selectIndex.push(0);
       this.state.selectedValue.push(data[0]);
@@ -167,6 +192,7 @@ class CPickerroll extends Component {
     let innerContainerTransparentStyle = this.state.transparent
       ? {backgroundColor: '#fff', padding: 20}
       : null;
+    console.log(this.state.passData);
     return (
       <View style={styles.container}>
         <Modal
@@ -175,8 +201,8 @@ class CPickerroll extends Component {
           visible={this.state.visible}
           onRequestClose={() => {this._setModalVisible(false)}}
         >
-          <View style={[testStyle.container, modalBackgroundStyle]}>
-            <View style={[testStyle.innerContainer, innerContainerTransparentStyle]}>
+          <View style={[styles.modalcontainer, modalBackgroundStyle]}>
+            <Animated.View style={[styles.innerContainer, innerContainerTransparentStyle,{marginTop:this.state.animatedHeight}]}>
               <View style={styles.nav}>
                 <TouchableOpacity  style={styles.confirm}>
                   <Text onPress={() => {this. _confirmChose()
@@ -193,6 +219,7 @@ class CPickerroll extends Component {
               </View>
               <View style={[styles.pickContainer, this.state.selfStyle]} >
                 {this.state.passData.map((item,index) =>{
+                  console.log(index);
                   return(
                     <CPicker
                       key = {index}
@@ -216,12 +243,12 @@ class CPickerroll extends Component {
                     </CPicker>)})}
               </View>
 
-            </View>
+            </Animated.View>
           </View>
         </Modal>
         <TextInput
           editable = {this.state.enable}
-          style = {this.props.inputStyle}
+          style = {[styles.textInput,this.props.inputStyle]}
           ref = 'test'
           multiline={ true }
           onFocus={() => { this._setEventBegin()
@@ -264,11 +291,7 @@ let styles = StyleSheet.create({
     alignSelf:'stretch',
     flexDirection:'row',
   },
-
-});
-
-const testStyle = StyleSheet.create({
-  container: {
+  modalcontainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -276,25 +299,19 @@ const testStyle = StyleSheet.create({
   },
   innerContainer: {
     flex:1,
-    marginTop:top,
     alignItems: 'center',
     justifyContent: 'flex-end',
     flexDirection: 'column',
   },
-  row: {
-    alignItems: 'center',
-    flex: 1,
-    flexDirection: 'row',
-    marginBottom: 20,
-  },
-  rowTitle: {
-    flex: 1,
-    fontWeight: 'bold',
-  },
-
-})
+  textInput:{
+    padding:10,
+    borderBottomWidth:1,
+    borderBottomColor: 'grey',
+    height: 40,
+  }
 
 
+});
 
 
 export default CPickerroll;

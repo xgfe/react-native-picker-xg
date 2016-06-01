@@ -9,12 +9,12 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "react": "^15.0.2",
-    "react-native": "^0.26.2",
     "react-native-vector-icons": "^2.0.3",
     "validate-commit-msg": "^2.6.1"
   },
   "devDependencies": {
+    "react": "^15.0.2",
+    "react-native": "^0.26.2",
     "cz-conventional-changelog": "^1.1.6",
     "eslint": "^2.10.2",
     "eslint-plugin-react": "^5.1.1",
