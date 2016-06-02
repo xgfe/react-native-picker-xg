@@ -292,9 +292,10 @@ Two ways:
     * the example has already in the index.android.js and index.ios.js
     
 ### Properties 
-  #####For the cascade wheel Picker:
+  **For the cascade wheel Picker:**
   * level: number, the number of the level of the wheels, and please make sure the number equals the length of the selectIndex's array if you have.[Mandatory]
-  #####Common properties:
+  
+  **Common properties:**
   * data: [see the data structure part], the content of the picker.[Mandatory]
   * inputValue: string, the initial text of the textInput
   * selectIndex: [number] ,initial selected item
