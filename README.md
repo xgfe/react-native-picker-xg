@@ -291,16 +291,21 @@ Two ways:
     ```
     * the example has already in the index.android.js and index.ios.js
     
-### Properties
- * selectIndex: [number] ,initial selected item
- * selfStyle: CSS-layout, the innerContainer's style
- * inputStyle: CSS-layout, the textInput's style
- * confirmBtnText: string, the text of the confirm button
- * cancelBtnText: string, the text of the cancel button
- * confirmBtnStyle: CSS-layout, the confirm button's style
- * cancelBtnStyle: CSS-layout, the cancel button;s style
- * enable: bool, to enable or disable the textInput
- * inputValue: string, the initial text of the textInput
+### Properties 
+  #####For the cascade wheel Picker:
+  * level: number, the number of the level of the wheels, and please make sure the number equals the length of the selectIndex's array if you have.[Mandatory]
+  #####Common properties:
+  * data: [see the data structure part], the content of the picker.[Mandatory]
+  * inputValue: string, the initial text of the textInput
+  * selectIndex: [number] ,initial selected item
+  * confirmBtnText: string, the text of the confirm button
+  * cancelBtnText: string, the text of the cancel button
+  * confirmBtnStyle: CSS-layout, the confirm button's style
+  * cancelBtnStyle: CSS-layout, the cancel button;s style
+  * selfStyle: CSS-layout, the innerContainer's style
+  * inputStyle: CSS-layout, the textInput's style
+  * enable: bool, to enable or disable the textInput
+  * visible: bool, to set the initial status of the wheels.
 
 ###Method
 * onResult: function, to expose the result you chose.

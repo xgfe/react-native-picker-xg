@@ -1,6 +1,6 @@
 {
   "name": "react-native-picker-xg",
-  "version": "0.0.4",
+  "version": "0.0.2",
   "private": false,
   "main": "app/picker.js",
   "description": "react native Picker component for both Android and iOS.",
