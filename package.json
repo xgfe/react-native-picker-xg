@@ -1,13 +1,14 @@
 {
-  "name": "react-native-tpicker",
-  "version": "0.0.5",
+
+  "name": "react-native-picker-xg",
+  "version": "0.0.3",
   "private": false,
   "main": "app/picker.js",
   "description": "react native Picker component for both Android and iOS.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:lulutia/react-native-tpicker.git"
+    "url": "git@github.com:xgfe/react-native-picker-xg.git"
   },
   "keywords": ["react-native","picker"],
   "author": "lulutia",
