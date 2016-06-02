@@ -15,7 +15,98 @@ react native Picker component for both Android and iOS.
 ```
 npm install react-native-tpicker --save
 ```
+### Properties 
+  * For the cascade wheel Picker:
+   * level: number, the number of the level of the wheels, and please make sure the number equals the length of the selectIndex's array if you have.[Mandatory]
 
+  * Common properties:
+    * data: [see the data structure part], the content of the picker.[Mandatory]
+    * inputValue: string, the initial text of the textInput
+    * selectIndex: [number] ,initial selected item
+    * confirmBtnText: string, the text of the confirm button
+    * cancelBtnText: string, the text of the cancel button
+    * confirmBtnStyle: CSS-layout, the confirm button's style
+    * cancelBtnStyle: CSS-layout, the cancel button;s style
+    * selfStyle: CSS-layout, the innerContainer's style
+    * inputStyle: CSS-layout, the textInput's style
+    * enable: bool, to enable or disable the textInput
+    * visible: bool, to set the initial status of the wheels.
+
+###Method
+* onResult: function, to expose the result you chose.
+
+###Data structure
+Basicly, you can realize as more as wheels as you like if you follow the data structure we set for you. However, take the size of the phone into consideration, we do not recommend more than 4 wheels.
+* For the basic pickers: It's an array, the count of the wheel depends on how many objects you have. And the content of the wheel depends on the name of one objects of the outer objects. 
+```
+let wheel2 = [
+  {
+    amc: {
+      name: '2011年',
+    },
+    alfa: {
+      name: '2012年',
+    },
+    aston: {
+      name: '2013年',
+    },
+    audi: {
+      name: '2014年',
+    },
+    austin: {
+      name: '2015年',
+    },
+    borgward: {
+      name: '2016年',
+    },
+    buick: {
+      name: '2017年',
+    },
+    cadillac: {
+      name: '2018年',
+    },
+    chevrolet: {
+      name: '2019年',
+    },
+  },
+  {
+    amc1: {
+      name: '1月',
+    },
+    alfa1: {
+      name: '2月',
+    },
+    aston1: {
+      name: '3月',
+    },
+    audi1: {
+      name: '4月',
+    },
+  },
+]
+```
+
+* For the cascade wheels: It'a an object in total, and the keys of one object become the content of the wheel. The last wheel's content is an array.
+```
+let level3Data =
+{
+  "四川":{
+    "成都":["青羊区","武侯区","温江区"],
+    "绵阳":["绵阳中学","核弹基地"],
+    "广安":["容县","武胜"]
+  },
+  "浙江":{
+    "杭州":["西湖","银泰","玉泉"],
+    "绍兴":["X1","X2","X3"],
+    "place":["Y1","Y2","Y3","Y4","Y5"],
+  },
+  "some":{
+    "place1":["Z1","Z2","Z3"],
+    "place2":["Z4","Z5","Z6","Z7"],
+    "place3":["A1","A2","A3","A4","A5","A6"],
+  }
+}
+```
 ### Example
 ![image](https://raw.githubusercontent.com/lulutia/react-native-tpicker/master/show.gif)
 
@@ -291,98 +382,6 @@ Two ways:
     ```
     * the example has already in the index.android.js and index.ios.js
     
-### Properties 
-  **For the cascade wheel Picker:**
-  * level: number, the number of the level of the wheels, and please make sure the number equals the length of the selectIndex's array if you have.[Mandatory]
-  
-  **Common properties:**
-  * data: [see the data structure part], the content of the picker.[Mandatory]
-  * inputValue: string, the initial text of the textInput
-  * selectIndex: [number] ,initial selected item
-  * confirmBtnText: string, the text of the confirm button
-  * cancelBtnText: string, the text of the cancel button
-  * confirmBtnStyle: CSS-layout, the confirm button's style
-  * cancelBtnStyle: CSS-layout, the cancel button;s style
-  * selfStyle: CSS-layout, the innerContainer's style
-  * inputStyle: CSS-layout, the textInput's style
-  * enable: bool, to enable or disable the textInput
-  * visible: bool, to set the initial status of the wheels.
-
-###Method
-* onResult: function, to expose the result you chose.
-
-###Data structure
-Basicly, you can realize as more as wheels as you like if you follow the data structure we set for you. However, take the size of the phone into consideration, we do not recommend more than 4 wheels.
-* For the basic pickers: It's an array, the count of the wheel depends on how many objects you have. And the content of the wheel depends on the name of one objects of the outer objects. 
-```
-let wheel2 = [
-  {
-    amc: {
-      name: '2011年',
-    },
-    alfa: {
-      name: '2012年',
-    },
-    aston: {
-      name: '2013年',
-    },
-    audi: {
-      name: '2014年',
-    },
-    austin: {
-      name: '2015年',
-    },
-    borgward: {
-      name: '2016年',
-    },
-    buick: {
-      name: '2017年',
-    },
-    cadillac: {
-      name: '2018年',
-    },
-    chevrolet: {
-      name: '2019年',
-    },
-  },
-  {
-    amc1: {
-      name: '1月',
-    },
-    alfa1: {
-      name: '2月',
-    },
-    aston1: {
-      name: '3月',
-    },
-    audi1: {
-      name: '4月',
-    },
-  },
-]
-```
-
-* For the cascade wheels: It'a an object in total, and the keys of one object become the content of the wheel. The last wheel's content is an array.
-```
-let level3Data =
-{
-  "四川":{
-    "成都":["青羊区","武侯区","温江区"],
-    "绵阳":["绵阳中学","核弹基地"],
-    "广安":["容县","武胜"]
-  },
-  "浙江":{
-    "杭州":["西湖","银泰","玉泉"],
-    "绍兴":["X1","X2","X3"],
-    "place":["Y1","Y2","Y3","Y4","Y5"],
-  },
-  "some":{
-    "place1":["Z1","Z2","Z3"],
-    "place2":["Z4","Z5","Z6","Z7"],
-    "place3":["A1","A2","A3","A4","A5","A6"],
-  }
-}
-```
 * For more information, you can see the examples.
 
 
