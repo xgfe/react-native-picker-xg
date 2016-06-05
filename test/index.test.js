@@ -34,19 +34,19 @@ describe('DOM TEST', () => {
     expect(wrapper.find(TextInput)).to.have.length(1);
     expect(wrapper.find(Text)).to.have.length(2);
   });
-  it("check more wheels", () => {
-    let level2Data = {
-      "四川":["w","e","q"],
-      "浙江":["ww","ee","qq"],
-    }
-    const wrapper = shallow(<Cpicker
-      level = {2}
-      selectIndex = {[0,1]}
-      data = {level2Data}
-    /> );
-    expect(wrapper.find(CPicker)).to.have.length(2);
-    expect(wrapper.find(PickerItem)).to.have.length(5);
-  })
+  // it("check more wheels", () => {
+  //   let level2Data = {
+  //     "四川":["w","e","q"],
+  //     "浙江":["ww","ee","qq"],
+  //   }
+  //   const wrapper = shallow(<Cpicker
+  //     level = {2}
+  //     selectIndex = {[0,1]}
+  //     data = {level2Data}
+  //   /> );
+  //   expect(wrapper.find(CPicker)).to.have.length(2);
+  //   expect(wrapper.find(PickerItem)).to.have.length(5);
+  // })
 });
 
 describe('STATE TEST', () => {
