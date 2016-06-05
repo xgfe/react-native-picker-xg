@@ -1,2 +1,6 @@
 node_modules
 .idea
+android
+ios
+coverage
+test/coverage
