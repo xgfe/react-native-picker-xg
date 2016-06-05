@@ -27,7 +27,7 @@ let saveIndex = [];
 class CPickerroll extends Component {
 
   static propTypes = {
-    data: PropTypes.object,
+    data: PropTypes.object
   };
 
 
@@ -36,7 +36,8 @@ class CPickerroll extends Component {
     this._setEventBegin = this._setEventBegin.bind(this);
     this._changeLayout = this._changeLayout.bind(this);
     this._cancelChose = this._cancelChose.bind(this);
-    this.state = this._stateFromProps(this.props);
+    this._changeAnimateStatus = this._changeAnimateStatus.bind(this);
+    this.state = this._stateFromProps(props);
     this.state.animatedHeight = new Animated.Value(height);
   }
 
@@ -45,7 +46,7 @@ class CPickerroll extends Component {
     let selectedValue = [];
     let passData = [];
     if(typeof props.selectIndex==='undefined'){
-      for(let temp=0;temp<props.level;temp++){
+      for (let temp=0;temp<props.level;temp++){
         selectIndex.push(0);
       }
     }else{
@@ -72,10 +73,10 @@ class CPickerroll extends Component {
     let selfStyle = props.selfStyle;
     let inputStyle = props.inputStyle;
     let animationType = props.animationType||'none';
-    let transparent = typeof props.transparent==='undefined'?true:props.transparent;
-    let visible = typeof props.visible==='undefined'?false:props.visible;
-    let enable = typeof props.enable==='undefined'?true:props.enable;
-    let inputValue = props.inputValue||'please chose';
+    let transparent = typeof props.transparent === 'undefined' ? true:props.transparent;
+    let visible = typeof props.visible === 'undefined' ? false:props.visible;
+    let enable = typeof props.enable === 'undefined' ? true:props.enable;
+    let inputValue = props.inputValue || 'please chose';
     return {
       selfStyle,
       visible,
@@ -90,11 +91,13 @@ class CPickerroll extends Component {
     };
   }
   _confirmChose(){
+    str = '';
     for(let item of this.state.selectedValue){
       str = str + item + ' ';
     }
     this.state.inputValue = str;
     this._setModalVisible(false,'confirm');
+    return str;
   }
   _cancelChose(){
     this.state.selectIndex.length=0;
@@ -110,6 +113,8 @@ class CPickerroll extends Component {
       this.state.selectIndex.push(item2);
     }
     this._setModalVisible(false,'cancel');
+    return {saveChoseValue:saveChoseValue,saveData:saveData,saveIndex:saveIndex};
+
   }
   _setEventBegin(){
     if(this.state.enable){
@@ -126,9 +131,9 @@ class CPickerroll extends Component {
         saveIndex.push(item2);
       }
       this.setState({passData:this.state.passData,selectIndex:this.state.selectIndex,selectedValue: this.state.selectedValue});
-      this._setModalVisible(true)
+      this._setModalVisible(true);
       this.refs.test.blur()
-      str = '';
+      return {saveChoseValue:saveChoseValue,saveData:saveData,saveIndex:saveIndex};
     }
 
   }
@@ -143,25 +148,23 @@ class CPickerroll extends Component {
       Animated.timing(
         this.state.animatedHeight,
         {toValue: height}
-      ).start(() => {
-        if(type==='confirm'){
-          this.setState({visible:visible},()=>{
-            this.setState({inputValue: str});
-            if(this.props.onResult){
-              this.props.onResult(str);
-            }
-          })
-        }
-        else{
-          this.setState({visible:visible});
-          this.setState({passData: this.state.passData,selectIndex:this.state.selectIndex,selectedValue: this.state.selectedValue});
+      ).start(() => this._changeAnimateStatus(type))
+    }
+  }
+  _changeAnimateStatus(type){
+    if (type==='confirm'){
+      this.setState({visible:false},()=>{
+        this.setState({inputValue: str});
+        if(this.props.onResult){
+          this.props.onResult(str);
         }
       })
-
     }
-
+    else if(type=='cancel'){
+      this.setState({visible:false});
+      this.setState({passData: this.state.passData,selectIndex:this.state.selectIndex,selectedValue: this.state.selectedValue});
+    }
   }
-
   _changeLayout(value,index){
     this.state.selectedValue.splice(index,1,value);
     this.state.passData.length = index+1;
@@ -195,7 +198,7 @@ class CPickerroll extends Component {
     let innerContainerTransparentStyle = this.state.transparent
       ? {backgroundColor: '#fff', padding: 20}
       : null;
-    console.log(this.state.passData);
+
     return (
       <View style={styles.container}>
         <Modal
@@ -208,12 +211,12 @@ class CPickerroll extends Component {
             <Animated.View style={[styles.innerContainer, innerContainerTransparentStyle,{marginTop:this.state.animatedHeight}]}>
               <View style={styles.nav}>
                 <TouchableOpacity  style={styles.confirm}>
-                  <Text onPress={() => {this. _confirmChose()
-                    }}
+                  <Text className={"confirm"} onPress={() => {this. _confirmChose()}}
                         style={{textAlign:'left',marginLeft:10}} >Confirm</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.cancel} >
                   <Text
+                    className={"cancel"}
                     style={{textAlign:'right',marginRight:10}}
                     onPress={() => {this._cancelChose()
                     }}
@@ -225,14 +228,14 @@ class CPickerroll extends Component {
                   return(
                     <CPicker
                       key = {index}
+                      className = {"test"+index}
                       style = {{flex:1}}
                       selectIndex = {this.state.selectIndex[index]}
                       selectedValue = {this.state.selectedValue[index]}
                       pickerStyle = {{flex:1}}
                       data = {this.state.passData[index]}
                       passData = {this.state.passData}
-                      onValueChange={(newValue,newIndex) => {
-                                            this._changeLayout(newValue,index)}}
+                      onValueChange={(newValue,newIndex) => {this._changeLayout(newValue,index)}}
                     >
                       { Platform.OS === 'ios' &&((this.state.passData[index]).map((carMake) => (
                         <PickerItem
@@ -253,8 +256,7 @@ class CPickerroll extends Component {
           style = {[styles.textInput,this.props.inputStyle]}
           ref = 'test'
           multiline={ true }
-          onFocus={() => { this._setEventBegin()
-                   }}
+          onFocus={() => { this._setEventBegin()}}
           placeholder={this.state.inputValue}
           value={this.state.inputValue}
         />

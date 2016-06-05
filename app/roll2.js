@@ -24,6 +24,7 @@ class CPickroll extends Component {
 
   constructor(props, context){
     super(props, context);
+    this._move = this._move.bind(this);
     this.state = this._stateFromProps(props);
   }
 
@@ -121,24 +122,23 @@ class CPickroll extends Component {
 
       upItems[index] = <Text
         key={'up'+index}
+        className={'up'+index}
         style={[styles.upText, this.state.itemStyle]}
-        onPress={() => {
-									this._moveTo(index);
-								}} >
+        onPress={() => {this._moveTo(index);}} >
         {item.label}
       </Text>;
 
       middleItems[index] = <Text
         key={'mid'+index}
+        className={'mid'+index}
         style={[styles.middleText, this.state.itemStyle]}>{item.label}
       </Text>;
 
       downItems[index] = <Text
         key={'down'+index}
+        className={'down'+index}
         style={[styles.downText, this.state.itemStyle]}
-        onPress={() => {
-										this._moveTo(index);
-									}} >
+        onPress={() => {this._moveTo(index);}} >
         {item.label}
       </Text>;
 
@@ -150,6 +150,7 @@ class CPickroll extends Component {
     var curItem = this.state.items[this.index];
     // this.setState({selectedIndex:this.index});
     this.state.onValueChange && this.state.onValueChange(curItem.value);
+    return curItem;
   }
 
   render(){
