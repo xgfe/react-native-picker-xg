@@ -185,9 +185,8 @@ class TpickerEx extends Component {
           visible = {false}
           transparent = {true}
           onResult = {(str)=>{
-                                this.setState({str:str});
-
-                                }}
+            this.setState({str:str});
+          }}
         >
         </Cpicker>
         <Cpicker

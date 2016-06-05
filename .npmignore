@@ -1,7 +1,6 @@
 android
 ios
 .*
-app/setup.js
 node_modules
 .idea
 show.gif
