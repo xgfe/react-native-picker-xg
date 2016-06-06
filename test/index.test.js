@@ -12,7 +12,7 @@ import {
   Text,
   PickerIOS
 } from 'react-native';
-import {shallow} from 'enzyme';
+import {shallow,mount} from 'enzyme';
 import {expect} from 'chai';
 import sinon from 'sinon';
 import Cpicker from '../app/csetup';
@@ -34,19 +34,6 @@ describe('DOM TEST', () => {
     expect(wrapper.find(TextInput)).to.have.length(1);
     expect(wrapper.find(Text)).to.have.length(2);
   });
-  // it("check more wheels", () => {
-  //   let level2Data = {
-  //     "四川":["w","e","q"],
-  //     "浙江":["ww","ee","qq"],
-  //   }
-  //   const wrapper = shallow(<Cpicker
-  //     level = {2}
-  //     selectIndex = {[0,1]}
-  //     data = {level2Data}
-  //   /> );
-  //   expect(wrapper.find(CPicker)).to.have.length(2);
-  //   expect(wrapper.find(PickerItem)).to.have.length(5);
-  // })
 });
 
 describe('STATE TEST', () => {
@@ -93,6 +80,7 @@ describe('SET MODAL VISIBLE', () => {
 describe('SET EVENT BEGIN', () => {
   it("check the _setEventBegin function", () => {
     let spy = sinon.spy();
+    let spy1 = sinon.spy();
     let level2Data = {
       "四川":["w","e","q"],
       "浙江":["ww","ee","qq"],
@@ -102,6 +90,12 @@ describe('SET EVENT BEGIN', () => {
       selectIndex = {[0,1]}
       data = {level2Data}
     /> );
+    const wrapper1 = shallow(<Cpicker
+      enable = {false}
+      level = {2}
+      selectIndex = {[0,1]}
+      data = {level2Data}
+    />)
     let cpicker = wrapper.instance();
     cpicker.refs = {
       test: {
@@ -115,6 +109,10 @@ describe('SET EVENT BEGIN', () => {
     expect(returnValue['saveChoseValue']).to.eql(wrapper.state("selectedValue"));
     expect(returnValue['saveData']).to.eql(wrapper.state("passData"));
     expect(returnValue['saveIndex']).to.eql(wrapper.state("selectIndex"));
+    let cpicker1 = wrapper1.instance();
+    cpicker1._setModalVisible = spy1;
+    cpicker1._setEventBegin();
+    expect(cpicker1._setModalVisible.callCount).to.equal(0);
   })
 })
 
@@ -134,6 +132,21 @@ describe("CHANGE ANIMATE STATUS", () => {
     });
     cpicker._changeAnimateStatus("cancel");
     expect(wrapper.state('visible')).to.equal(false);
+    let level2Data = {
+      "四川":["w","e","q"],
+      "浙江":["ww","ee","qq"],
+    }
+    let spy = sinon.spy();
+    const wrapper1 = mount(<Cpicker
+      level = {2}
+      selectIndex = {[0,1]}
+      data = {level2Data}
+      onResult = {() => {}}
+    /> );
+    let cpicker1 = wrapper1.instance();
+    wrapper1.setProps({ onResult: spy });
+    cpicker1._changeAnimateStatus('confirm');
+    expect(spy.callCount).to.equal(1);
   })
 })
 
@@ -233,6 +246,41 @@ describe("CHANGE LAYOUT", () => {
     expect(wrapper.state('passData')).to.eql([['四川','浙江'],['ww','ee','qq']]);
     expect(wrapper.state('selectIndex')).to.eql([1,0]);
     expect(wrapper.state('selectedValue')).to.eql(['浙江','ww']);
+    let level3Data =
+      {
+        "四川":{
+          "成都":["青羊区","武侯区","温江区"],
+          "绵阳":["绵阳中学","核弹基地"],
+          "广安":["容县","武胜"]
+        },
+        "浙江":{
+         "杭州":["西湖","银泰","玉泉"],
+         "绍兴":["X1","X2","X3"],
+          "place":["Y1","Y2","Y3","Y4","Y5"],
+        },
+        "some":{
+         "place1":["Z1","Z2","Z3"],
+          "place2":["Z4","Z5","Z6","Z7"],
+          "place3":["A1","A2","A3","A4","A5","A6"],
+        }
+      }
+    const wrapper1 = shallow(<Cpicker
+      data={level3Data}
+      level={3}/>)
+    let cpicker1 = wrapper1.instance();
+    cpicker1._changeLayout("浙江",0);
+    expect(wrapper1.state('passData')).to.eql([['四川','浙江',"some"],['杭州','绍兴','place'],['西湖','银泰','玉泉']]);
+    expect(wrapper1.state('selectIndex')).to.eql([1,0,0]);
+    expect(wrapper1.state('selectedValue')).to.eql(['浙江','杭州','西湖']);
+    const wrapper2 = shallow(<Cpicker
+      selectIndex={[0,0,0]}
+      data={level3Data}
+      level={3}/>)
+    let cpicker2 = wrapper2.instance();
+    cpicker2._changeLayout("温江区",2);
+    expect(wrapper2.state('passData')).to.eql([['四川','浙江',"some"],['成都','绵阳','广安'],['青羊区','武侯区','温江区']]);
+    expect(wrapper2.state('selectIndex')).to.eql([0,0,2]);
+    expect(wrapper2.state('selectedValue')).to.eql(['四川','成都','温江区']);
   })
 })
 
@@ -280,7 +328,10 @@ describe("MOVETO", () => {
     pickRoll._moveTo(0);
     expect(pickRoll._move.calledWith(40)).to.equal(true);
     expect(pickRoll.index).to.equal(0);
-
+    pickRoll.isMoving = true;
+    pickRoll._moveTo(0);
+    let returnValue = pickRoll._moveTo(0);
+    expect(returnValue).to.equal("you are moving");
   })
 })
 
@@ -313,11 +364,21 @@ describe("HANDLEPAN RESPONDER", () => {
     pickRoll.isMoving = false;
     pickRoll._handlePanResponderMove({},{dy:10});
     expect(pickRoll._move.calledWith(10)).to.equal(true);
-    pickRoll._handlePanResponderMove({},{dy:-10});
-    expect(pickRoll._move.calledWith(10)).to.equal(true);
+
+    pickRoll._handlePanResponderMove({},{dy:90});
+    expect(pickRoll._move.calledWith(40)).to.equal(true);
+
     pickRoll.index = 0;
+    pickRoll._handlePanResponderMove({},{dy:-50});
+    expect(pickRoll._move.calledWith(-40)).to.equal(true);
+
+    pickRoll._handlePanResponderMove({},{dy:-20});
+    expect(pickRoll._move.calledWith(-20)).to.equal(true);
+
+    pickRoll.isMoving = true;
+    let returnValue = pickRoll._handlePanResponderMove({},{dy:10});
     pickRoll._handlePanResponderMove({},{dy:10});
-    expect(pickRoll._move.calledWith(0)).to.equal(true);
+    expect(returnValue).to.equal("you are moving");
   })
 })
 
@@ -334,6 +395,10 @@ describe("HANDLEPAN RESPONDERRELEASE", () => {
     pickRoll._handlePanResponderRelease();
     expect(pickRoll._move.calledWith(0)).to.equal(true);
     expect(pickRoll.index).to.equal(2);
+    pickRoll.middleHeight = 50;
+    pickRoll._handlePanResponderRelease();
+    expect(pickRoll.index).to.equal(1);
+
   })
 })
 
@@ -386,7 +451,7 @@ describe("EVENT TEST", () => {
   it("check the roll2 dom-like event", () => {
     let spy = sinon.spy();
     let props = {
-      data: ["四川","浙江","浙江"],
+      data: ["四川","浙江","江苏"],
     };
     const wrapper = shallow(<CPickroll data = {props.data}/>);
     let pickRoll = wrapper.instance();
@@ -395,5 +460,15 @@ describe("EVENT TEST", () => {
     expect(pickRoll._moveTo.calledOnce).to.equal(true);
     wrapper.find(Text).find(".down1").simulate('press');
     expect(pickRoll._moveTo.callCount).to.equal(2);
+  })
+})
+
+describe("CHECK THE REF", () => {
+  it("check the ref", () => {
+    let props = {
+      data: ["四川","浙江","江苏","重庆"],
+    };
+    const wrapper = mount(<CPickroll data = {props.data}/>);
+    let pickRoll = wrapper.instance();
   })
 })

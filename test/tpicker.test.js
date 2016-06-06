@@ -18,7 +18,8 @@ import sinon from 'sinon';
 import Tpicker from '../app/setup3';
 import TPickroll from '../app/roll';
 
-let TPicker = Platform.OS === 'ios' ? PickerIOS : TPickroll;
+let PickRoll = Platform.OS === 'ios' ? PickerIOS : Pickroll;
+let PickerItem = PickRoll.Item;
 class Item extends Component {
   render() {
     return null;
@@ -153,6 +154,11 @@ describe('SET EVENT BEGIN', () => {
     }];
     const wrapper = shallow( <Tpicker data = {wheel1}/>);
     let tpicker = wrapper.instance();
+    const wrapper1 = shallow(<Tpicker
+      enable = {false}
+      data = {wheel1}
+    />)
+    let tpicker1 = wrapper1.instance();
     tpicker.refs = {
       test: {
         blur: () => {}
@@ -164,6 +170,9 @@ describe('SET EVENT BEGIN', () => {
     let returnValue = tpicker._setEventBegin();
     expect(returnValue['valueCount']).to.eql(wrapper.state("selectedValue"));
     expect(returnValue['indexCount']).to.eql(wrapper.state("selectIndex"));
+    let returnValue1 = tpicker1._setEventBegin();
+    tpicker1._setEventBegin();
+    expect(returnValue1).to.equal("it's disabled");
   })
 })
 
@@ -200,6 +209,11 @@ describe("CHANGE ANIMATE STATUS", () => {
     expect(wrapper.state('visible')).to.equal(false);
     expect(returnValue.indexCount).to.eql(wrapper.state('selectIndex'));
     expect(returnValue.valueCount).to.eql(wrapper.state('selectedValue'));
+    let spy = sinon.spy();
+    const wrapper1 = shallow( <Tpicker data = {wheel1} onResult={spy}/>);
+    let tpicker1 = wrapper1.instance();
+    tpicker1._changeAnimateStatus('confirm');
+    expect(spy.callCount).to.equal(1);
   })
 })
 
@@ -313,6 +327,10 @@ describe("MOVETO", () => {
     pickRoll._moveTo(0);
     expect(pickRoll._move.calledWith(40)).to.equal(true);
     expect(pickRoll.index).to.equal(0);
+    pickRoll.isMoving = true;
+    pickRoll._moveTo(0);
+    let returnValue = pickRoll._moveTo(0);
+    expect(returnValue).to.equal("you are moving");
   })
 })
 describe("HANDLEPAN RESPONDER", () => {
@@ -344,6 +362,10 @@ describe("HANDLEPAN RESPONDER", () => {
     pickRoll.index = 0;
     pickRoll._handlePanResponderMove({},{dy:10});
     expect(pickRoll._move.calledWith(0)).to.equal(true);
+    pickRoll.isMoving = true;
+    let returnValue = pickRoll._handlePanResponderMove({},{dy:10});
+    pickRoll._handlePanResponderMove({},{dy:10});
+    expect(returnValue).to.equal("you are moving");
   })
 })
 
@@ -414,7 +436,8 @@ describe("EVENT TEST", () => {
         name: '4月',
       },
     }];
-    const wrapper = shallow( <Tpicker data = {wheel1}/>);
+
+    const wrapper = shallow( <Tpicker data = {wheel1} selectIndex={[0]}/>);
     let tpicker = wrapper.instance();
     tpicker._setEventBegin = spy;
     tpicker._confirmChose = spy1;
@@ -427,6 +450,10 @@ describe("EVENT TEST", () => {
     expect(tpicker._setModalVisible.calledOnce).to.equal(true);
     wrapper.find(Modal).simulate('RequestClose');
     expect(tpicker._setModalVisible.callCount).to.equal(2);
+    expect(wrapper.find(PickRoll).find(".test0")).to.have.length(1);
+    wrapper.find(PickRoll).find(".test0").props().onValueChange("alfa1",1);
+    expect(wrapper.state("selectIndex")).to.eql([1]);
+    expect(wrapper.state("selectedValue")).to.eql(["alfa1"]);
   })
 
   it("check the roll dom-like event", () => {

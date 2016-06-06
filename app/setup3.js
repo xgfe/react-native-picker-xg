@@ -105,6 +105,8 @@ class TMPicker extends Component {
       }
       str = '';
       return {"valueCount":valueCount,"indexCount":indexCount};
+    }else{
+      return "it's disabled"
     }
   }
   _setModalVisible(visible,type) {
@@ -178,6 +180,7 @@ class TMPicker extends Component {
                       <PickRoll
                         key = {index}
                         style = {{flex:1}}
+                        className = {"test"+index}
                         selectIndex = {this.state.selectIndex[index]}
                         selectedValue={this.state.selectedValue[index]}
                         pickerStyle = {{flex:1}}
