@@ -1,4 +1,4 @@
-###The React-Native-Picker [![Coverage Status](https://coveralls.io/repos/github/xgfe/react-native-picker-xg/badge.svg?branch=master)](https://coveralls.io/github/xgfe/react-native-picker-xg?branch=master)
+###The React-Native-Picker [![Build Status](https://travis-ci.org/xgfe/react-native-picker-xg.svg?branch=master)](https://travis-ci.org/xgfe/react-native-picker-xg) [![Coverage Status](https://coveralls.io/repos/github/xgfe/react-native-picker-xg/badge.svg?branch=master)](https://coveralls.io/github/xgfe/react-native-picker-xg?branch=master)
 react native Picker component for both Android and iOS.
 
 ###The environment
