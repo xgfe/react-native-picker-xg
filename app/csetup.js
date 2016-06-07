@@ -1,4 +1,5 @@
 import React, { Component,  PropTypes} from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   View,
   Text,
@@ -14,10 +15,11 @@ import {
   Modal,
 } from 'react-native';
 
-
 import CPickroll from './roll2';
+import styles from './style';
 let CPicker = Platform.OS === 'ios' ? PickerIOS : CPickroll;
 let PickerItem = CPicker.Item;
+
 let height = Dimensions.get('window').height;
 let top = height - 250;
 let str = '';
@@ -39,6 +41,7 @@ class CPickerroll extends Component {
     this._changeAnimateStatus = this._changeAnimateStatus.bind(this);
     this.state = this._stateFromProps(props);
     this.state.animatedHeight = new Animated.Value(height);
+    this.state.flex = new Animated.Value(0);
   }
 
   _stateFromProps(props){
@@ -70,24 +73,24 @@ class CPickerroll extends Component {
       }
     }
 
-    let selfStyle = props.selfStyle;
-    let inputStyle = props.inputStyle;
     let animationType = props.animationType||'none';
     let transparent = typeof props.transparent === 'undefined' ? true:props.transparent;
     let visible = typeof props.visible === 'undefined' ? false:props.visible;
     let enable = typeof props.enable === 'undefined' ? true:props.enable;
     let inputValue = props.inputValue || 'please chose';
+    let confirmBtnText = props.confirmBtnText || '确定';
+    let cancelBtnText = props.cancelBtnText || '取消';
     return {
-      selfStyle,
       visible,
       transparent,
       animationType,
       enable,
       inputValue,
-      inputStyle,
       passData,
       selectIndex,
       selectedValue,
+      confirmBtnText,
+      cancelBtnText,
     };
   }
   _confirmChose(){
@@ -100,6 +103,7 @@ class CPickerroll extends Component {
     return str;
   }
   _cancelChose(){
+    console.log("nono");
     this.state.selectIndex.length=0;
     this.state.passData.length = 0;
     this.state.selectedValue.length = 0;
@@ -141,13 +145,13 @@ class CPickerroll extends Component {
     if(visible){
       this.setState({visible: visible});
       Animated.timing(
-        this.state.animatedHeight,
-        {toValue: top}
+        this.state.flex,
+        {toValue: 1}
       ).start();
     }else{
       Animated.timing(
-        this.state.animatedHeight,
-        {toValue: height}
+        this.state.flex,
+        {toValue: 0}
       ).start(() => this._changeAnimateStatus(type))
     }
   }
@@ -193,11 +197,9 @@ class CPickerroll extends Component {
   render(){
 
     let modalBackgroundStyle = {
-      backgroundColor: this.state.transparent ? 'rgba(0, 0, 0, 0.5)' : '#f5fcff',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)' ,
     };
-    let innerContainerTransparentStyle = this.state.transparent
-      ? {backgroundColor: '#fff', padding: 20}
-      : null;
+    let innerContainerTransparentStyle = {backgroundColor: '#fff'};
 
     return (
       <View style={styles.container}>
@@ -207,29 +209,31 @@ class CPickerroll extends Component {
           visible={this.state.visible}
           onRequestClose={() => {this._setModalVisible(false)}}
         >
-          <View style={[styles.modalcontainer, modalBackgroundStyle]}>
-            <Animated.View style={[styles.innerContainer, innerContainerTransparentStyle,{marginTop:this.state.animatedHeight}]}>
-              <View style={styles.nav}>
+          <View style={[styles.modalContainer]}>
+            <View style={styles.test}></View>
+            <Animated.View style={[styles.innerContainer,{flex:this.state.flex}]}>
+              <View style={[styles.nav,this.props.navStyle]}>
                 <TouchableOpacity  style={styles.confirm}>
                   <Text className={"confirm"} onPress={() => {this. _confirmChose()}}
-                        style={{textAlign:'left',marginLeft:10}} >Confirm</Text>
+                        style={[styles.confirmBtnStyle,this.props.confirmBtnStyle]} >{this.state.confirmBtnText}</Text>
                 </TouchableOpacity>
+                <Text style={[styles.pickerName,this.props.pickerNameStyle]}>{this.props.pickerName}</Text>
                 <TouchableOpacity style={styles.cancel} >
                   <Text
                     className={"cancel"}
-                    style={{textAlign:'right',marginRight:10}}
-                    onPress={() => {this._cancelChose()
-                    }}
-                  >Cancel</Text>
+                    onPress={() => {this._cancelChose()}}
+                    style={[styles.cancelBtnStyle,this.props.cancelBtnStyle]}
+                  >{this.state.cancelBtnText}</Text>
                 </TouchableOpacity>
               </View>
-              <View style={[styles.pickContainer, this.state.selfStyle]} >
+              <View style={[styles.pickContainer]} >
                 {this.state.passData.map((item,index) =>{
                   return(
                     <CPicker
                       key = {index}
                       className = {"test"+index}
                       style = {{flex:1}}
+                      itemStyle = {{flex:1}}
                       selectIndex = {this.state.selectIndex[index]}
                       selectedValue = {this.state.selectedValue[index]}
                       pickerStyle = {{flex:1}}
@@ -251,15 +255,19 @@ class CPickerroll extends Component {
             </Animated.View>
           </View>
         </Modal>
+        <View style={[styles.outerInput,this.props.inputStyle]}>
         <TextInput
+          underlineColorAndroid={'transparent'}
           editable = {this.state.enable}
-          style = {[styles.textInput,this.props.inputStyle]}
+          style = {[styles.textInput,this.props.textStyle]}
           ref = 'test'
-          multiline={ true }
           onFocus={() => { this._setEventBegin()}}
           placeholder={this.state.inputValue}
           value={this.state.inputValue}
-        />
+        /><TouchableOpacity style={styles.iconOuter}onPress={() => { this._setEventBegin()}}>
+          <Icon style={styles.container2Icon} name="sort-desc" color="grey" size={20}/>
+          </TouchableOpacity>
+          </View>
       </View>
 
     );
@@ -268,54 +276,7 @@ class CPickerroll extends Component {
 
 
 
-let styles = StyleSheet.create({
 
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  nav: {
-    flex: 1,
-    marginTop:10,
-    flexDirection: 'row',
-    height: 28,
-    alignSelf: 'stretch',
-    backgroundColor:'white',
-  },
-  confirm: {
-    flex:1,
-  },
-  cancel: {
-    flex:1,
-
-  },
-  pickContainer:{
-    flex:1,
-    justifyContent: 'center',
-    alignSelf:'stretch',
-    flexDirection:'row',
-  },
-  modalcontainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  innerContainer: {
-    flex:1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    flexDirection: 'column',
-  },
-  textInput:{
-    padding:10,
-    borderBottomWidth:1,
-    borderBottomColor: 'grey',
-    height: 40,
-  }
-
-
-});
 
 
 export default CPickerroll;

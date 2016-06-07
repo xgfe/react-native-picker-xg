@@ -1,4 +1,5 @@
 import React, { Component,PropTypes } from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {
     View,
     Text,
@@ -16,6 +17,7 @@ import {
 
 
 import Pickroll from './roll';
+import styles from './style';
 
 let PickRoll = Platform.OS === 'ios' ? PickerIOS : Pickroll;
 let PickerItem = PickRoll.Item;
@@ -57,10 +59,7 @@ class TMPicker extends Component {
         selectedValue.push(Object.keys(item)[selectIndex[index]]);
       })
     }
-    let selfStyle = props.selfStyle;
-    let inputStyle = props.inputStyle;
-    let confirmBtnStyle = props.confirmBtnStyle;
-    let cancelBtnStyle = props.cancelBtnStyle;
+
     let animationType = props.animationType||'none';
     let transparent = typeof props.transparent==='undefined'?true:props.transparent;
     let visible = typeof props.visible==='undefined'?false:props.visible;
@@ -69,7 +68,6 @@ class TMPicker extends Component {
     let confirmBtnText = props.confirmBtnText || '确定';
     let cancelBtnText = props.cancelBtnText || '取消';
     return {
-      selfStyle,
       visible,
       transparent,
       animationType,
@@ -77,11 +75,8 @@ class TMPicker extends Component {
       inputValue,
       selectIndex,
       selectedValue,
-      inputStyle,
       confirmBtnText,
       cancelBtnText,
-      confirmBtnStyle,
-      cancelBtnStyle,
     };
   }
   _confirmChose(){
@@ -147,7 +142,7 @@ class TMPicker extends Component {
       backgroundColor: this.state.transparent ? 'rgba(0, 0, 0, 0.5)' : '#f5fcff',
     };
     let innerContainerTransparentStyle = this.state.transparent
-      ? {backgroundColor: '#fff'}
+      ? {backgroundColor: '#fff',padding:20}
       : null;
     return (
       <View style={styles.container}>
@@ -157,17 +152,18 @@ class TMPicker extends Component {
           visible={this.state.visible}
           onRequestClose={() => {this._setModalVisible(false)}}
         >
-          <View style={[styles.modalContainer, modalBackgroundStyle]}>
-            <Animated.View style={[styles.innerContainer, innerContainerTransparentStyle, this.state.selfStyle,{marginTop:this.state.animatedHeight}]}>
+          <View style={[styles.modalContainer]}>
+            <Animated.View style={[styles.innerContainer]}>
               <  View style={styles.nav}>
                 <TouchableOpacity  style={styles.confirm}>
                   <Text className={"confirm"} onPress={() => {this._confirmChose()}}
-                        style={[{textAlign:'left',marginLeft:10},this.state.confirmBtnStyle]} >{this.state.confirmBtnText}</Text>
+                        style={[{textAlign:'left',marginLeft:10},this.props.confirmBtnStyle]} >{this.state.confirmBtnText}</Text>
                 </TouchableOpacity>
+                <Text style={[styles.pickerName,this.props.pickerNameStyle]}>{this.props.pickerName}</Text>
                 <TouchableOpacity style={styles.cancel} >
                   <Text
                     className={"cancel"}
-                    style={[{textAlign:'right',marginRight:10},this.state.cancelBtnStyle]}
+                    style={[{textAlign:'right',marginRight:10},this.props.cancelBtnStyle]}
                     onPress={() => {this._setModalVisible(false,'cancel')
                     }}
                   >{this.state.cancelBtnText}</Text>
@@ -208,63 +204,21 @@ class TMPicker extends Component {
             </Animated.View>
           </View>
         </Modal>
+        <View style={[styles.outerInput,this.props.inputStyle]}>
         <TextInput
+          underlineColorAndroid={'transparent'}
           editable = {this.state.enable}
-          multiline={ true }
-          style = {[styles.textInput,this.props.inputStyle]}
+          style = {[styles.textInput,this.props.textStyle]}
           ref = 'test'
           onFocus={() => { this._setEventBegin()}}
           placeholder={this.state.inputValue}
           value={this.state.inputValue}
-        />
+        /><TouchableOpacity style={styles.iconOuter}onPress={() => { this._setEventBegin()}}>
+        <Icon style={styles.container2Icon} name="sort-desc" color="grey" size={20}/>
+      </TouchableOpacity>
+          </View>
       </View>
     );
   }}
-
-
-let styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  nav: {
-    flex: 1,
-    marginTop:10,
-    flexDirection: 'row',
-    height: 28,
-    alignSelf: 'stretch',
-    backgroundColor:'white',
-  },
-  confirm: {
-    flex:1,
-  },
-  cancel: {
-    flex:1,
-  },
-  pickContainer:{
-    flex:1,
-    justifyContent: 'center',
-    alignSelf:'stretch',
-    flexDirection:'row',
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  innerContainer: {
-    flex:1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    flexDirection: 'column',
-  },
-  textInput:{
-    padding:10,
-    borderBottomWidth:1,
-    borderBottomColor: 'grey',
-    height: 40,
-  }
-});
 
 export default TMPicker;

@@ -36,7 +36,7 @@ class CPickroll extends Component {
     let selectedIndex = props.selectIndex;
     let items = [];
     let pickerStyle = props.pickerStyle;
-    let itemStyle = props.itemStyle;
+    let itemStyle = props.itemAndroidStyle;
     let onValueChange = props.onValueChange;
     props.data.map((child,index) =>{
       child === props.selectedValue && ( selectedIndex = index );
@@ -172,7 +172,7 @@ class CPickroll extends Component {
 
     return (
 
-      <View style={[styles.container, this.state.pickerStyle]} {...this._panResponder.panHandlers}>
+      <View style={[styles.container, this.state.pickerStyle,{flex:1}]} {...this._panResponder.panHandlers}>
 
         <View style={styles.up}>
           <View style={[styles.upView, upViewStyle]} ref={(up) => { this.up = up }} >
