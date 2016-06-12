@@ -1,5 +1,15 @@
-<a name="0.0.4"></a>
-## [0.0.4](https://github.com/xgfe/react-native-picker-xg/compare/v0.0.1...v0.0.4) (2016-06-12)
+<a name="0.0.7"></a>
+## [0.0.7](https://github.com/xgfe/react-native-picker-xg/compare/v0.0.2...v0.0.7) (2016-06-12)
+
+
+### Bug Fixes
+
+* **location:** remove the unneeded dependencies ([e8a293e](https://github.com/xgfe/react-native-picker-xg/commit/e8a293e))
+
+
+
+<a name="0.0.2"></a>
+## [0.0.2](https://github.com/xgfe/react-native-picker-xg/compare/v0.0.1...v0.0.2) (2016-06-12)
 
 
 ### Bug Fixes
@@ -10,8 +20,8 @@
 
 ### Features
 
+* **location:** add more test ([2136e85](https://github.com/xgfe/react-native-picker-xg/commit/2136e85))
 * **location:** add the iconStyle properties ([d181481](https://github.com/xgfe/react-native-picker-xg/commit/d181481))
-* **location:** add the unit test ([ea6f368](https://github.com/xgfe/react-native-picker-xg/commit/ea6f368))
 * **location:** add unit test, add note, add pushOpera function, change some exposed properties. ([711d491](https://github.com/xgfe/react-native-picker-xg/commit/711d491))
 
 
@@ -33,7 +43,7 @@
 ### Features
 
 * **location:** change the location of the readme ([fe48dbc](https://github.com/xgfe/react-native-picker-xg/commit/fe48dbc))
-* **location:** add a onResult func to expose the result ([8050882](https://github.com/xgfe/react-native-picker-xg/commit/8050882))
+* **location:** add a onResult fun to expose the result ([8050882](https://github.com/xgfe/react-native-picker-xg/commit/8050882))
 * **location:** add animation ([eceeaa3](https://github.com/xgfe/react-native-picker-xg/commit/eceeaa3))
 * **location:** add propTypes check ([e5c19ac](https://github.com/xgfe/react-native-picker-xg/commit/e5c19ac))
 * **location:** add readme ([aa9e3c5](https://github.com/xgfe/react-native-picker-xg/commit/aa9e3c5))
@@ -45,7 +55,6 @@
 * **location:** cancel function ([ffd9d03](https://github.com/xgfe/react-native-picker-xg/commit/ffd9d03))
 * **location:** cascade wheel ([6dd50c5](https://github.com/xgfe/react-native-picker-xg/commit/6dd50c5))
 * **location:** fix the layout bug and use a strange way to set the width = = ([9a4755d](https://github.com/xgfe/react-native-picker-xg/commit/9a4755d))
-
 
 
 
