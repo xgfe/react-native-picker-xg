@@ -10,13 +10,26 @@ import {
   Modal,
   TextInput,
   Text,
-  PickerIOS
+  PickerIOS,
+  Image
 } from 'react-native';
 import {shallow,mount} from 'enzyme';
 import {expect} from 'chai';
 import sinon from 'sinon';
 import Cpicker from '../app/csetup';
 import CPickroll from '../app/roll2';
+
+// hack require for require image
+var m = require('module');
+var originalLoader = m._load;
+
+m._load = function (request, parent, isMain) {
+  var file = m._resolveFilename(request, parent);
+  if (file.match(/.jpeg|.jpg|.png$/)) {
+    return {uri: file};
+  }
+  return originalLoader(request, parent, isMain);
+};
 
 let CPicker = Platform.OS === 'ios' ? PickerIOS : CPickroll;
 let PickerItem = CPicker.Item;
@@ -26,13 +39,24 @@ class Item extends Component {
   }
 }
 PickerIOS.Item = Item;
+describe("WILL RECEIVE PROPS", () => {
+  it("check the componentWillReceiveProps", () => {
+    let props = {
+      data: ["四川","浙江"],
+      selectIndex: 0,
+    };
+    const wrapper = shallow(<CPickroll data = {props.data}/>);
+    wrapper.setProps({ selectIndex: 1 });
+    expect(wrapper.state("selectedIndex")).to.equal(1);
+  })
+})
 describe('DOM TEST', () => {
   it("check the dom", () => {
     const wrapper = shallow( <Cpicker/>);
     expect(wrapper.find(Modal)).to.have.length(1);
-    expect(wrapper.find(View)).to.have.length(4);
+    expect(wrapper.find(View)).to.have.length(5);
     expect(wrapper.find(TextInput)).to.have.length(1);
-    expect(wrapper.find(Text)).to.have.length(2);
+    expect(wrapper.find(Text)).to.have.length(3);
   });
 });
 
@@ -50,7 +74,6 @@ describe('STATE TEST', () => {
   it("check the state value", () => {
     expect(wrapper.state('inputValue')).to.equal('please chose');
     expect(wrapper.state('animationType')).to.equal('none');
-    expect(wrapper.state('transparent')).to.equal(true);
     expect(wrapper.state('visible')).to.equal(false);
     expect(wrapper.state('enable')).to.equal(true);
     expect(wrapper.state('selectIndex')).to.eql([0,1]);
@@ -205,7 +228,6 @@ describe("STATE FROM PROPS", () => {
     expect(returnValue.selectedValue).to.eql(['四川','w']);
     expect(returnValue.selfStyle).to.equal(undefined);
     expect(returnValue.visible).to.equal(false);
-    expect(returnValue.transparent).to.equal(true);
     expect(returnValue.animationType).to.equal('none');
     expect(returnValue.enable).to.equal(true);
     expect(returnValue.inputValue).to.equal('please chose');
@@ -225,7 +247,6 @@ describe("STATE FROM PROPS", () => {
     let returnValue1 = cpicker1._stateFromProps(props1);
     expect(returnValue1.selectIndex).to.eql([1,2]);
     expect(returnValue1.visible).to.equal(true);
-    expect(returnValue1.transparent).to.equal(false);
     expect(returnValue1.animationType).to.equal('fade');
     expect(returnValue1.enable).to.equal(false);
     expect(returnValue1.inputValue).to.equal('just a test');
@@ -447,6 +468,8 @@ describe("EVENT TEST", () => {
     expect(cpicker._setModalVisible.callCount).to.equal(1);
     wrapper.find(CPicker).find(".test1").simulate("ValueChange");
     expect(cpicker._changeLayout.callCount).to.equal(1);
+    wrapper.find(".arrowDown").simulate("press");
+    expect(cpicker._setEventBegin.callCount).to.equal(2);
   })
   it("check the roll2 dom-like event", () => {
     let spy = sinon.spy();
@@ -470,5 +493,6 @@ describe("CHECK THE REF", () => {
     };
     const wrapper = mount(<CPickroll data = {props.data}/>);
     let pickRoll = wrapper.instance();
+    console.log(wrapper.refs);
   })
 })
