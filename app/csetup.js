@@ -59,6 +59,10 @@ class CPickerroll extends Component {
     pickerName: PropTypes.string,
     //输入框内部文字初始值
     inputValue: PropTypes.string,
+    //确定按钮的文字
+    confirmBtnText: PropTypes.string,
+    //取消按钮的文字
+    cancelBtnText: PropTypes.string,
     //确定几层菜单,必填
     level: PropTypes.number,
     //确定默认选择的
