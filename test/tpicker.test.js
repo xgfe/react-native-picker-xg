@@ -10,13 +10,26 @@ import {
   Modal,
   TextInput,
   Text,
-  PickerIOS
+  PickerIOS,
+  Image,
 } from 'react-native';
 import {shallow} from 'enzyme';
 import {expect} from 'chai';
 import sinon from 'sinon';
 import Tpicker from '../app/setup3';
 import TPickroll from '../app/roll';
+
+// hack require for require image
+var m = require('module');
+var originalLoader = m._load;
+
+m._load = function (request, parent, isMain) {
+  var file = m._resolveFilename(request, parent);
+  if (file.match(/.jpeg|.jpg|.png$/)) {
+    return {uri: file};
+  }
+  return originalLoader(request, parent, isMain);
+};
 
 let PickRoll = Platform.OS === 'ios' ? PickerIOS : Pickroll;
 let PickerItem = PickRoll.Item;
@@ -45,9 +58,9 @@ describe('DOM TEST', () => {
     }];
     const wrapper = shallow( <Tpicker data = {wheel1}/>);
     expect(wrapper.find(Modal)).to.have.length(1);
-    expect(wrapper.find(View)).to.have.length(4);
+    expect(wrapper.find(View)).to.have.length(5);
     expect(wrapper.find(TextInput)).to.have.length(1);
-    expect(wrapper.find(Text)).to.have.length(2);
+    expect(wrapper.find(Text)).to.have.length(3);
   });
 });
 
@@ -68,12 +81,10 @@ describe('STATE TEST', () => {
       },
     }];
     const wrapper = shallow( <Tpicker data = {wheel1}/>);
-    const tpicker = wrapper.instance();
     expect(wrapper.state('selfStyle')).to.equal(undefined);
     expect(wrapper.state('inputStyle')).to.equal(undefined);
     expect(wrapper.state('inputValue')).to.equal('please chose');
     expect(wrapper.state('animationType')).to.equal('none');
-    expect(wrapper.state('transparent')).to.equal(true);
     expect(wrapper.state('visible')).to.equal(false);
     expect(wrapper.state('enable')).to.equal(true);
     expect(wrapper.state('selectIndex')).to.eql([0]);
@@ -92,7 +103,6 @@ describe('STATE TEST', () => {
                             />);
     expect(wrapper1.state('inputValue')).to.equal('just a test');
     expect(wrapper1.state('animationType')).to.equal('fade');
-    expect(wrapper1.state('transparent')).to.equal(false);
     expect(wrapper1.state('visible')).to.equal(true);
     expect(wrapper1.state('enable')).to.equal(false);
     expect(wrapper1.state('selectIndex')).to.eql([1]);
@@ -172,7 +182,7 @@ describe('SET EVENT BEGIN', () => {
     expect(returnValue['indexCount']).to.eql(wrapper.state("selectIndex"));
     let returnValue1 = tpicker1._setEventBegin();
     tpicker1._setEventBegin();
-    expect(returnValue1).to.equal("it's disabled");
+    expect(returnValue1).to.equal("it is disabled");
   })
 })
 
@@ -454,6 +464,8 @@ describe("EVENT TEST", () => {
     wrapper.find(PickRoll).find(".test0").props().onValueChange("alfa1",1);
     expect(wrapper.state("selectIndex")).to.eql([1]);
     expect(wrapper.state("selectedValue")).to.eql(["alfa1"]);
+    wrapper.find(".arrowDown").simulate("press");
+    expect(tpicker._setEventBegin.callCount).to.equal(2);
   })
 
   it("check the roll dom-like event", () => {

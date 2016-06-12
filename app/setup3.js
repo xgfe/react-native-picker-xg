@@ -1,50 +1,91 @@
+/**
+ * 依赖引用
+ */
 import React, { Component,PropTypes } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {
     View,
     Text,
-    StyleSheet,
     Dimensions,
-    PixelRatio,
-    PanResponder,
     TouchableOpacity,
     TextInput,
     Animated,
     Platform,
     PickerIOS,
-    Modal
+    Modal,
+    Image,
 } from 'react-native';
-
-
 import Pickroll from './roll';
-import styles from './style';
+import {styles} from './style';
 
+/**
+ * 平台兼容
+ */
 let PickRoll = Platform.OS === 'ios' ? PickerIOS : Pickroll;
 let PickerItem = PickRoll.Item;
 
+/**
+ * 全局变量声明
+ */
 let height = Dimensions.get('window').height;
-let top = height - 250;
 let valueCount = [];
 let indexCount = [];
 let str = '';
 
+/**
+ * 组件扩展
+ */
 class TMPicker extends Component {
+
+  /**
+   * 类型约束
+   * @type {{data: Requireable<any>, visible: Requireable<any>, transparent: Requireable<any>, animationType: Requireable<any>, enable: Requireable<any>, inputValue: Requireable<any>}}
+     */
   static propTypes = {
+    //传递的数据
     data: PropTypes.array,
-    visible: PropTypes.bool,
-    transparent: PropTypes.bool,
-    animationType: PropTypes.string,
-    enable: PropTypes.bool,
+    //picker名称样式
+    pickerNameStyle: Text.propTypes.style,
+    //取消按钮样式
+    cancelBtnStyle: Text.propTypes.style,
+    //确认按钮样式
+    confirmBtnStyle: Text.propTypes.style,
+    //输入框样式
+    inputStyle: View.propTypes.style,
+    //滚轮头部样式
+    navStyle: View.propTypes.style,
+    //输入框内部字体样式
+    textStyle: Text.propTypes.style,
+    //picker的名称
+    pickerName: PropTypes.string,
+    //输入框内部文字初始值
     inputValue: PropTypes.string,
+    //确定默认选择的
+    selectIndex: PropTypes.array,
+    //获取选择的内容
+    onResult: PropTypes.func,
+    //picker是否能操作
+    enable: PropTypes.bool
   };
 
+  /**
+   * 构造函数
+   * @param props {object} 继承的属性
+   * @param context 上下文
+     */
   constructor(props, context){
     super(props, context);
     this._changeAnimateStatus = this._changeAnimateStatus.bind(this);
+    this._pushOpera = this._pushOpera.bind(this);
     this.state = this._stateFromProps(props);
     this.state.animatedHeight = new Animated.Value(height);
   }
 
+  /**
+   * 状态初始化
+   * @param props {object} 继承的属性
+   * @returns {{visible: bool, animationType: string, enable: bool, inputValue: string, selectIndex: Array, selectedValue: Array, confirmBtnText: string, cancelBtnText: string}}
+   * @private
+     */
   _stateFromProps(props){
     let selectIndex = [];
     let selectedValue = [];
@@ -59,9 +100,7 @@ class TMPicker extends Component {
         selectedValue.push(Object.keys(item)[selectIndex[index]]);
       })
     }
-
     let animationType = props.animationType||'none';
-    let transparent = typeof props.transparent==='undefined'?true:props.transparent;
     let visible = typeof props.visible==='undefined'?false:props.visible;
     let enable = typeof props.enable==='undefined'?true:props.enable;
     let inputValue = props.inputValue||'please chose';
@@ -69,7 +108,6 @@ class TMPicker extends Component {
     let cancelBtnText = props.cancelBtnText || '取消';
     return {
       visible,
-      transparent,
       animationType,
       enable,
       inputValue,
@@ -79,6 +117,12 @@ class TMPicker extends Component {
       cancelBtnText,
     };
   }
+
+  /**
+   * 确定操作
+   * @returns {string} 选择的数据
+   * @private
+     */
   _confirmChose(){
     this.props.data.map((item,index) =>{
       str = str +  this.props.data[index][this.state.selectedValue[index]].name;
@@ -86,30 +130,50 @@ class TMPicker extends Component {
     this. _setModalVisible(false,'confirm');
     return str;
   }
+
+  /**
+   * 数组操作
+   * @param from {array} 拷贝的数组
+   * @param to {array} 待拷贝的数组
+   * @private
+   */
+  _pushOpera(from,to){
+    to.length = 0;
+    for (let item of from){
+      to.push(item);
+    }
+  }
+
+  /**
+   * 行为触发(整个操作的开始
+   * @returns {*}
+   * @private
+     */
   _setEventBegin(){
     if(this.state.enable){
       this._setModalVisible(true)
       this.refs.test.blur()
-      valueCount.length = 0;
-      indexCount.length = 0;
-      for (let item of this.state.selectIndex){
-        indexCount.push(item);
-      }
-      for(let temp of this.state.selectedValue){
-        valueCount.push(temp);
-      }
+      this._pushOpera(this.state.selectIndex, indexCount);
+      this._pushOpera(this.state.selectedValue,valueCount);
       str = '';
-      return {"valueCount":valueCount,"indexCount":indexCount};
+      return {valueCount: valueCount, indexCount:indexCount};
     }else{
-      return "it's disabled"
+      return 'it is disabled';
     }
   }
+
+  /**
+   * Modal操作
+   * @param visible {bool} 是否可见
+   * @param type {string} 确定操作触发的类型
+   * @private
+     */
   _setModalVisible(visible,type) {
     if(visible){
       this.setState({visible: visible});
       Animated.timing(
         this.state.animatedHeight,
-        {toValue: top}
+        {toValue: height-250}
       ).start();
     }else{
       Animated.timing(
@@ -119,51 +183,50 @@ class TMPicker extends Component {
     }
   }
 
+  /**
+   * 根据触发的状态改变动画的状态
+   * @param type {string} 操作触发的类型
+   * @returns {{indexCount: Array, valueCount: Array}}
+   * @private
+     */
   _changeAnimateStatus(type){
     if(type==='confirm'){this.setState({visible:false,inputValue: str});
       if(this.props.onResult){
         this.props.onResult(str);
       }}
     else if(type==='cancel'){
-      this.state.selectIndex.length = 0;
-      this.state.selectedValue.length = 0;
-      for(let item of indexCount){
-        this.state.selectIndex.push(item);
-      }
-      for(let temp of valueCount){
-        this.state.selectedValue.push(temp);
-      }
+      this._pushOpera(indexCount, this.state.selectIndex);
+      this._pushOpera(valueCount, this.state.selectedValue);
       this.setState({visible:false})
       return {indexCount,valueCount}
     }
   }
+
+  /**
+   * 渲染函数
+   * @returns {XML}
+     */
   render(){
-    let modalBackgroundStyle = {
-      backgroundColor: this.state.transparent ? 'rgba(0, 0, 0, 0.5)' : '#f5fcff',
-    };
-    let innerContainerTransparentStyle = this.state.transparent
-      ? {backgroundColor: '#fff',padding:20}
-      : null;
     return (
       <View style={styles.container}>
         <Modal
           animationType={this.state.animationType}
-          transparent={this.state.transparent}
+          transparent={true}
           visible={this.state.visible}
           onRequestClose={() => {this._setModalVisible(false)}}
         >
           <View style={[styles.modalContainer]}>
-            <Animated.View style={[styles.innerContainer]}>
-              <  View style={styles.nav}>
+            <Animated.View style={[styles.innerContainer,{top:this.state.animatedHeight}]}>
+              <View style={[styles.nav, this.props.navStyle]}>
                 <TouchableOpacity  style={styles.confirm}>
                   <Text className={"confirm"} onPress={() => {this._confirmChose()}}
-                        style={[{textAlign:'left',marginLeft:10},this.props.confirmBtnStyle]} >{this.state.confirmBtnText}</Text>
+                        style={[styles.confirmBtnStyle,this.props.confirmBtnStyle]} >{this.state.confirmBtnText}</Text>
                 </TouchableOpacity>
                 <Text style={[styles.pickerName,this.props.pickerNameStyle]}>{this.props.pickerName}</Text>
                 <TouchableOpacity style={styles.cancel} >
                   <Text
                     className={"cancel"}
-                    style={[{textAlign:'right',marginRight:10},this.props.cancelBtnStyle]}
+                    style={[styles.cancelBtnStyle,this.props.cancelBtnStyle]}
                     onPress={() => {this._setModalVisible(false,'cancel')
                     }}
                   >{this.state.cancelBtnText}</Text>
@@ -213,8 +276,8 @@ class TMPicker extends Component {
           onFocus={() => { this._setEventBegin()}}
           placeholder={this.state.inputValue}
           value={this.state.inputValue}
-        /><TouchableOpacity style={styles.iconOuter}onPress={() => { this._setEventBegin()}}>
-        <Icon style={styles.container2Icon} name="sort-desc" color="grey" size={20}/>
+        /><TouchableOpacity className="arrowDown" style={styles.iconOuter}onPress={() => { this._setEventBegin()}}>
+          <Image source={require('./img/arrow.png')} />
       </TouchableOpacity>
           </View>
       </View>

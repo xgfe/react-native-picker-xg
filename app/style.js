@@ -1,7 +1,12 @@
 import {
   StyleSheet,
+  Dimensions,
+  PixelRatio
 } from 'react-native';
 
+let height = Dimensions.get('window').height;
+let width = Dimensions.get('window').width;
+let ratio = PixelRatio.get();
 let styles = StyleSheet.create({
 
   container: {
@@ -13,11 +18,9 @@ let styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft:20,
     paddingRight:20,
-    backgroundColor: 'yellow',
   },
   confirm: {
     flex:1,
-    backgroundColor:'lightblue',
   },
   confirmBtnStyle:{
     textAlign:'left',
@@ -42,13 +45,12 @@ let styles = StyleSheet.create({
     flex: 1,
     backgroundColor:'rgba(0, 0, 0, 0.5)',
   },
-  test:{
-    flex:1,
-    backgroundColor:'rgba(0,0,0,0)',
-  },
   innerContainer: {
-    flex:1,
-    backgroundColor:'pink',
+    position:'absolute',
+    top: height-250,
+    height:250,
+    width:width,
+    backgroundColor:'white',
   },
   outerInput: {
     borderColor:'grey',
@@ -76,4 +78,74 @@ let styles = StyleSheet.create({
   }
 });
 
-export default styles;
+let rollStyles = StyleSheet.create({
+
+  container: {
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  up: {
+    height: 90,
+    overflow: 'hidden',
+    alignSelf:'stretch'
+  },
+  upView: {
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  upText: {
+    paddingTop: 0,
+    height: 30,
+    fontSize: 20,
+    color: '#000',
+    opacity: .5,
+    paddingBottom: 0,
+    marginTop: 0,
+    marginBottom: 0
+  },
+  middle: {
+    alignSelf:'stretch',
+    height: 40,
+    overflow: 'hidden',
+    borderColor: '#aaa',
+    borderTopWidth: 1 / ratio,
+    borderBottomWidth: 1 / ratio
+  },
+  middleView: {
+    height: 40,
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  middleText: {
+    paddingTop: 0,
+    height: 40,
+    color: '#000',
+    fontSize: 28,
+    paddingBottom: 0,
+    marginTop: 0,
+    marginBottom: 0
+  },
+  down: {
+    height: 90,
+    overflow: 'hidden',
+    alignSelf:'stretch'
+  },
+  downView: {
+    overflow: 'hidden',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  downText: {
+    paddingTop: 0,
+    height: 30,
+    fontSize: 16,
+    color: '#000',
+    opacity: 0.5,
+    paddingBottom: 0,
+    marginTop: 0,
+    marginBottom: 0
+  }
+});
+
+export {styles as styles, rollStyles as rollStyles};
