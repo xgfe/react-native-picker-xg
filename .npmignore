@@ -4,3 +4,14 @@ ios
 node_modules
 .idea
 show.gif
+test
+.travis.yml
+.npmignore
+.gitignore
+coverage
+CHANGELOG.md
+LICENSE
+.eslintignore
+.eslintrc
+.editorconfig
+.babelrc
