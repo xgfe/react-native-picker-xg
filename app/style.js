@@ -75,6 +75,10 @@ let styles = StyleSheet.create({
   container2Icon: {
     flex:1,
     marginTop:-10,
+  },
+  icon: {
+    width:30,
+    height:30
   }
 });
 

@@ -55,6 +55,8 @@ class CPickerroll extends Component {
     navStyle: View.propTypes.style,
     //输入框内部字体样式
     textStyle: Text.propTypes.style,
+    //右边下拉按钮的样式
+    iconStyle: View.propTypes.style,
     //picker的名称
     pickerName: PropTypes.string,
     //输入框内部文字初始值
@@ -342,7 +344,7 @@ class CPickerroll extends Component {
           placeholder={this.state.inputValue}
           value={this.state.inputValue}
         /><TouchableOpacity className="arrowDown" style={styles.iconOuter} onPress={() => { this._setEventBegin()}}>
-          <Image source={require('./img/arrow.png')} />
+          <Image source={require('./img/arrow.png')} style={[styles.icon, this.props.iconStyle]} />
           </TouchableOpacity>
           </View>
       </View>

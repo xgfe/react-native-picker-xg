@@ -20,6 +20,7 @@ npm install react-native-picker-xg --save
      * pickerNameStyle: CSS-layout, the style of the pickerName
      * cancelBtnStyle: CSS-layout, the style of the cancel button
      * confirmBtnStyle: CSS-layout, the confirm button's style
+     * iconStyle: CSS-layout, the right downdrop button's style
      * inputStyle: CSS-layout, the textInput's style
      * navStyle: CSS-layout, the style of the nav of the picker
      * textStyle: CSS-layout, the style of the inputText's inner text
@@ -38,6 +39,7 @@ npm install react-native-picker-xg --save
     * inputStyle: CSS-layout, the textInput's style
     * navStyle: CSS-layout, the style of the nav of the picker
     * textStyle: CSS-layout, the style of the inputText's inner text
+    * iconStyle: CSS-layout, the right downdrop button's style
     * pickerName: string, the text of the picker's name
     * inputValue: string, the initial text of the textInput
     * selectIndex: [number] ,initial selected item
