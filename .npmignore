@@ -15,3 +15,5 @@ LICENSE
 .eslintrc
 .editorconfig
 .babelrc
+index.android.js
+index.ios.js
