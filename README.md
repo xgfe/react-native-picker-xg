@@ -52,7 +52,8 @@ npm install react-native-picker-xg --save
 
 ###Data structure
 Basicly, you can realize as more as wheels as you like if you follow the data structure we set for you. However, take the size of the phone into consideration, we do not recommend more than 4 wheels.
-* For the basic pickers: It's an array, the count of the wheel depends on how many objects you have. And the content of the wheel depends on the name of one objects of the outer objects. 
+* For the basic pickers: It's an array, the count of the wheel depends on how many objects you have. And the content of the wheel depends on the name of one objects of the outer objects.
+By default we export the basic wheel picker, if you want to use the cascade wheel Picker you can do as follows:
 ```
 let wheel3 = [
   {
@@ -127,7 +128,7 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
-import {Cpicker,Tpicker} from 'react-native-picker-xg';
+import Test3, {Cpicker}from './app/picker';
 let wheel2 = [
   {
     amc: {
@@ -196,7 +197,7 @@ class TpickerEx extends Component {
             this.setState({str:str});
           }}
         />
-        <Tpicker
+        <Test3
           inputValue ={'2 wheel picker'}
           inputStyle = {testStyle.textInput}
           confirmBtnText = {'confirm'}
