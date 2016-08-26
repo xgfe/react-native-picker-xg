@@ -10,7 +10,7 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
-import {Cpicker,Tpicker} from './app/picker';
+import Test3, {Cpicker}from './app/picker';
 
 
 let wheel2 = [
@@ -198,7 +198,7 @@ class TpickerEx extends Component {
           data = {level2Data}
           visible = {false}
         />
-        <Tpicker
+        <Test3
           inputValue ={'3 wheel picker'}
           inputStyle = {testStyle.textInput}
           confirmBtnText = {'confirm'}
@@ -207,7 +207,7 @@ class TpickerEx extends Component {
           selectIndex = {[0,2,1]}
           visible = {false}
         />
-        <Tpicker
+        <Test3
           inputValue ={'2 wheel picker'}
           inputStyle = {testStyle.textInput}
           confirmBtnText = {'confirm'}

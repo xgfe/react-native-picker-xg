@@ -289,7 +289,7 @@ class CPickerroll extends Component {
           animationType={this.state.animationType}
           transparent={true}
           visible={this.state.visible}
-          onRequestClose={() => {this._setModalVisible(false)}}
+          onRequestClose={() => {this._setModalVisible(false, 'cancel')}}
         >
           <View style={[styles.modalContainer]}>
             <Animated.View style={[styles.innerContainer,{top:this.state.animatedHeight}]}>
