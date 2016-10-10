@@ -123,7 +123,7 @@ class Pickroll extends Component {
   _handlePanResponderMove(evt, gestureState){
     let dy = gestureState.dy;
     if (this.isMoving) {
-      return 'you are moving';
+      return 'you are moving!';
     }
 
     if (dy > 0) {
