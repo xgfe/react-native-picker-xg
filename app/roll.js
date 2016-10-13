@@ -74,6 +74,21 @@ class Pickroll extends Component {
   }
 
   /**
+   * 组件需要渲染前,对手势事件处理进行初始化
+   */
+  componentWillMount(){
+    this._panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder.bind(this),
+      onMoveShouldSetPanResponder: this._handleStartShouldSetPanResponder.bind(this),
+      onPanResponderGrant: this._handlePanResponderGrant.bind(this),
+      onPanResponderRelease: this._handlePanResponderRelease.bind(this),
+      onPanResponderMove: this._handlePanResponderMove.bind(this)
+    });
+    this.isMoving = false;
+    this.index = this.state.selectedIndex;
+  }
+
+  /**
    * 根据移动的距离重新布局
    * @param dy {number} 移动的距离
    * @private
@@ -103,6 +118,7 @@ class Pickroll extends Component {
       marginValue = diff * 36;
       this._move(marginValue);
       this.index = index;
+      this.moveDy = 0;
       this._onValueChange();
     } else { return 'you are moving';}
   }
@@ -135,6 +151,7 @@ class Pickroll extends Component {
    */
   _handlePanResponderRelease(evt, gestureState){
     let diff;
+    console.debug(gestureState.vy);
     diff = Math.abs(this.moveDy) % 36 >= 18 ? Math.ceil(Math.abs(this.moveDy / 36)) : Math.floor(Math.abs(this.moveDy / 36));
     if (this.moveDy >= 0) {this.index = this.index - diff} else {this.index = this.index + diff;}
     this.middle && this.middle.setNativeProps({
@@ -146,20 +163,6 @@ class Pickroll extends Component {
     this._onValueChange();
   }
 
-  /**
-   * 组件需要渲染前,对手势事件处理进行初始化
-   */
-  componentWillMount(){
-    this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder.bind(this),
-      onMoveShouldSetPanResponder: this._handleStartShouldSetPanResponder.bind(this),
-      onPanResponderGrant: this._handlePanResponderGrant.bind(this),
-      onPanResponderRelease: this._handlePanResponderRelease.bind(this),
-      onPanResponderMove: this._handlePanResponderMove.bind(this)
-    });
-    this.isMoving = false;
-    this.index = this.state.selectedIndex;
-  }
 
   _handleStartShouldSetPanResponder(e, gestureState){
     return true;
@@ -177,10 +180,10 @@ class Pickroll extends Component {
   _renderItems(items, init){
     let upItems = [], middleItems = [], downItems = [];
     items.forEach((item, index) => {
-      console.debug((1- Math.abs((index - this.index)*36 + this.moveDy)/36 * 0.05) * 22);
       middleItems[index] = <Text
         key={'mid' + index}
         className={'mid' + index}
+        onPress={() => {this._moveTo(index)}}
         style={[rollStyles.middleText, this.state.itemStyle, {fontSize: (1- Math.abs((index - this.index)*36 + this.moveDy)/36 * 0.07) * 22, opacity: 1- Math.abs((index - this.index)*36 + this.moveDy)/36 * 0.4}]}>{item.label}
       </Text>;
     });
