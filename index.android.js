@@ -172,48 +172,14 @@ class TpickerEx extends Component {
     return (
       <View style={testStyle.container}>
         <Text style={{margin:10}}>{this.state.str}</Text>
-        <Cpicker
-          pickerNameStyle = {{color:'red'}}
-          cancelBtnStyle = {{color:'blue'}}
-          pickerName = {'just a test'}
-          inputValue={'4 level picker'}
-          level = {4}
-          selectIndex = {[0,1,1,0]}
-          data = {level4Data}
-          onResult = {(str)=>{
-            this.setState({str:str});
-          }}
-        />
-        <Cpicker
-          inputValue={'3 level picker'}
-          level = {3}
-          selectIndex = {[0,1,0]}
-          data = {level3Data}
-          visible = {false}
-        />
-        <Cpicker
-          inputValue={'2 level picker'}
-          level = {2}
-          selectIndex = {[0,1]}
-          data = {level2Data}
-          visible = {false}
-        />
-        <Test3
-          inputValue ={'3 wheel picker'}
-          inputStyle = {testStyle.textInput}
-          confirmBtnText = {'confirm'}
-          cancelBtnText = {'cancel'}
-          data = {wheel3}
-          selectIndex = {[0,2,1]}
-          visible = {false}
-        />
+
         <Test3
           inputValue ={'2 wheel picker'}
           inputStyle = {testStyle.textInput}
           confirmBtnText = {'confirm'}
           cancelBtnText = {'cancel'}
           data = {wheel2}
-          selectIndex = {[0,2]}
+          selectIndex = {[0,1]}
           onResult ={(str) => {this.setState({str1:str});}}
           visible = {false}
         />

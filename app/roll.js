@@ -5,7 +5,8 @@ import React, { Component, PropTypes } from 'react';
 import {
     View,
     Text,
-    PanResponder
+    PanResponder,
+    Animated
 } from 'react-native';
 import {rollStyles} from './style';
 
@@ -43,6 +44,8 @@ class Pickroll extends Component {
   constructor(props, context){
     super(props, context);
     this.state = this._stateFromProps(props);
+    this.init = true;
+    this.moveDy = 0;
   }
 
   /**
@@ -77,22 +80,13 @@ class Pickroll extends Component {
    */
   _move(dy){
     let index = this.index;
-    this.middleHeight = Math.abs(-index * 40 + dy);
-    this.up && this.up.setNativeProps({
-      style: {
-        marginTop: (3 - index) * 30 + dy * 0.75
-      }
-    });
+    this.moveDy = dy;
     this.middle && this.middle.setNativeProps({
       style: {
-        marginTop: -index * 40 + dy
+        top: - 36 * index + 72 + dy
       }
     });
-    this.down && this.down.setNativeProps({
-      style: {
-        marginTop: (-index - 1) * 30 + dy * 0.75
-      }
-    });
+    this.forceUpdate();
   }
 
   /**
@@ -106,7 +100,7 @@ class Pickroll extends Component {
     let diff = _index - index;
     let marginValue;
     if (diff && !this.isMoving) {
-      marginValue = diff * 40;
+      marginValue = diff * 36;
       this._move(marginValue);
       this.index = index;
       this._onValueChange();
@@ -127,9 +121,9 @@ class Pickroll extends Component {
     }
 
     if (dy > 0) {
-      this._move(dy > this.index * 40 ? this.index * 40 : dy);
+      this._move(dy > this.index * 36 ? this.index * 36 : dy);
     } else {
-      this._move(dy < (this.index - this.state.items.length + 1) * 40 ? (this.index - this.state.items.length + 1) * 40 : dy);
+      this._move(dy < (this.index - this.state.items.length + 1) * 36 ? (this.index - this.state.items.length + 1) * 36 : dy);
     }
   }
 
@@ -140,9 +134,15 @@ class Pickroll extends Component {
    * @private
    */
   _handlePanResponderRelease(evt, gestureState){
-    let middleHeight = this.middleHeight;
-    this.index = middleHeight % 40 >= 20 ? Math.ceil(middleHeight / 40) : Math.floor(middleHeight / 40);
-    this._move(0);
+    let diff;
+    diff = Math.abs(this.moveDy) % 36 >= 18 ? Math.ceil(Math.abs(this.moveDy / 36)) : Math.floor(Math.abs(this.moveDy / 36));
+    if (this.moveDy >= 0) {this.index = this.index - diff} else {this.index = this.index + diff;}
+    this.middle && this.middle.setNativeProps({
+      style: {
+        top: - 36 * this.index + 72
+      }
+    });
+    this.moveDy = 0;
     this._onValueChange();
   }
 
@@ -151,8 +151,9 @@ class Pickroll extends Component {
    */
   componentWillMount(){
     this._panResponder = PanResponder.create({
-      onMoveShouldSetPanResponder: (evt, gestureState) => true,
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder.bind(this),
+      onMoveShouldSetPanResponder: this._handleStartShouldSetPanResponder.bind(this),
+      onPanResponderGrant: this._handlePanResponderGrant.bind(this),
       onPanResponderRelease: this._handlePanResponderRelease.bind(this),
       onPanResponderMove: this._handlePanResponderMove.bind(this)
     });
@@ -160,37 +161,31 @@ class Pickroll extends Component {
     this.index = this.state.selectedIndex;
   }
 
+  _handleStartShouldSetPanResponder(e, gestureState){
+    return true;
+  }
+
+  _handlePanResponderGrant(){
+    console.debug('Start to move');
+  }
   /**
    * 对单轮的每个格子进行初始化
    * @param items {array} 需要渲染的总的数据
    * @returns {{upItems: Array, middleItems: Array, downItems: Array}}
    * @private
    */
-  _renderItems(items){
+  _renderItems(items, init){
     let upItems = [], middleItems = [], downItems = [];
     items.forEach((item, index) => {
-      upItems[index] = <Text
-        key={'up' + index}
-        className={'up' + index}
-        style={[rollStyles.upText, this.state.itemStyle]}
-        onPress={() => {this._moveTo(index);}} >
-        {item.label}
-      </Text>;
-
+      console.debug((1- Math.abs((index - this.index)*36 + this.moveDy)/36 * 0.05) * 22);
       middleItems[index] = <Text
         key={'mid' + index}
         className={'mid' + index}
-        style={[rollStyles.middleText, this.state.itemStyle]}>{item.label}
-      </Text>;
-      downItems[index] = <Text
-        key={'down' + index}
-        className={'down' + index}
-        style={[rollStyles.downText, this.state.itemStyle]}
-        onPress={() => {this._moveTo(index);}} >
-        {item.label}
+        style={[rollStyles.middleText, this.state.itemStyle, {fontSize: (1- Math.abs((index - this.index)*36 + this.moveDy)/36 * 0.07) * 22, opacity: 1- Math.abs((index - this.index)*36 + this.moveDy)/36 * 0.4}]}>{item.label}
       </Text>;
     });
-    return { upItems, middleItems, downItems };
+
+    return middleItems;
   }
 
   /**
@@ -209,40 +204,24 @@ class Pickroll extends Component {
    * @returns {XML}
    */
   render(){
+
     let index = this.state.selectedIndex;
     let length = this.state.items.length;
-    let items = this._renderItems(this.state.items);
 
-    let upViewStyle = {
-      marginTop: (3 - index) * 30,
-      height: length * 30
-    };
+    this.init = false;
     let middleViewStyle = {
-      marginTop:  -index * 40
-    };
-    let downViewStyle = {
-      marginTop: (-index - 1) * 30,
-      height:  length * 30
+      position: 'absolute',
+      top: - 36 * index + 72
     };
 
     return (
-
-      <View style={[rollStyles.container, this.state.pickerStyle]} {...this._panResponder.panHandlers}>
-        <View style={rollStyles.up}>
-          <View style={[rollStyles.upView, upViewStyle]} ref={(up) => { this.up = up }} >
-            { items.upItems }
-          </View>
-        </View>
-        <View style={rollStyles.middle}>
+      <View style={[{flex: 1}]}>
+      <View style={{position: 'absolute', width: 400, height: 46, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ccc', marginTop: 63}}></View>
+      <View style={[rollStyles.container, this.state.pickerStyle]} {...this._panResponder.panHandlers} >
           <View style={[rollStyles.middleView, middleViewStyle]} ref={(middle) => { this.middle = middle }} >
-            { items.middleItems }
+            { this._renderItems(this.state.items) }
           </View>
-        </View>
-        <View style={rollStyles.down}>
-          <View style={[rollStyles.downView, downViewStyle]} ref={(down) => { this.down = down }} >
-            { items.downItems }
-          </View>
-        </View>
+      </View>
       </View>
         );
   }

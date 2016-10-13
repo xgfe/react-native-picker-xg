@@ -47,8 +47,7 @@ let styles = StyleSheet.create({
   },
   innerContainer: {
     position:'absolute',
-    top: height-250,
-    height:250,
+    height:220,
     width:width,
     backgroundColor:'white',
   },
@@ -87,7 +86,9 @@ let rollStyles = StyleSheet.create({
   container: {
     flex:1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: 'rgba(255,255,255,0)'
   },
   up: {
     height: 90,
@@ -110,25 +111,23 @@ let rollStyles = StyleSheet.create({
   },
   middle: {
     alignSelf:'stretch',
-    height: 40,
-    overflow: 'hidden',
     borderColor: '#aaa',
     borderTopWidth: 1 / ratio,
     borderBottomWidth: 1 / ratio
   },
   middleView: {
-    height: 40,
     justifyContent: 'flex-start',
     alignItems: 'center'
   },
   middleText: {
-    paddingTop: 0,
-    height: 40,
+    height: 36,
+    paddingTop: 8,
+    paddingBottom: 8,
     color: '#000',
-    fontSize: 28,
+    fontSize: 20,
     paddingBottom: 0,
     marginTop: 0,
-    marginBottom: 0
+    marginBottom: 0,
   },
   down: {
     height: 90,

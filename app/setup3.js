@@ -11,6 +11,7 @@ import {
     Animated,
     Platform,
     PickerIOS,
+    StatusBar,
     Modal,
     Image,
 } from 'react-native';
@@ -86,6 +87,9 @@ class TMPicker extends Component {
     this.state.animatedHeight = new Animated.Value(height);
   }
 
+  componentDidMount() {
+    this._setEventBegin();
+  }
   /**
    * 状态初始化
    * @param props {object} 继承的属性
@@ -179,7 +183,7 @@ class TMPicker extends Component {
       this.setState({visible: visible});
       Animated.timing(
         this.state.animatedHeight,
-        {toValue: height-250}
+        {toValue: height-StatusBar.currentHeight-220}
       ).start();
     }else{
       Animated.timing(
@@ -213,6 +217,7 @@ class TMPicker extends Component {
    * @returns {XML}
      */
   render(){
+    console.debug(StatusBar.currentHeight);
     return (
       <View style={styles.container}>
         <Modal
