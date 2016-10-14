@@ -44,8 +44,11 @@ class Pickroll extends Component {
   constructor(props, context){
     super(props, context);
     this.state = this._stateFromProps(props);
-    this.init = true;
     this.moveDy = 0;
+
+    this.state._viewAnimation = new Animated.Value(0);
+    this.state._textFontAnimation = new Animated.Value(0);
+    this.state._textOpacityAnimation = new Animated.Value(0);
   }
 
   /**
@@ -96,11 +99,7 @@ class Pickroll extends Component {
   _move(dy){
     let index = this.index;
     this.moveDy = dy;
-    this.middle && this.middle.setNativeProps({
-      style: {
-        top: - 36 * index + 72 + dy
-      }
-    });
+    this.state._viewAnimation.setValue(dy);
     this.forceUpdate();
   }
 
@@ -116,13 +115,18 @@ class Pickroll extends Component {
     let marginValue;
     if (diff && !this.isMoving) {
       marginValue = diff * 36;
-      this._move(marginValue);
-      this.index = index;
-      this.moveDy = 0;
-      this._onValueChange();
+      Animated.timing(this.state._viewAnimation, {
+        toValue: marginValue,
+        duration: 800
+      }).start(() => this._test(index));
     } else { return 'you are moving';}
   }
 
+  _test(index) {
+    this.index = index;
+    this.state._viewAnimation.setValue(0);
+    this._onValueChange();
+  }
   /**
    * 处理移动(RN自带的函数)
    * @param evt
@@ -151,14 +155,9 @@ class Pickroll extends Component {
    */
   _handlePanResponderRelease(evt, gestureState){
     let diff;
-    console.debug(gestureState.vy);
     diff = Math.abs(this.moveDy) % 36 >= 18 ? Math.ceil(Math.abs(this.moveDy / 36)) : Math.floor(Math.abs(this.moveDy / 36));
     if (this.moveDy >= 0) {this.index = this.index - diff} else {this.index = this.index + diff;}
-    this.middle && this.middle.setNativeProps({
-      style: {
-        top: - 36 * this.index + 72
-      }
-    });
+    this.state._viewAnimation.setValue(0);
     this.moveDy = 0;
     this._onValueChange();
   }
@@ -169,6 +168,7 @@ class Pickroll extends Component {
   }
 
   _handlePanResponderGrant(){
+    this.state._viewAnimation.setValue(0);
     console.debug('Start to move');
   }
   /**
@@ -177,15 +177,16 @@ class Pickroll extends Component {
    * @returns {{upItems: Array, middleItems: Array, downItems: Array}}
    * @private
    */
-  _renderItems(items, init){
+  _renderItems(items){
     let upItems = [], middleItems = [], downItems = [];
     items.forEach((item, index) => {
-      middleItems[index] = <Text
+      console.debug((1- Math.abs((index - this.index)*36 + this.state._viewAnimation._value)/36 * 0.07) * 22);
+      middleItems[index] = <Animated.Text
         key={'mid' + index}
         className={'mid' + index}
         onPress={() => {this._moveTo(index)}}
-        style={[rollStyles.middleText, this.state.itemStyle, {fontSize: (1- Math.abs((index - this.index)*36 + this.moveDy)/36 * 0.07) * 22, opacity: 1- Math.abs((index - this.index)*36 + this.moveDy)/36 * 0.4}]}>{item.label}
-      </Text>;
+        style={[rollStyles.middleText, this.state.itemStyle, {fontSize: (1- Math.abs((index - this.index)*36 + this.state._viewAnimation._value)/36 * 0.07) * 22, opacity: 1- Math.abs((index - this.index)*36 + this.state._viewAnimation._value)/36 * 0.4}]}>{item.label}
+      </Animated.Text>;
     });
 
     return middleItems;
@@ -209,9 +210,8 @@ class Pickroll extends Component {
   render(){
 
     let index = this.state.selectedIndex;
-    let length = this.state.items.length;
 
-    this.init = false;
+
     let middleViewStyle = {
       position: 'absolute',
       top: - 36 * index + 72
@@ -221,9 +221,15 @@ class Pickroll extends Component {
       <View style={[{flex: 1}]}>
       <View style={{position: 'absolute', width: 400, height: 46, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ccc', marginTop: 63}}></View>
       <View style={[rollStyles.container, this.state.pickerStyle]} {...this._panResponder.panHandlers} >
-          <View style={[rollStyles.middleView, middleViewStyle]} ref={(middle) => { this.middle = middle }} >
+          <Animated.View
+            style={[
+              rollStyles.middleView,
+              middleViewStyle,
+              {transform: [{translateY: this.state._viewAnimation}]}
+              ]}
+            ref={(middle) => { this.middle = middle }} >
             { this._renderItems(this.state.items) }
-          </View>
+          </Animated.View>
       </View>
       </View>
         );
