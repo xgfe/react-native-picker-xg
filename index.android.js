@@ -46,15 +46,6 @@ let wheel2 = [
   {
     amc1: {
       name: '1月'
-    },
-    alfa1: {
-      name: '2月'
-    },
-    aston1: {
-      name: '3月'
-    },
-    audi1: {
-      name: '4月'
     }
   }
 ];
@@ -179,7 +170,7 @@ class TpickerEx extends Component {
           confirmBtnText = {'confirm'}
           cancelBtnText = {'cancel'}
           data = {wheel2}
-          selectIndex = {[0,1]}
+          selectIndex = {[0,0]}
           onResult ={(str) => {this.setState({str1:str});}}
           visible = {false}
         />

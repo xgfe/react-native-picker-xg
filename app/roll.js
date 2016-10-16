@@ -45,10 +45,13 @@ class Pickroll extends Component {
     super(props, context);
     this.state = this._stateFromProps(props);
     this.moveDy = 0;
-
+    this.endHeight = - 36 * this.state.initSelectedIndex + 72;
+    //相对高度
     this.state._viewAnimation = new Animated.Value(0);
-    this.state._textFontAnimation = new Animated.Value(0);
-    this.state._textOpacityAnimation = new Animated.Value(0);
+    //绝对高度
+    this.state._viewHeight = new Animated.Value(- 36 * this.state.initSelectedIndex + 72);
+    //距离计算
+    this.state._scrollHeight = new Animated.Value(0);
   }
 
   /**
@@ -59,6 +62,7 @@ class Pickroll extends Component {
      */
   _stateFromProps(props){
     let selectedIndex = this.props.selectIndex;
+    let initSelectedIndex = this.props.selectIndex;
     let items = [];
     let pickerStyle = props.pickerStyle;
     let itemStyle = props.itemStyle;
@@ -69,6 +73,7 @@ class Pickroll extends Component {
     });
     return {
       selectedIndex,
+      initSelectedIndex,
       items,
       pickerStyle,
       itemStyle,
@@ -100,6 +105,7 @@ class Pickroll extends Component {
     let index = this.index;
     this.moveDy = dy;
     this.state._viewAnimation.setValue(dy);
+    this.state._viewHeight.setValue(this.endHeight + dy);
     this.forceUpdate();
   }
 
@@ -113,18 +119,27 @@ class Pickroll extends Component {
     let _index = this.index;
     let diff = _index - index;
     let marginValue;
+    this.state._viewAnimation.setValue(0);
     if (diff && !this.isMoving) {
       marginValue = diff * 36;
-      Animated.timing(this.state._viewAnimation, {
-        toValue: marginValue,
-        duration: 800
-      }).start(() => this._test(index));
+      this.state._viewHeight.setValue(this.endHeight);
+      Animated.parallel([
+        Animated.timing(this.state._viewAnimation, {
+          toValue: marginValue,
+          duration: 800
+        }),
+        Animated.timing(this.state._viewHeight, {
+          toValue: this.endHeight + marginValue,
+          duration: 800
+        })
+        ]).start(() => this._test(index, marginValue));
     } else { return 'you are moving';}
   }
 
-  _test(index) {
+  _test(index, marginValue) {
     this.index = index;
     this.state._viewAnimation.setValue(0);
+    this.endHeight = this.endHeight + marginValue;
     this._onValueChange();
   }
   /**
@@ -157,8 +172,10 @@ class Pickroll extends Component {
     let diff;
     diff = Math.abs(this.moveDy) % 36 >= 18 ? Math.ceil(Math.abs(this.moveDy / 36)) : Math.floor(Math.abs(this.moveDy / 36));
     if (this.moveDy >= 0) {this.index = this.index - diff} else {this.index = this.index + diff;}
+    this.state._viewHeight.setValue(- 36 * this.index + 72);
     this.state._viewAnimation.setValue(0);
     this.moveDy = 0;
+    this.endHeight = this.state._viewHeight._value;
     this._onValueChange();
   }
 
@@ -179,16 +196,34 @@ class Pickroll extends Component {
    */
   _renderItems(items){
     let upItems = [], middleItems = [], downItems = [];
+    let initSelectedIndex = this.state.initSelectedIndex;
     items.forEach((item, index) => {
-      console.debug((1- Math.abs((index - this.index)*36 + this.state._viewAnimation._value)/36 * 0.07) * 22);
+      let ownHeight = - 36 * this.state.initSelectedIndex + 72;
+      console.debug("ss " + this.state._viewHeight._value + " " + (ownHeight - 36 * (- this.state.initSelectedIndex + index + 2)) + " "
+        + (ownHeight + (this.state.initSelectedIndex - index) * 36) + " " + (ownHeight + 36 * (2 + this.state.initSelectedIndex - index)) + " "
+        + this.state.initSelectedIndex);
       middleItems[index] = <Animated.Text
         key={'mid' + index}
         className={'mid' + index}
         onPress={() => {this._moveTo(index)}}
-        style={[rollStyles.middleText, this.state.itemStyle, {fontSize: (1- Math.abs((index - this.index)*36 + this.state._viewAnimation._value)/36 * 0.07) * 22, opacity: 1- Math.abs((index - this.index)*36 + this.state._viewAnimation._value)/36 * 0.4}]}>{item.label}
+
+        style={[rollStyles.middleText, this.state.itemStyle,
+              { fontSize:
+                  this.state._viewHeight.interpolate({
+                    inputRange: [ownHeight - 36 * (- this.state.initSelectedIndex + index + 2),
+                                 ownHeight + (this.state.initSelectedIndex - index) * 36,
+                                 ownHeight + 36 * (2 + this.state.initSelectedIndex - index)],
+                    outputRange: [18, 22, 18]}),
+                opacity:
+                  this.state._viewHeight.interpolate({
+                    inputRange: [ownHeight - 36 * (- this.state.initSelectedIndex + index + 2),
+                                 ownHeight + (this.state.initSelectedIndex - index) * 36,
+                                 ownHeight + 36 * (2 + this.state.initSelectedIndex - index)],
+                    outputRange: [0.6, 1.0, 0.6]
+                  })
+                }]}>{item.label}
       </Animated.Text>;
     });
-
     return middleItems;
   }
 
@@ -227,8 +262,8 @@ class Pickroll extends Component {
               middleViewStyle,
               {transform: [{translateY: this.state._viewAnimation}]}
               ]}
-            ref={(middle) => { this.middle = middle }} >
-            { this._renderItems(this.state.items) }
+           >
+            {this._renderItems(this.state.items)}
           </Animated.View>
       </View>
       </View>
