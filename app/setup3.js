@@ -245,7 +245,6 @@ class TMPicker extends Component {
               <View style={styles.pickContainer}>
                 {
                   this.props.data.map((row,index) =>{
-                    console.debug(this.state.selectIndex[index]);
                     return (
                       <PickRoll
                         key = {index}

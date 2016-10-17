@@ -170,6 +170,45 @@ class Pickroll extends Component {
    */
   _handlePanResponderRelease(evt, gestureState){
     let diff;
+    let that = this;
+    let animatedListen = this.state._viewAnimation.addListener(({value}) => this._checkArrivetheBoundary(value));
+    Animated.parallel([
+      Animated.decay(this.state._viewAnimation, {
+        velocity: gestureState.vy,
+        deceleration: 0.99
+      }),
+      Animated.decay(this.state._viewHeight, {
+        velocity: gestureState.vy,
+        deceleration: 0.99
+      })
+      ]).start(({finished}) => this._checkIfAnimaStopNormally(finished, animatedListen));
+  }
+
+  _checkIfAnimaStopNormally(value, anima) {
+    this.state._viewAnimation.removeListener(anima);
+    if (value) {
+      this._test2();
+    }
+  }
+
+  _checkArrivetheBoundary(value) {
+    if (value > 0) {
+      if (value > this.index * 36) {
+        this.state._viewAnimation.stopAnimation(({value}) => console.debug('stop'));
+        this.state._viewAnimation.setValue(this.index * 36);
+        this._test2();
+      }
+    } else {
+      if (value < (this.index - this.state.items.length + 1) * 36) {
+        this.state._viewAnimation.stopAnimation(({value}) => console.debug('stop'));
+        this.state._viewAnimation.setValue((this.index - this.state.items.length + 1) * 36);
+        this._test2();
+      }
+    }
+  }
+  _test2() {
+    this.moveDy = this.state._viewAnimation._value;
+    this.endHeight = this.state._viewHeight._value;
     diff = Math.abs(this.moveDy) % 36 >= 18 ? Math.ceil(Math.abs(this.moveDy / 36)) : Math.floor(Math.abs(this.moveDy / 36));
     if (this.moveDy >= 0) {this.index = this.index - diff} else {this.index = this.index + diff;}
     this.state._viewHeight.setValue(- 36 * this.index + 72);
@@ -178,7 +217,6 @@ class Pickroll extends Component {
     this.endHeight = this.state._viewHeight._value;
     this._onValueChange();
   }
-
 
   _handleStartShouldSetPanResponder(e, gestureState){
     return true;
@@ -199,9 +237,9 @@ class Pickroll extends Component {
     let initSelectedIndex = this.state.initSelectedIndex;
     items.forEach((item, index) => {
       let ownHeight = - 36 * this.state.initSelectedIndex + 72;
-      console.debug("ss " + this.state._viewHeight._value + " " + (ownHeight - 36 * (- this.state.initSelectedIndex + index + 2)) + " "
-        + (ownHeight + (this.state.initSelectedIndex - index) * 36) + " " + (ownHeight + 36 * (2 + this.state.initSelectedIndex - index)) + " "
-        + this.state.initSelectedIndex);
+      // console.debug("ss " + this.state._viewHeight._value + " " + (ownHeight - 36 * (- this.state.initSelectedIndex + index + 2)) + " "
+      //   + (ownHeight + (this.state.initSelectedIndex - index) * 36) + " " + (ownHeight + 36 * (2 + this.state.initSelectedIndex - index)) + " "
+      //   + this.state.initSelectedIndex);
       middleItems[index] = <Animated.Text
         key={'mid' + index}
         className={'mid' + index}
@@ -219,7 +257,7 @@ class Pickroll extends Component {
                     inputRange: [ownHeight - 36 * (- this.state.initSelectedIndex + index + 2),
                                  ownHeight + (this.state.initSelectedIndex - index) * 36,
                                  ownHeight + 36 * (2 + this.state.initSelectedIndex - index)],
-                    outputRange: [0.6, 1.0, 0.6]
+                    outputRange: [0.4, 1.0, 0.4]
                   })
                 }]}>{item.label}
       </Animated.Text>;
