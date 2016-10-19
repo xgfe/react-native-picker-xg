@@ -39,12 +39,15 @@
     "istanbul": "^1.0.0-alpha.2",
     "jsdom": "^9.2.1",
     "mocha": "^2.5.3",
-    "react": "15.0.2",
+    "react": "15.3.2",
+    "react-native": "^0.35.0",
     "react-addons-test-utils": "15.0.2",
     "react-dom": "15.0.2",
-    "react-native": "0.26.2",
     "react-native-mock": "^0.2.2",
-    "sinon": "^1.17.4"
+    "sinon": "^1.17.4",
+    "jest": "16.0.1",
+    "jest-react-native": "16.0.0",
+    "react-test-renderer": "15.3.2"
   },
   "config": {
     "validate-commit-msg": {

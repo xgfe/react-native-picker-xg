@@ -227,7 +227,7 @@ class TMPicker extends Component {
         >
           <View style={[styles.modalContainer]}>
             <Animated.View style={[styles.innerContainer,{top:this.state.animatedHeight}]}>
-              <View style={[styles.nav, this.props.navStyle]}>
+              <View style={[styles.nav, this.props.navStyle, {backgroundColor: '#7ff9f9'}]}>
                 <TouchableOpacity  style={styles.confirm}>
                   <Text className={"confirm"} onPress={() => {this._confirmChose()}}
                         style={[styles.confirmBtnStyle,this.props.confirmBtnStyle]} >{this.state.confirmBtnText}</Text>

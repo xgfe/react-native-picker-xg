@@ -186,4 +186,4 @@ const testStyle = StyleSheet.create({
     flex: 1
   }
 });
-AppRegistry.registerComponent('widgets', () => TpickerEx);
+AppRegistry.registerComponent('updatepicker', () => TpickerEx);

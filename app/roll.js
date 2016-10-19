@@ -44,14 +44,14 @@ class Pickroll extends Component {
   constructor(props, context){
     super(props, context);
     this.state = this._stateFromProps(props);
-    this.moveDy = 0;
     this.endHeight = - 36 * this.state.initSelectedIndex + 72;
+
+    this.scrollAnima = null;
+    this.basicAnima = null;
     //相对高度
     this.state._viewAnimation = new Animated.Value(0);
     //绝对高度
     this.state._viewHeight = new Animated.Value(- 36 * this.state.initSelectedIndex + 72);
-    //距离计算
-    this.state._scrollHeight = new Animated.Value(0);
   }
 
   /**
@@ -103,7 +103,6 @@ class Pickroll extends Component {
    */
   _move(dy){
     let index = this.index;
-    this.moveDy = dy;
     this.state._viewAnimation.setValue(dy);
     this.state._viewHeight.setValue(this.endHeight + dy);
     this.forceUpdate();
@@ -116,6 +115,9 @@ class Pickroll extends Component {
    * @private
    */
   _moveTo(index){
+    if (this.scrollAnima === undefined) {
+      return;
+    }
     let _index = this.index;
     let diff = _index - index;
     let marginValue;
@@ -123,20 +125,22 @@ class Pickroll extends Component {
     if (diff && !this.isMoving) {
       marginValue = diff * 36;
       this.state._viewHeight.setValue(this.endHeight);
-      Animated.parallel([
+      this.scrollAnima = Animated.parallel([
         Animated.timing(this.state._viewAnimation, {
           toValue: marginValue,
-          duration: 800
+          duration: 250
         }),
         Animated.timing(this.state._viewHeight, {
           toValue: this.endHeight + marginValue,
-          duration: 800
+          duration: 250
         })
         ]).start(() => this._test(index, marginValue));
     } else { return 'you are moving';}
   }
 
+
   _test(index, marginValue) {
+    this.scrollAnima = null;
     this.index = index;
     this.state._viewAnimation.setValue(0);
     this.endHeight = this.endHeight + marginValue;
@@ -169,10 +173,13 @@ class Pickroll extends Component {
    * @private
    */
   _handlePanResponderRelease(evt, gestureState){
+    if (this.basicAnima === undefined) {
+      return;
+    }
     let diff;
     let that = this;
     let animatedListen = this.state._viewAnimation.addListener(({value}) => this._checkArrivetheBoundary(value));
-    Animated.parallel([
+    this.basicAnima = Animated.parallel([
       Animated.decay(this.state._viewAnimation, {
         velocity: gestureState.vy,
         deceleration: 0.99
@@ -185,9 +192,10 @@ class Pickroll extends Component {
   }
 
   _checkIfAnimaStopNormally(value, anima) {
+    this.basicAnima = null;
     this.state._viewAnimation.removeListener(anima);
     if (value) {
-      this._test2();
+      this._afterAnimation(true);
     }
   }
 
@@ -195,29 +203,64 @@ class Pickroll extends Component {
     if (value > 0) {
       if (value > this.index * 36) {
         this.state._viewAnimation.stopAnimation(({value}) => console.debug('stop'));
-        this.state._viewAnimation.setValue(this.index * 36);
-        this._test2();
+        this._afterAnimation(false, true);
       }
     } else {
       if (value < (this.index - this.state.items.length + 1) * 36) {
         this.state._viewAnimation.stopAnimation(({value}) => console.debug('stop'));
-        this.state._viewAnimation.setValue((this.index - this.state.items.length + 1) * 36);
-        this._test2();
+        this._afterAnimation(false, false);
       }
     }
   }
-  _test2() {
-    this.moveDy = this.state._viewAnimation._value;
-    this.endHeight = this.state._viewHeight._value;
-    diff = Math.abs(this.moveDy) % 36 >= 18 ? Math.ceil(Math.abs(this.moveDy / 36)) : Math.floor(Math.abs(this.moveDy / 36));
-    if (this.moveDy >= 0) {this.index = this.index - diff} else {this.index = this.index + diff;}
-    this.state._viewHeight.setValue(- 36 * this.index + 72);
-    this.state._viewAnimation.setValue(0);
-    this.moveDy = 0;
-    this.endHeight = this.state._viewHeight._value;
-    this._onValueChange();
+  _afterAnimation(stop, flag) {
+    let scrollDisatance = this.state._viewAnimation._value;
+    if (!stop) {
+      let scroll;
+      if(flag){
+        scroll = this.index * 36;
+        this.index = 0
+      } else {
+        scroll = (this.index - this.state.items.length + 1) * 36;
+        this.index = this.state.items.length - 1;
+      }
+      Animated.parallel([
+        Animated.timing(this.state._viewAnimation, {
+          toValue: scroll,
+          duration: 250
+        }),
+        Animated.timing(this.state._viewHeight, {
+          toValue: - 36 * this.index + 72,
+          duration: 250
+        })
+        ]).start(() => this._ttt());
+    } else {
+      let before = this.index;
+      diff = Math.abs(scrollDisatance) % 36 >= 18 ? Math.ceil(Math.abs(scrollDisatance / 36)) : Math.floor(Math.abs(scrollDisatance / 36));
+      if (scrollDisatance >= 0) {this.index = this.index - diff} else {this.index = this.index + diff;}
+        Animated.parallel([
+          Animated.timing(this.state._viewAnimation, {
+            toValue: (before - this.index) * 36,
+            duration: 250
+          }),
+          Animated.timing(this.state._viewHeight, {
+            toValue: - 36 * this.index + 72,
+            duration: 250
+          })
+          ]).start(() => this._ttt());
+    }
   }
 
+  _scrollBack(flag) {
+    if (flag) {
+      this.index = 0
+    } else {this.index = this.state.items.length - 1;}
+    this._ttt();
+  }
+  _ttt() {
+    this.endHeight = this.state._viewHeight._value;
+    this.state._viewAnimation.setValue(0);
+    this._onValueChange();
+  }
   _handleStartShouldSetPanResponder(e, gestureState){
     return true;
   }
@@ -237,14 +280,10 @@ class Pickroll extends Component {
     let initSelectedIndex = this.state.initSelectedIndex;
     items.forEach((item, index) => {
       let ownHeight = - 36 * this.state.initSelectedIndex + 72;
-      // console.debug("ss " + this.state._viewHeight._value + " " + (ownHeight - 36 * (- this.state.initSelectedIndex + index + 2)) + " "
-      //   + (ownHeight + (this.state.initSelectedIndex - index) * 36) + " " + (ownHeight + 36 * (2 + this.state.initSelectedIndex - index)) + " "
-      //   + this.state.initSelectedIndex);
       middleItems[index] = <Animated.Text
         key={'mid' + index}
         className={'mid' + index}
         onPress={() => {this._moveTo(index)}}
-
         style={[rollStyles.middleText, this.state.itemStyle,
               { fontSize:
                   this.state._viewHeight.interpolate({
@@ -272,6 +311,8 @@ class Pickroll extends Component {
    */
   _onValueChange(){
     var curItem = this.state.items[this.index];
+    console.debug(this.index);
+    this.state.selectedIndex = this.index;
     this.setState({selectedIndex:this.index});
     this.state.onValueChange && this.state.onValueChange(curItem.value, this.index);
   }
@@ -292,7 +333,7 @@ class Pickroll extends Component {
 
     return (
       <View style={[{flex: 1}]}>
-      <View style={{position: 'absolute', width: 400, height: 46, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ccc', marginTop: 63}}></View>
+      <View style={{position: 'absolute', width: 400, height: 46, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ccc', marginTop: 67}}></View>
       <View style={[rollStyles.container, this.state.pickerStyle]} {...this._panResponder.panHandlers} >
           <Animated.View
             style={[

@@ -121,13 +121,9 @@ let rollStyles = StyleSheet.create({
   },
   middleText: {
     height: 36,
-    paddingTop: 8,
-    paddingBottom: 8,
+    textAlign: 'center',
     color: '#000',
-    fontSize: 20,
-    paddingBottom: 0,
-    marginTop: 0,
-    marginBottom: 0,
+    paddingTop: 3
   },
   down: {
     height: 90,
