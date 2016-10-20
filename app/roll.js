@@ -6,7 +6,8 @@ import {
     View,
     Text,
     PanResponder,
-    Animated
+    Animated,
+    Platform
 } from 'react-native';
 import {rollStyles} from './style';
 
@@ -46,6 +47,7 @@ class Pickroll extends Component {
     this.state = this._stateFromProps(props);
     this.endHeight = - 36 * this.state.initSelectedIndex + 72;
 
+    this.test = false;
     this.scrollAnima = null;
     this.basicAnima = null;
     //相对高度
@@ -92,7 +94,6 @@ class Pickroll extends Component {
       onPanResponderRelease: this._handlePanResponderRelease.bind(this),
       onPanResponderMove: this._handlePanResponderMove.bind(this)
     });
-    this.isMoving = false;
     this.index = this.state.selectedIndex;
   }
 
@@ -105,7 +106,6 @@ class Pickroll extends Component {
     let index = this.index;
     this.state._viewAnimation.setValue(dy);
     this.state._viewHeight.setValue(this.endHeight + dy);
-    this.forceUpdate();
   }
 
   /**
@@ -122,7 +122,7 @@ class Pickroll extends Component {
     let diff = _index - index;
     let marginValue;
     this.state._viewAnimation.setValue(0);
-    if (diff && !this.isMoving) {
+    if (diff) {
       marginValue = diff * 36;
       this.state._viewHeight.setValue(this.endHeight);
       this.scrollAnima = Animated.parallel([
@@ -134,7 +134,7 @@ class Pickroll extends Component {
           toValue: this.endHeight + marginValue,
           duration: 250
         })
-        ]).start(() => this._test(index, marginValue));
+        ]).start((finished) => this._test(index, marginValue));
     } else { return 'you are moving';}
   }
 
@@ -155,10 +155,6 @@ class Pickroll extends Component {
    */
   _handlePanResponderMove(evt, gestureState){
     let dy = gestureState.dy;
-    if (this.isMoving) {
-      return 'you are moving!';
-    }
-
     if (dy > 0) {
       this._move(dy > this.index * 36 ? this.index * 36 : dy);
     } else {
@@ -173,43 +169,59 @@ class Pickroll extends Component {
    * @private
    */
   _handlePanResponderRelease(evt, gestureState){
-    if (this.basicAnima === undefined) {
-      return;
-    }
     let diff;
     let that = this;
-    let animatedListen = this.state._viewAnimation.addListener(({value}) => this._checkArrivetheBoundary(value));
     this.basicAnima = Animated.parallel([
       Animated.decay(this.state._viewAnimation, {
         velocity: gestureState.vy,
-        deceleration: 0.99
+        deceleration: 0.97
       }),
       Animated.decay(this.state._viewHeight, {
         velocity: gestureState.vy,
-        deceleration: 0.99
+        deceleration: 0.97
       })
-      ]).start(({finished}) => this._checkIfAnimaStopNormally(finished, animatedListen));
+      ]).start(({finished}) => this._checkIfAnimaStopNormally(finished));
   }
 
-  _checkIfAnimaStopNormally(value, anima) {
-    this.basicAnima = null;
-    this.state._viewAnimation.removeListener(anima);
+  _checkIfAnimaStopNormally(value) {
     if (value) {
-      this._afterAnimation(true);
+      console.debug('nobreak');
+      this._checkArrivetheBoundary(this.state._viewAnimation._value);
+    } else {
+      console.debug('break');
+      this._testBoundry(this.state._viewAnimation._value);
     }
   }
 
+  _testBoundry(value) {
+    if (value > 0) {
+      if (value <= this.index * 36) {
+        this._afterAnimation2();
+      }
+    } else {
+      if (value >= (this.index - this.state.items.length + 1) * 36) {
+        this._afterAnimation2();
+      }
+    }
+  }
+
+  _afterAnimation2() {
+    let scrollDisatance = this.state._viewAnimation._value;
+    let before = this.index;
+    diff = Math.abs(scrollDisatance) % 36 >= 18 ? Math.ceil(Math.abs(scrollDisatance / 36)) : Math.floor(Math.abs(scrollDisatance / 36));
+    if (scrollDisatance >= 0) {this.index = this.index - diff} else {this.index = this.index + diff;}
+    this._ttt();
+    this.basicAnima = null;
+  }
   _checkArrivetheBoundary(value) {
     if (value > 0) {
       if (value > this.index * 36) {
-        this.state._viewAnimation.stopAnimation(({value}) => console.debug('stop'));
         this._afterAnimation(false, true);
-      }
+      } else {this._afterAnimation(true);}
     } else {
       if (value < (this.index - this.state.items.length + 1) * 36) {
-        this.state._viewAnimation.stopAnimation(({value}) => console.debug('stop'));
         this._afterAnimation(false, false);
-      }
+      } else {this._afterAnimation(true);}
     }
   }
   _afterAnimation(stop, flag) {
@@ -223,6 +235,7 @@ class Pickroll extends Component {
         scroll = (this.index - this.state.items.length + 1) * 36;
         this.index = this.state.items.length - 1;
       }
+      console.debug('this ' + this.index);
       Animated.parallel([
         Animated.timing(this.state._viewAnimation, {
           toValue: scroll,
@@ -250,12 +263,6 @@ class Pickroll extends Component {
     }
   }
 
-  _scrollBack(flag) {
-    if (flag) {
-      this.index = 0
-    } else {this.index = this.state.items.length - 1;}
-    this._ttt();
-  }
   _ttt() {
     this.endHeight = this.state._viewHeight._value;
     this.state._viewAnimation.setValue(0);
@@ -266,9 +273,13 @@ class Pickroll extends Component {
   }
 
   _handlePanResponderGrant(){
-    this.state._viewAnimation.setValue(0);
+    if (this.basicAnima === undefined) {
+      this.state._viewAnimation.stopAnimation();
+      this.state._viewHeight.stopAnimation();
+    }
     console.debug('Start to move');
   }
+
   /**
    * 对单轮的每个格子进行初始化
    * @param items {array} 需要渲染的总的数据
@@ -314,7 +325,7 @@ class Pickroll extends Component {
     console.debug(this.index);
     this.state.selectedIndex = this.index;
     this.setState({selectedIndex:this.index});
-    this.state.onValueChange && this.state.onValueChange(curItem.value, this.index);
+    this.state.onValueChange(curItem.value, this.index);
   }
 
   /**
@@ -333,12 +344,13 @@ class Pickroll extends Component {
 
     return (
       <View style={[{flex: 1}]}>
-      <View style={{position: 'absolute', width: 400, height: 46, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ccc', marginTop: 67}}></View>
-      <View style={[rollStyles.container, this.state.pickerStyle]} {...this._panResponder.panHandlers} >
+      <View style={{position: 'absolute', width: Platform.width, height: 46, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ccc', marginTop: 67}}></View>
+      <View style={[rollStyles.container, this.state.pickerStyle, {backgroundColor: '#f79e80'}]} {...this._panResponder.panHandlers} >
           <Animated.View
             style={[
               rollStyles.middleView,
               middleViewStyle,
+              {backgroundColor: '#f5f7a0'},
               {transform: [{translateY: this.state._viewAnimation}]}
               ]}
            >

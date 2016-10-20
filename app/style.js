@@ -86,7 +86,7 @@ let rollStyles = StyleSheet.create({
   container: {
     flex:1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     flexDirection: 'row',
     backgroundColor: 'rgba(255,255,255,0)'
   },

@@ -20,32 +20,6 @@ let wheel2 = [
     },
     alfa: {
       name: '2012年'
-    },
-    aston: {
-      name: '2013年'
-    },
-    audi: {
-      name: '2014年'
-    },
-    austin: {
-      name: '2015年'
-    },
-    borgward: {
-      name: '2016年'
-    },
-    buick: {
-      name: '2017年'
-    },
-    cadillac: {
-      name: '2018年'
-    },
-    chevrolet: {
-      name: '2019年'
-    }
-  },
-  {
-    amc1: {
-      name: '1月'
     }
   }
 ];
