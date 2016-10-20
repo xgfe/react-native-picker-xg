@@ -7,7 +7,7 @@ import {
     Text,
     PanResponder,
     Animated,
-    Platform
+    Dimensions
 } from 'react-native';
 import {rollStyles} from './style';
 
@@ -47,7 +47,7 @@ class Pickroll extends Component {
     this.state = this._stateFromProps(props);
     this.endHeight = - 36 * this.state.initSelectedIndex + 72;
 
-    this.test = false;
+    this.tapBegin = '';
     this.scrollAnima = null;
     this.basicAnima = null;
     //相对高度
@@ -103,6 +103,7 @@ class Pickroll extends Component {
    * @private
    */
   _move(dy){
+    console.debug(dy);
     let index = this.index;
     this.state._viewAnimation.setValue(dy);
     this.state._viewHeight.setValue(this.endHeight + dy);
@@ -115,7 +116,8 @@ class Pickroll extends Component {
    * @private
    */
   _moveTo(index){
-    if (this.scrollAnima === undefined) {
+    console.debug('moveto ' + index);
+    if (this.scrollAnima === undefined || this.basicAnima === undefined) {
       return;
     }
     let _index = this.index;
@@ -134,12 +136,12 @@ class Pickroll extends Component {
           toValue: this.endHeight + marginValue,
           duration: 250
         })
-        ]).start((finished) => this._test(index, marginValue));
+        ]).start((finished) => this._afterMoveTo(index, marginValue));
     } else { return 'you are moving';}
   }
 
 
-  _test(index, marginValue) {
+  _afterMoveTo(index, marginValue) {
     this.scrollAnima = null;
     this.index = index;
     this.state._viewAnimation.setValue(0);
@@ -171,14 +173,32 @@ class Pickroll extends Component {
   _handlePanResponderRelease(evt, gestureState){
     let diff;
     let that = this;
+    if (Math.abs(this.state._viewAnimation._value) <=4) {
+      let diff = gestureState.y0 - (Dimensions.get('window').height-72);
+      let diffIndex;
+      console.debug(diff);
+      if (diff <= 0) {
+        diffIndex = Math.floor(Math.abs(diff)/36);
+        if (this.index - diffIndex <=0){
+          this._moveTo(0);
+        } else {this._moveTo(this.index - diffIndex)}
+      } else {
+        diffIndex = Math.ceil(Math.abs(diff)/36);
+        console.debug('sss ' + (this.index + diffIndex) )
+        if (this.index + diffIndex > (this.state.items.length - 1)){
+          this._moveTo(this.state.items.length - 1);
+        } else {this._moveTo(this.index + diffIndex)}
+      }
+      return;
+    }
     this.basicAnima = Animated.parallel([
       Animated.decay(this.state._viewAnimation, {
         velocity: gestureState.vy,
-        deceleration: 0.97
+        deceleration: 0.99
       }),
       Animated.decay(this.state._viewHeight, {
         velocity: gestureState.vy,
-        deceleration: 0.97
+        deceleration: 0.99
       })
       ]).start(({finished}) => this._checkIfAnimaStopNormally(finished));
   }
@@ -211,7 +231,6 @@ class Pickroll extends Component {
     diff = Math.abs(scrollDisatance) % 36 >= 18 ? Math.ceil(Math.abs(scrollDisatance / 36)) : Math.floor(Math.abs(scrollDisatance / 36));
     if (scrollDisatance >= 0) {this.index = this.index - diff} else {this.index = this.index + diff;}
     this._ttt();
-    this.basicAnima = null;
   }
   _checkArrivetheBoundary(value) {
     if (value > 0) {
@@ -248,7 +267,8 @@ class Pickroll extends Component {
         ]).start(() => this._ttt());
     } else {
       let before = this.index;
-      diff = Math.abs(scrollDisatance) % 36 >= 18 ? Math.ceil(Math.abs(scrollDisatance / 36)) : Math.floor(Math.abs(scrollDisatance / 36));
+      diff = Math.ceil(Math.abs(scrollDisatance / 36));
+      //diff = Math.abs(scrollDisatance) % 36 >= 18 ? Math.ceil(Math.abs(scrollDisatance / 36)) : Math.floor(Math.abs(scrollDisatance / 36));
       if (scrollDisatance >= 0) {this.index = this.index - diff} else {this.index = this.index + diff;}
         Animated.parallel([
           Animated.timing(this.state._viewAnimation, {
@@ -266,6 +286,7 @@ class Pickroll extends Component {
   _ttt() {
     this.endHeight = this.state._viewHeight._value;
     this.state._viewAnimation.setValue(0);
+    this.basicAnima = null;
     this._onValueChange();
   }
   _handleStartShouldSetPanResponder(e, gestureState){
@@ -294,14 +315,14 @@ class Pickroll extends Component {
       middleItems[index] = <Animated.Text
         key={'mid' + index}
         className={'mid' + index}
-        onPress={() => {this._moveTo(index)}}
+        onPress={() => {console.debug('press '+index); this._moveTo(index)}}
         style={[rollStyles.middleText, this.state.itemStyle,
               { fontSize:
                   this.state._viewHeight.interpolate({
                     inputRange: [ownHeight - 36 * (- this.state.initSelectedIndex + index + 2),
                                  ownHeight + (this.state.initSelectedIndex - index) * 36,
                                  ownHeight + 36 * (2 + this.state.initSelectedIndex - index)],
-                    outputRange: [18, 22, 18]}),
+                    outputRange: [22, 22, 22]}),
                 opacity:
                   this.state._viewHeight.interpolate({
                     inputRange: [ownHeight - 36 * (- this.state.initSelectedIndex + index + 2),
@@ -338,19 +359,17 @@ class Pickroll extends Component {
 
 
     let middleViewStyle = {
-      position: 'absolute',
       top: - 36 * index + 72
     };
 
     return (
       <View style={[{flex: 1}]}>
-      <View style={{position: 'absolute', width: Platform.width, height: 46, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ccc', marginTop: 67}}></View>
-      <View style={[rollStyles.container, this.state.pickerStyle, {backgroundColor: '#f79e80'}]} {...this._panResponder.panHandlers} >
+      <View style={{position: 'absolute', width: 10000, height: 46, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ccc', marginTop: 67}}></View>
+      <View style={[rollStyles.container, this.state.pickerStyle]} {...this._panResponder.panHandlers} >
           <Animated.View
             style={[
               rollStyles.middleView,
               middleViewStyle,
-              {backgroundColor: '#f5f7a0'},
               {transform: [{translateY: this.state._viewAnimation}]}
               ]}
            >
