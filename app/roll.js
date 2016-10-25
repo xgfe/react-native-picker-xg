@@ -322,7 +322,7 @@ class Pickroll extends Component {
                     inputRange: [ownHeight - 36 * (- this.state.initSelectedIndex + index + 2),
                                  ownHeight + (this.state.initSelectedIndex - index) * 36,
                                  ownHeight + 36 * (2 + this.state.initSelectedIndex - index)],
-                    outputRange: [22, 22, 22]}),
+                    outputRange: [18, 22, 18]}),
                 opacity:
                   this.state._viewHeight.interpolate({
                     inputRange: [ownHeight - 36 * (- this.state.initSelectedIndex + index + 2),
@@ -364,7 +364,7 @@ class Pickroll extends Component {
 
     return (
       <View style={[{flex: 1}]}>
-      <View style={{position: 'absolute', width: 10000, height: 46, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ccc', marginTop: 67}}></View>
+      <View style={{position: 'absolute', width: 300, height: 46, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ccc', marginTop: 67}}></View>
       <View style={[rollStyles.container, this.state.pickerStyle]} {...this._panResponder.panHandlers} >
           <Animated.View
             style={[
