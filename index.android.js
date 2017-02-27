@@ -10,8 +10,8 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
-import Test3, {Cpicker}from './app/picker';
-
+import Test3, {CascadePicker}from './app/pickerLogic/picker';
+import styles from './style'
 
 let wheel2 = [
   {
@@ -162,20 +162,25 @@ class TpickerEx extends Component {
   constructor(props, context){
     super(props, context);
     this.state = {
-      str:'just a test',
-      str1: 'just a test'
+      str:'React Native Picker Demo',
+      str1: 'without showing init chose',
+      str2: 'showing init chose'
     };
   }
 
 
   render() {
     return (
-      <View style={testStyle.container}>
-        <Text style={{margin:10}}>{this.state.str}</Text>
-
+      <View style={styles.container}>
+        <View style={styles.titleContainer}>
+        <Text style={styles.title}>{this.state.str}</Text>
+        </View>
+        <View>
+        <Text style={styles.demoValue}>Basic Picker value: {this.state.str1}</Text>
         <Test3
-          inputValue ={'2 wheel picker'}
-          inputStyle = {testStyle.textInput}
+          inputInit = {false}
+          inputValue ={'basic picker without init chose'}
+          inputStyle = {styles.textInput}
           confirmBtnText = {'confirm'}
           cancelBtnText = {'cancel'}
           data = {wheel2}
@@ -183,16 +188,24 @@ class TpickerEx extends Component {
           onResult ={(str) => {this.setState({str1:str});}}
           visible = {false}
         />
-        <Text style={{margin:10}}>{this.state.str1}</Text>
+        </View>
+         <View>
+        <Text style={styles.demoValue}>Basic Picker value: {this.state.str2}</Text>
+        <Test3
+          inputInit = {true}
+          inputStyle = {styles.textInput}
+          confirmBtnText = {'confirm'}
+          cancelBtnText = {'cancel'}
+          data = {wheel2}
+          selectIndex = {[0,2]}
+          onResult ={(str) => {this.setState({str2:str});}}
+          visible = {false}
+        />
+        </View>
       </View>
 
     );
   }
 }
 
-const testStyle = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});
-AppRegistry.registerComponent('widgets', () => TpickerEx);
+AppRegistry.registerComponent('newpicker', () => TpickerEx);

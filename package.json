@@ -1,63 +1,23 @@
 {
-  "name": "react-native-picker-xg",
-  "version": "0.0.8",
-  "private": false,
-  "main": "app/picker.js",
-  "description": "react native Picker component for both Android and iOS.",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:xgfe/react-native-picker-xg.git"
-  },
-  "keywords": [
-    "react-native",
-    "picker"
-  ],
-  "author": "lulutia",
+  "name": "newpicker",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
-    "mocha": "./node_modules/mocha/bin/_mocha ./test/*.test.js --watch",
-    "test": "node ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha ./test/*.test.js",
-    "coverage": "cat ./coverage/lcov.info | coveralls",
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "changelogsee": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0",
-    "lint": "eslint ."
+    "test": "jest"
   },
   "dependencies": {
+    "react": "15.4.2",
+    "react-native": "^0.41.2",
+    "react-native-vector-icons": "^4.0.0"
   },
   "devDependencies": {
-    "validate-commit-msg": "^2.6.1",
-    "babel-core": "^6.9.1",
-    "babel-preset-react-native": "^1.9.0",
-    "chai": "^3.5.0",
-    "coveralls": "^2.11.9",
-    "cz-conventional-changelog": "^1.1.6",
-    "enzyme": "^2.3.0",
-    "eslint": "^2.10.2",
-    "eslint-plugin-react": "^5.1.1",
-    "ghooks": "^1.2.1",
-    "istanbul": "^1.0.0-alpha.2",
-    "jsdom": "^9.2.1",
-    "mocha": "^2.5.3",
-    "react": "15.0.2",
-    "react-addons-test-utils": "15.0.2",
-    "react-dom": "15.0.2",
-    "react-native": "0.26.2",
-    "react-native-mock": "^0.2.2",
-    "sinon": "^1.17.4"
+    "babel-jest": "18.0.0",
+    "babel-preset-react-native": "1.9.1",
+    "jest": "18.1.0",
+    "react-test-renderer": "15.4.2"
   },
-  "config": {
-    "validate-commit-msg": {
-      "warnOnFail": true
-    },
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    },
-    "ghooks": {
-      "commit-msg": "validate-commit-msg"
-    }
-  },
-  "pre-commit": [
-    "lint"
-  ]
+  "jest": {
+    "preset": "react-native"
+  }
 }

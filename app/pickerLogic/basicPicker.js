@@ -1,7 +1,7 @@
 /**
  * 依赖引用
  */
-import React, { Component,PropTypes } from 'react';
+import React, {Component,PropTypes} from 'react';
 import {
     View,
     Text,
@@ -16,8 +16,9 @@ import {
     Image,
 } from 'react-native';
 import Pickroll from './roll';
-import {styles} from './style';
-
+import {styles} from './pickerStyle';
+import InputOuter from '../pickerTrigger/outer';
+import Handle from '../pickerHandle/handle';
 /**
  * 平台兼容
  */
@@ -29,13 +30,13 @@ let PickerItem = PickRoll.Item;
  */
 let height = Dimensions.get('window').height;
 let valueCount = [];
-let indexCount = [];
-let str = '';
+    let indexCount = [];
+    let str = '';
 
 /**
  * 组件扩展
  */
-class TMPicker extends Component {
+class BasicPicker extends Component {
 
   /**
    * 类型约束
@@ -60,6 +61,8 @@ class TMPicker extends Component {
     iconStyle: View.propTypes.style,
     //picker的名称
     pickerName: PropTypes.string,
+    // 根据选择的初始值来初始化输入框内部文字
+    inputInit: PropTypes.bool,
     //输入框内部文字初始值
     inputValue: PropTypes.string,
     //确定按钮的文字
@@ -84,11 +87,14 @@ class TMPicker extends Component {
     this._changeAnimateStatus = this._changeAnimateStatus.bind(this);
     this._pushOpera = this._pushOpera.bind(this);
     this.state = this._stateFromProps(props);
+    this._setEventBegin = this._setEventBegin.bind(this);
+    this._confirmChose = this._confirmChose.bind(this);
+    this._setModalVisible = this._setModalVisible.bind(this);
     this.state.animatedHeight = new Animated.Value(height);
   }
 
-  componentDidMount() {
-    this._setEventBegin();
+  componentWillMount() {
+    //this._setEventBegin();
   }
   /**
    * 状态初始化
@@ -114,6 +120,7 @@ class TMPicker extends Component {
     let visible = typeof props.visible==='undefined'?false:props.visible;
     let enable = typeof props.enable==='undefined'?true:props.enable;
     let inputValue = props.inputValue||'please chose';
+    let inputInit = typeof props.enable==='undefined'?false:props.enable;
     let confirmBtnText = props.confirmBtnText || '确定';
     let cancelBtnText = props.cancelBtnText || '取消';
     return {
@@ -125,9 +132,15 @@ class TMPicker extends Component {
       selectedValue,
       confirmBtnText,
       cancelBtnText,
+      inputInit
     };
   }
 
+  componentDidMount() {
+    if (this.state.inputInit) {
+
+    }
+  }
   /**
    * 确定操作
    * @returns {string} 选择的数据
@@ -160,9 +173,9 @@ class TMPicker extends Component {
    * @private
      */
   _setEventBegin(){
+    console.debug(this.state);
     if(this.state.enable){
       this._setModalVisible(true)
-      this.refs.test.blur()
       this._pushOpera(this.state.selectIndex, indexCount);
       this._pushOpera(this.state.selectedValue,valueCount);
       str = '';
@@ -217,7 +230,7 @@ class TMPicker extends Component {
    * @returns {XML}
      */
   render(){
-    console.debug(StatusBar.currentHeight);
+
     return (
       <View style={styles.container}>
         <Modal
@@ -228,21 +241,13 @@ class TMPicker extends Component {
         >
           <View style={[styles.modalContainer]}>
             <Animated.View style={[styles.innerContainer,{top:this.state.animatedHeight}]}>
-              <View style={[styles.nav, this.props.navStyle]}>
-                <TouchableOpacity  style={styles.confirm}>
-                  <Text className={"confirm"} onPress={() => {this._confirmChose()}}
-                        style={[styles.confirmBtnStyle,this.props.confirmBtnStyle]} >{this.state.confirmBtnText}</Text>
-                </TouchableOpacity>
-                <Text style={[styles.pickerName,this.props.pickerNameStyle]}>{this.props.pickerName}</Text>
-                <TouchableOpacity style={styles.cancel} >
-                  <Text
-                    className={"cancel"}
-                    style={[styles.cancelBtnStyle,this.props.cancelBtnStyle]}
-                    onPress={() => {this._setModalVisible(false,'cancel')
-                    }}
-                  >{this.state.cancelBtnText}</Text>
-                </TouchableOpacity>
-              </View>
+              <Handle
+                confirmChose = {this._confirmChose}
+                cancelChose = {this._setModalVisible}
+                pickerName = {this.props.pickerName}
+                confirmBtnText = {this.state.confirmBtnText}
+                cancelBtnText = {this.state.cancelBtnText}
+                />
               <View style={styles.pickContainer}>
                 {
                   this.props.data.map((row,index) =>{
@@ -278,21 +283,13 @@ class TMPicker extends Component {
             </Animated.View>
           </View>
         </Modal>
-        <View style={[styles.outerInput,this.props.inputStyle]}>
-        <TextInput
-          underlineColorAndroid={'transparent'}
-          editable = {this.state.enable}
-          style = {[styles.textInput,this.props.textStyle]}
-          ref = 'test'
-          onFocus={() => { this._setEventBegin()}}
+        <InputOuter
+          onPress={this._setEventBegin}
+          editable={this.state.enable}
           placeholder={this.state.inputValue}
-          value={this.state.inputValue}
-        /><TouchableOpacity className="arrowDown" style={styles.iconOuter}onPress={() => { this._setEventBegin()}}>
-          <Image source={require('./img/arrow.png')} style={[styles.icon, this.props.iconStyle]}/>
-      </TouchableOpacity>
-          </View>
+          value={this.state.inputValue}/>
       </View>
     );
   }}
 
-export default TMPicker;
+export default BasicPicker;
