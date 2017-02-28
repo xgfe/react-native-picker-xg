@@ -73,7 +73,11 @@ class CascadePicker extends Component {
     //获取选择的内容
     onResult: PropTypes.func,
     //picker是否能操作
-    enable: PropTypes.bool
+    enable: PropTypes.bool,
+    //icon name
+    iconName: PropTypes.string,
+    //icon size
+    iconSize: PropTypes.number
   };
 
   /**
@@ -101,6 +105,9 @@ class CascadePicker extends Component {
     this.saveChoseValue = [];
     this.saveData = [];
     this.saveIndex = [];
+    if (this.state.visible) {
+      this._setEventBegin();
+    }
   }
   /**
    * 状态初始化
@@ -214,6 +221,8 @@ class CascadePicker extends Component {
       this.setState({passData:this.state.passData,selectIndex:this.state.selectIndex,selectedValue: this.state.selectedValue});
       this._setModalVisible(true);
       return {saveChoseValue:this.saveChoseValue,saveData:this.saveData,saveIndex:this.saveIndex};
+    }else{
+      this.state.visible = false;
     }
   }
 
@@ -228,7 +237,8 @@ class CascadePicker extends Component {
       this.setState({visible: visible});
       Animated.timing(
         this.state.animatedHeight,
-        {toValue: height - modalHeight}
+        {toValue: height - modalHeight,
+         delay: 300}
       ).start();
     } else {
       Animated.timing(
@@ -308,7 +318,11 @@ class CascadePicker extends Component {
           <View style={[styles.modalContainer]}>
             <Animated.View style={[styles.innerContainer,{top:this.state.animatedHeight}]}>
             <Handle
+                navStyle = {this.props.navStyle}
+                confirmBtnStyle = {this.props.confirmBtnStyle}
+                cancelBtnStyle = {this.props.cancelBtnStyle}
                 confirmChose = {this._confirmChose}
+                pickerNameStyle ={this.props.pickerNameStyle}
                 cancelChose = {this._cancelChose}
                 pickerName = {this.props.pickerName}
                 confirmBtnText = {this.state.confirmBtnText}
@@ -343,9 +357,15 @@ class CascadePicker extends Component {
           </View>
         </Modal>
         <InputOuter
+          enable={this.state.enable}
+          textStyle={this.props.textStyle}
+          inputStyle={this.props.inputStyle}
+          iconSize={this.props.iconSize}
+          iconName={this.props.iconName}
           onPress={this._setEventBegin}
           editable={this.state.enable}
           placeholder={this.state.inputValue}
+          iconStyle={this.props.iconStyle}
           value={this.state.inputValue}/>
       </View>
     );

@@ -22,13 +22,17 @@ let styles = StyleSheet.create({
     fontSize: 18
   },
   pickerName:{
-    flex:1,
     textAlign:'center',
-    fontSize: 18
+    fontSize: 14
   },
   cancel: {
     flex:1,
     justifyContent: 'center'
+  },
+  pickerNameContainer: {
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   cancelBtnStyle: {
     textAlign:'right',

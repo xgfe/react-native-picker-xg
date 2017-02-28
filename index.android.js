@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   View,
+  ScrollView,
   Text,
   StyleSheet
 } from 'react-native';
@@ -163,15 +164,19 @@ class TpickerEx extends Component {
     super(props, context);
     this.state = {
       str:'React Native Picker Demo',
-      str1: 'without showing init chose',
-      str2: 'showing init chose'
+      str1: 'without showing init chose and custom button words',
+      str2: 'showing init chose',
+      str3: 'cascadePicker with init index',
+      str4: 'cascadePicker without init index',
+      str5: 'cascadePicker with init show and custom styles',
+      str6: 'disabled cascadePicker'
     };
   }
 
-
+  // todo: ios can not init show two pickers
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.titleContainer}>
         <Text style={styles.title}>{this.state.str}</Text>
         </View>
@@ -183,9 +188,7 @@ class TpickerEx extends Component {
           confirmBtnText = {'confirm'}
           cancelBtnText = {'cancel'}
           data = {wheel2}
-          selectIndex = {[0,1]}
           onResult ={(str) => {this.setState({str1:str});}}
-          visible = {false}
         />
         </View>
          <View>
@@ -197,38 +200,59 @@ class TpickerEx extends Component {
           data = {wheel2}
           selectIndex = {[0,2]}
           onResult ={(str) => {this.setState({str2:str});}}
-          visible = {false}
+        />
+        </View>
+          <View>
+        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str5}</Text>
+        <CascadePicker
+          textStyle = {{color: 'red'}}
+          navStyle = {{backgroundColor:'lightblue'}}
+          inputValue={'4 level CascadePicker'}
+          level = {4}
+          data = {level4Data}
+          iconName={'cog'}
+          iconSize={14}
+          inputStyle = {{borderColor: 'gray'}}
+          confirmBtnStyle = {{color: 'blue'}}
+          cancelBtnStyle={{color: 'red'}}
+          pickerNameStyle={{fontSize: 12}}
+          pickerName={'picker name test'}
+          selectIndex = {[1,1,0,2]}
+          visible = {true}
+          iconStyle={{marginRight: 30}}
+          onResult ={(str) => {this.setState({str5:str});}}
         />
         </View>
          <View>
-        <Text style={styles.demoValue}>Basic Picker value: {this.state.str2}</Text>
+        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str3}</Text>
         <CascadePicker
           inputValue={'3 level CascadePicker'}
           level = {3}
           selectIndex = {[0,1,0]}
           data = {level3Data}
-          visible = {false}
+          onResult ={(str) => {this.setState({str3:str});}}
         />
         </View>
           <View>
-        <Text style={styles.demoValue}>Basic Picker value: {this.state.str2}</Text>
+        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str4}</Text>
         <CascadePicker
           inputValue={'2 level CascadePicker'}
           level = {2}
           data = {level2Data}
-          visible = {false}
+          onResult ={(str) => {this.setState({str4:str});}}
         />
         </View>
           <View>
-        <Text style={styles.demoValue}>Basic Picker value: {this.state.str2}</Text>
+        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str6}</Text>
         <CascadePicker
-          inputValue={'4 level CascadePicker'}
-          level = {4}
-          data = {level4Data}
-          visible = {false}
+          inputValue={'2 level CascadePicker'}
+          level = {2}
+          data = {level2Data}
+          enable={false}
+          onResult ={(str) => {this.setState({str6:str});}}
         />
         </View>
-      </View>
+      </ScrollView>
 
     );
   }

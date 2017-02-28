@@ -30,8 +30,8 @@ let styles = StyleSheet.create({
   },
   inputLabel: {
     fontSize: 14,
-    paddingLeft: 10,
-    color: '#666'
+    color: '#666',
+    paddingLeft: 10
   },
   vectorIcon: {
     marginRight: 10

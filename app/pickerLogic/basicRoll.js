@@ -234,6 +234,7 @@ class Pickroll extends Component {
 
     return (
       <View style={{flex: 1}}>
+      <View style={{position: 'absolute', width: 400, height: 36, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ccc', marginTop: 75}}></View>
       <ScrollView
         ref='_scrollView'
         showsVerticalScrollIndicator={false}
@@ -247,8 +248,6 @@ class Pickroll extends Component {
           {this._renderItems(this.state.items)}
         </View>
       </ScrollView>
-      {/*这个要处理下，要不下面的响应被遮盖了*/}
-      <View style={{position: 'absolute', width: 400, height: 36, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ccc', marginTop: 75}}></View>
       </View>
         );
   }

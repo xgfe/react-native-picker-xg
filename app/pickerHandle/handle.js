@@ -60,7 +60,9 @@ class Handle extends Component {
               <Text className={"confirm"}
                     style={[styles.confirmBtnStyle,this.props.confirmBtnStyle]} >{this.props.confirmBtnText}</Text>
             </TouchableOpacity>
-            <Text style={[styles.pickerName,this.props.pickerNameStyle]}>{this.props.pickerName}</Text>
+            <View style={styles.pickerNameContainer}>
+              <Text style={[styles.pickerName,this.props.pickerNameStyle]}>{this.props.pickerName}</Text>
+            </View>
             <TouchableOpacity style={styles.cancel} onPress={() => {this.props.cancelChose(false, 'cancel')
                 }}>
               <Text
