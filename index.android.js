@@ -117,43 +117,43 @@ let level3Data =
   {
     '四川':{
       '成都':['青羊区','武侯区','温江区'],
-      '绵阳':['绵阳中学','核弹基地'],
+      '绵阳':['涪城区','安州区', '三台县', '平武县'],
       '广安':['容县','武胜']
     },
     '浙江':{
       '杭州':['西湖','银泰','玉泉'],
-      '绍兴':['X1','X2','X3'],
-      'place':['Y1','Y2','Y3','Y4','Y5']
+      '绍兴':['越城区','柯桥区','上虞区'],
+      '温州':['鹿城区','瓯海区','瑞安市','永嘉县','苍南县']
     },
-    'some':{
-      'place1':['Z1','Z2','Z3'],
-      'place2':['Z4','Z5','Z6','Z7'],
-      'place3':['A1','A2','A3','A4','A5','A6']
+    '北京':{
+      '朝阳区':[''],
+      '海淀区':[''],
+      '东城区':['']
     }
   };
 let level2Data = {
-  '四川':['w','e','q'],
-  '浙江':['ww','ee','qq']
+  'American':['Alabama','Arizona','California', 'Connecticut', 'Georgia', 'Maine'],
+  'Australia':['NSW','QLD','TAS']
 };
 let level4Data = {
   '1':{
     '11':{
-      '10':['a1','b1','c1'],
-      '01':['d1','f1']
+      '111':['1111','1112','1113'],
+      '112':['1121','1122']
     },
-    '22':{
-      '20':['w','d','qq'],
-      '21':['wp','c']
+    '12':{
+      '121':['1211','1212','1213'],
+      '122':['1221','1222']
     }
   },
   '2':{
-    '33':{
-      '34':['e','qd','cd'],
-      '56':['dw','vf','we']
+    '21':{
+      '211':['2111','2112','2113'],
+      '212':['2121','2122','2123']
     },
-    '09':{
-      'v':['bb','t','bd'],
-      'p':['vd','der','f']
+    '22':{
+      '221':['2211','2212','2213'],
+      '222':['2221','2222','2223']
     }
   }
 };
@@ -178,7 +178,6 @@ class TpickerEx extends Component {
         <View>
         <Text style={styles.demoValue}>Basic Picker value: {this.state.str1}</Text>
         <Test3
-          inputInit = {false}
           inputValue ={'basic picker without init chose'}
           inputStyle = {styles.textInput}
           confirmBtnText = {'confirm'}
@@ -192,13 +191,40 @@ class TpickerEx extends Component {
          <View>
         <Text style={styles.demoValue}>Basic Picker value: {this.state.str2}</Text>
         <Test3
-          inputInit = {true}
           inputStyle = {styles.textInput}
           confirmBtnText = {'confirm'}
           cancelBtnText = {'cancel'}
           data = {wheel2}
           selectIndex = {[0,2]}
           onResult ={(str) => {this.setState({str2:str});}}
+          visible = {false}
+        />
+        </View>
+         <View>
+        <Text style={styles.demoValue}>Basic Picker value: {this.state.str2}</Text>
+        <CascadePicker
+          inputValue={'3 level CascadePicker'}
+          level = {3}
+          selectIndex = {[0,1,0]}
+          data = {level3Data}
+          visible = {false}
+        />
+        </View>
+          <View>
+        <Text style={styles.demoValue}>Basic Picker value: {this.state.str2}</Text>
+        <CascadePicker
+          inputValue={'2 level CascadePicker'}
+          level = {2}
+          data = {level2Data}
+          visible = {false}
+        />
+        </View>
+          <View>
+        <Text style={styles.demoValue}>Basic Picker value: {this.state.str2}</Text>
+        <CascadePicker
+          inputValue={'4 level CascadePicker'}
+          level = {4}
+          data = {level4Data}
           visible = {false}
         />
         </View>

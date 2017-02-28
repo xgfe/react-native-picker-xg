@@ -15,7 +15,7 @@ import {
     Modal,
     Image,
 } from 'react-native';
-import Pickroll from './roll';
+import Pickroll from './basicRoll';
 import {styles} from './pickerStyle';
 import InputOuter from '../pickerTrigger/outer';
 import Handle from '../pickerHandle/handle';
@@ -23,15 +23,14 @@ import Handle from '../pickerHandle/handle';
  * 平台兼容
  */
 let PickRoll = Platform.OS === 'ios' ? PickerIOS : Pickroll;
+let modalHeight = Platform.OS === 'ios' ? 220 : (StatusBar.currentHeight + 220);
 let PickerItem = PickRoll.Item;
 
 /**
  * 全局变量声明
  */
 let height = Dimensions.get('window').height;
-let valueCount = [];
-    let indexCount = [];
-    let str = '';
+
 
 /**
  * 组件扩展
@@ -61,8 +60,6 @@ class BasicPicker extends Component {
     iconStyle: View.propTypes.style,
     //picker的名称
     pickerName: PropTypes.string,
-    // 根据选择的初始值来初始化输入框内部文字
-    inputInit: PropTypes.bool,
     //输入框内部文字初始值
     inputValue: PropTypes.string,
     //确定按钮的文字
@@ -95,6 +92,9 @@ class BasicPicker extends Component {
 
   componentWillMount() {
     //this._setEventBegin();
+    this.valueCount = [];
+    this.indexCount = [];
+    this.str = '';
   }
   /**
    * 状态初始化
@@ -120,7 +120,6 @@ class BasicPicker extends Component {
     let visible = typeof props.visible==='undefined'?false:props.visible;
     let enable = typeof props.enable==='undefined'?true:props.enable;
     let inputValue = props.inputValue||'please chose';
-    let inputInit = typeof props.enable==='undefined'?false:props.enable;
     let confirmBtnText = props.confirmBtnText || '确定';
     let cancelBtnText = props.cancelBtnText || '取消';
     return {
@@ -131,14 +130,12 @@ class BasicPicker extends Component {
       selectIndex,
       selectedValue,
       confirmBtnText,
-      cancelBtnText,
-      inputInit
+      cancelBtnText
     };
   }
 
   componentDidMount() {
     if (this.state.inputInit) {
-
     }
   }
   /**
@@ -173,13 +170,12 @@ class BasicPicker extends Component {
    * @private
      */
   _setEventBegin(){
-    console.debug(this.state);
     if(this.state.enable){
       this._setModalVisible(true)
-      this._pushOpera(this.state.selectIndex, indexCount);
-      this._pushOpera(this.state.selectedValue,valueCount);
+      this._pushOpera(this.state.selectIndex, this.indexCount);
+      this._pushOpera(this.state.selectedValue,this.valueCount);
       str = '';
-      return {valueCount: valueCount, indexCount:indexCount};
+      return {valueCount: this.valueCount, indexCount:this.indexCount};
     }else{
       return 'it is disabled';
     }
@@ -192,11 +188,12 @@ class BasicPicker extends Component {
    * @private
      */
   _setModalVisible(visible,type) {
+    //debugger
     if(visible){
       this.setState({visible: visible});
       Animated.timing(
         this.state.animatedHeight,
-        {toValue: height-StatusBar.currentHeight-220}
+        {toValue: height-modalHeight}
       ).start();
     }else{
       Animated.timing(
@@ -218,10 +215,9 @@ class BasicPicker extends Component {
         this.props.onResult(str);
       }}
     else if(type==='cancel'){
-      this._pushOpera(indexCount, this.state.selectIndex);
-      this._pushOpera(valueCount, this.state.selectedValue);
+      this._pushOpera(this.indexCount, this.state.selectIndex);
+      this._pushOpera(this.valueCount, this.state.selectedValue);
       this.setState({visible:false})
-      return {indexCount,valueCount}
     }
   }
 

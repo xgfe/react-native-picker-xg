@@ -122,7 +122,7 @@ class Pickroll extends Component {
         className={'mid' + (index + 2)}
         onPress={() => {this._moveTo(index + 2)}}
         style={[rollStyles.middleText, this.state.itemStyle,
-                        { 
+                        {
                           // todo: when add fontSize, the shaking is too obvious
                           // fontSize:
                           //   total.interpolate({
@@ -229,13 +229,12 @@ class Pickroll extends Component {
    * @returns {XML}
    */
   render(){
-
     let index = this.state.selectedIndex;
     let length = this.state.items.length;
 
     return (
       <View style={{flex: 1}}>
-      <ScrollView 
+      <ScrollView
         ref='_scrollView'
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}

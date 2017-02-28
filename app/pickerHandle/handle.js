@@ -57,11 +57,11 @@ class Handle extends Component {
     return (
           <View style={[styles.nav, this.props.navStyle]}>
             <TouchableOpacity  style={styles.confirm} onPress={() => {this.props.confirmChose()}}>
-              <Text className={"confirm"} 
+              <Text className={"confirm"}
                     style={[styles.confirmBtnStyle,this.props.confirmBtnStyle]} >{this.props.confirmBtnText}</Text>
             </TouchableOpacity>
             <Text style={[styles.pickerName,this.props.pickerNameStyle]}>{this.props.pickerName}</Text>
-            <TouchableOpacity style={styles.cancel} onPress={() => {this.props.cancelChose(false,'cancel')
+            <TouchableOpacity style={styles.cancel} onPress={() => {this.props.cancelChose(false, 'cancel')
                 }}>
               <Text
                 className={"cancel"}
