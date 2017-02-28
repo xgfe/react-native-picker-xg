@@ -87,15 +87,15 @@ class BasicPicker extends Component {
     super(props, context);
     this._changeAnimateStatus = this._changeAnimateStatus.bind(this);
     this._pushOpera = this._pushOpera.bind(this);
-    this.state = this._stateFromProps(props);
     this._setEventBegin = this._setEventBegin.bind(this);
     this._confirmChose = this._confirmChose.bind(this);
     this._setModalVisible = this._setModalVisible.bind(this);
+
+    this.state = this._stateFromProps(props);
     this.state.animatedHeight = new Animated.Value(height);
   }
 
   componentWillMount() {
-    //this._setEventBegin();
     this.valueCount = [];
     this.indexCount = [];
     this.str = '';
@@ -112,39 +112,30 @@ class BasicPicker extends Component {
   _stateFromProps(props){
     let selectIndex = [];
     let selectedValue = [];
-    if(typeof props.selectIndex==='undefined'){
-      for(let item of props.data){
+    if (typeof props.selectIndex === 'undefined'){
+      for (let item of props.data){
         selectIndex.push(0);
         selectedValue.push(Object.keys(item)[0]);
       }
-    }else{
+    } else {
       selectIndex = props.selectIndex;
       props.data.map((item,index) =>{
         selectedValue.push(Object.keys(item)[selectIndex[index]]);
-      })
+      });
     }
-    let animationType = props.animationType||'none';
-    let visible = typeof props.visible==='undefined'?false:props.visible;
-    let enable = typeof props.enable==='undefined'?true:props.enable;
-    let inputValue = props.inputValue||'please chose';
-    let confirmBtnText = props.confirmBtnText || '确定';
-    let cancelBtnText = props.cancelBtnText || '取消';
+    const {
+      visible,
+      inputValue
+    } = props;
+
     return {
       visible,
-      animationType,
-      enable,
       inputValue,
       selectIndex,
       selectedValue,
-      confirmBtnText,
-      cancelBtnText
     };
   }
 
-  componentDidMount() {
-    if (this.state.inputInit) {
-    }
-  }
   /**
    * 确定操作
    * @returns {string} 选择的数据
@@ -152,10 +143,10 @@ class BasicPicker extends Component {
      */
   _confirmChose(){
     this.props.data.map((item,index) =>{
-      str = str +  this.props.data[index][this.state.selectedValue[index]].name;
-    })
+      this.str = this.str +  this.props.data[index][this.state.selectedValue[index]].name;
+    });
     this. _setModalVisible(false,'confirm');
-    return str;
+    return this.str;
   }
 
   /**
@@ -177,13 +168,13 @@ class BasicPicker extends Component {
    * @private
      */
   _setEventBegin(){
-    if(this.state.enable){
-      this._setModalVisible(true)
+    if (this.props.enable){
+      this._setModalVisible(true);
       this._pushOpera(this.state.selectIndex, this.indexCount);
       this._pushOpera(this.state.selectedValue,this.valueCount);
-      str = '';
+      this.str = '';
       return {valueCount: this.valueCount, indexCount:this.indexCount};
-    }else{
+    } else {
       this.state.visible = false;
       return 'it is disabled';
     }
@@ -196,14 +187,14 @@ class BasicPicker extends Component {
    * @private
      */
   _setModalVisible(visible,type) {
-    if(visible){
+    if (visible){
       this.setState({visible: visible});
       Animated.timing(
         this.state.animatedHeight,
-        {toValue: height-modalHeight,
-         delay: 300}
+        {toValue: height - modalHeight,
+          delay: 300}
       ).start();
-    }else{
+    } else {
       Animated.timing(
         this.state.animatedHeight,
         {toValue: height}
@@ -218,14 +209,14 @@ class BasicPicker extends Component {
    * @private
      */
   _changeAnimateStatus(type){
-    if(type==='confirm'){this.setState({visible:false,inputValue: str});
-      if(this.props.onResult){
-        this.props.onResult(str);
+    if (type === 'confirm'){this.setState({visible:false,inputValue: this.str});
+      if (this.props.onResult){
+        this.props.onResult(this.str);
       }}
-    else if(type==='cancel'){
+    else if (type === 'cancel'){
       this._pushOpera(this.indexCount, this.state.selectIndex);
       this._pushOpera(this.valueCount, this.state.selectedValue);
-      this.setState({visible:false})
+      this.setState({visible:false});
     }
   }
 
@@ -234,14 +225,16 @@ class BasicPicker extends Component {
    * @returns {XML}
      */
   render(){
+    console.debug('sasdqwqwqwdqw-------');
+    console.debug(this.state.selectedValue);
 
     return (
       <View style={styles.container}>
         <Modal
-          animationType={this.state.animationType}
+          animationType={this.props.animationType}
           transparent={true}
           visible={this.state.visible}
-          onRequestClose={() => {this._setModalVisible(false)}}
+          onRequestClose={() => {this._setModalVisible(false);}}
         >
           <View style={[styles.modalContainer]}>
             <Animated.View style={[styles.innerContainer,{top:this.state.animatedHeight}]}>
@@ -249,12 +242,12 @@ class BasicPicker extends Component {
                 navStyle = {this.props.navStyle}
                 confirmBtnStyle = {this.props.confirmBtnStyle}
                 cancelBtnStyle = {this.props.cancelBtnStyle}
-                confirmChose = {this._confirmChose}
-                cancelChose = {this._setModalVisible}
                 pickerNameStyle ={this.props.pickerNameStyle}
                 pickerName = {this.props.pickerName}
-                confirmBtnText = {this.state.confirmBtnText}
-                cancelBtnText = {this.state.cancelBtnText}
+                confirmBtnText = {this.props.confirmBtnText}
+                cancelBtnText = {this.props.cancelBtnText}
+                confirmChose = {this._confirmChose}
+                cancelChose = {this._setModalVisible}
                 />
               <View style={styles.pickContainer}>
                 {
@@ -263,7 +256,7 @@ class BasicPicker extends Component {
                       <PickRoll
                         key = {index}
                         style = {{flex:1}}
-                        className = {"test"+index}
+                        className = {'test' + index}
                         selectIndex = {this.state.selectIndex[index]}
                         selectedValue={this.state.selectedValue[index]}
                         pickerStyle = {{flex:1}}
@@ -275,7 +268,7 @@ class BasicPicker extends Component {
                           this.setState({selectIndex:this.state.selectIndex,selectedValue:this.state.selectedValue});
                         }}
                       >{
-                        Platform.OS === 'ios' &&(
+                        Platform.OS === 'ios' && (
                           Object.keys(this.props.data[index]).map((carMake) => (
                             <PickerItem
                               key={carMake}
@@ -284,7 +277,7 @@ class BasicPicker extends Component {
                             />
                           )))
                       }
-                      </PickRoll>)
+                      </PickRoll>);
                   })
                 }
               </View>
@@ -292,18 +285,25 @@ class BasicPicker extends Component {
           </View>
         </Modal>
         <InputOuter
-          enable={this.state.enable}
           textStyle={this.props.textStyle}
           inputStyle={this.props.inputStyle}
           iconSize={this.props.iconSize}
           iconName={this.props.iconName}
           onPress={this._setEventBegin}
-          editable={this.state.enable}
-          placeholder={this.state.inputValue}
           iconStyle={this.props.iconStyle}
+          enable={this.props.enable}
+          placeholder={this.state.inputValue}
           value={this.state.inputValue}/>
       </View>
     );
   }}
 
+BasicPicker.defaultProps = {
+  animationType: 'none',
+  visible: false,
+  enable: true,
+  inputValue: 'please chose',
+  confirmBtnText: '确定',
+  cancelBtnText: '取消'
+};
 export default BasicPicker;

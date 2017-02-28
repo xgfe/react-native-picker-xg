@@ -24,6 +24,17 @@ let styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     color: '#fff'
+  },
+  button: {
+    width: 100,
+    height: 30,
+    marginLeft: 20,
+    backgroundColor: '#f79e80',
+    borderRadius: 3,
+    borderWidth: 1,
+    borderColor: '#ba3407',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 

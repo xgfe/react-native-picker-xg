@@ -182,82 +182,7 @@ let wheel2 = [
   }
 ];
 
-let wheel3 = [
-  {
-    amc: {
-      name: '2011年'
-    },
-    alfa: {
-      name: '2012年'
-    },
-    aston: {
-      name: '2013年'
-    },
-    audi: {
-      name: '2014年'
-    },
-    austin: {
-      name: '2015年'
-    },
-    borgward: {
-      name: '2016年'
-    },
-    buick: {
-      name: '2017年'
-    },
-    cadillac: {
-      name: '2018年'
-    },
-    chevrolet: {
-      name: '2019年'
-    }
-  },
-  {
-    amc1: {
-      name: '1月'
-    },
-    alfa1: {
-      name: '2月'
-    },
-    aston1: {
-      name: '3月'
-    },
-    audi1: {
-      name: '4月'
-    }
-  },
-  {
-    cadillac2: {
-      name: '1号'
-    },
-    chevrolet2: {
-      name: '2号'
-    }
-  }
-];
 
-let level3Data =
-  {
-    '四川':{
-      '成都':['青羊区','武侯区','温江区'],
-      '绵阳':['涪城区','安州区', '三台县', '平武县'],
-      '广安':['容县','武胜']
-    },
-    '浙江':{
-      '杭州':['西湖','银泰','玉泉'],
-      '绍兴':['越城区','柯桥区','上虞区'],
-      '温州':['鹿城区','瓯海区','瑞安市','永嘉县','苍南县']
-    },
-    '北京':{
-      '朝阳区':[''],
-      '海淀区':[''],
-      '东城区':['']
-    }
-  };
-let level2Data = {
-  'American':['Alabama','Arizona','California', 'Connecticut', 'Georgia', 'Maine'],
-  'Australia':['NSW','QLD','TAS']
-};
 let level4Data = {
   '1':{
     '11':{
@@ -295,7 +220,6 @@ class TpickerEx extends Component {
     };
   }
 
-  // todo: ios can not init show two pickers
   render() {
     return (
       <ScrollView style={styles.container}>
@@ -311,17 +235,6 @@ class TpickerEx extends Component {
           cancelBtnText = {'cancel'}
           data = {wheel2}
           onResult ={(str) => {this.setState({str1:str});}}
-        />
-        </View>
-         <View>
-        <Text style={styles.demoValue}>Basic Picker value: {this.state.str2}</Text>
-        <Test3
-          inputStyle = {styles.textInput}
-          confirmBtnText = {'confirm'}
-          cancelBtnText = {'cancel'}
-          data = {wheel2}
-          selectIndex = {[0,2]}
-          onResult ={(str) => {this.setState({str2:str});}}
         />
         </View>
           <View>
@@ -343,35 +256,6 @@ class TpickerEx extends Component {
           visible = {true}
           iconStyle={{marginRight: 30}}
           onResult ={(str) => {this.setState({str5:str});}}
-        />
-        </View>
-         <View>
-        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str3}</Text>
-        <CascadePicker
-          inputValue={'3 level CascadePicker'}
-          level = {3}
-          selectIndex = {[0,1,0]}
-          data = {level3Data}
-          onResult ={(str) => {this.setState({str3:str});}}
-        />
-        </View>
-          <View>
-        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str4}</Text>
-        <CascadePicker
-          inputValue={'2 level CascadePicker'}
-          level = {2}
-          data = {level2Data}
-          onResult ={(str) => {this.setState({str4:str});}}
-        />
-        </View>
-          <View>
-        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str6}</Text>
-        <CascadePicker
-          inputValue={'2 level CascadePicker'}
-          level = {2}
-          data = {level2Data}
-          enable={false}
-          onResult ={(str) => {this.setState({str6:str});}}
         />
         </View>
       </ScrollView>

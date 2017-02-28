@@ -8,11 +8,13 @@ import {
   AppRegistry,
   View,
   ScrollView,
+  TouchableWithoutFeedback,
+  TouchableHighlight,
   Text,
   StyleSheet
 } from 'react-native';
-import Test3, {CascadePicker}from './app/pickerLogic/picker';
-import styles from './style'
+import Test3, {CascadePicker} from './app/pickerLogic/picker';
+import styles from './style';
 
 let wheel2 = [
   {
@@ -169,16 +171,50 @@ class TpickerEx extends Component {
       str3: 'cascadePicker with init index',
       str4: 'cascadePicker without init index',
       str5: 'cascadePicker with init show and custom styles',
-      str6: 'disabled cascadePicker'
+      str6: 'disabled cascadePicker',
+      str7: 'with asynchronous request',
+      data: []
     };
   }
 
+  _getData() {
+    let that = this;
+    fetch('http://10.0.0.6:3000/data').then((res) => {
+      return res.json();
+    }, (err) => {
+      console.debug(err);
+    }).then((data) => {
+      that.setState({data: data});
+    }, () => {
+      console.debug('fail');
+    });
+  }
   // todo: ios can not init show two pickers
   render() {
+    console.debug('---------');
+    console.debug(this.state.data);
     return (
       <ScrollView style={styles.container}>
         <View style={styles.titleContainer}>
         <Text style={styles.title}>{this.state.str}</Text>
+        </View>
+        <TouchableWithoutFeedback style={styles.button} onPress={() => {this._getData();}}>
+          <View style={styles.button}>
+            <Text style={{color:'#fff'}}>获取数据</Text>
+          </View>
+        </TouchableWithoutFeedback>
+        <View>
+        <Text style={styles.demoValue}>Basic Picker value: {this.state.str7}</Text>
+        <Test3
+          inputValue ={'basic picker with asynchronous request'}
+          inputStyle = {styles.textInput}
+          confirmBtnText = {'confirm'}
+          cancelBtnText = {'cancel'}
+          data = {this.state.data}
+          selectIndex = {[0,2,1]}
+          enable = {this.state.data.length > 0}
+          onResult ={(str) => {this.setState({str7:str});}}
+        />
         </View>
         <View>
         <Text style={styles.demoValue}>Basic Picker value: {this.state.str1}</Text>
@@ -218,7 +254,6 @@ class TpickerEx extends Component {
           pickerNameStyle={{fontSize: 12}}
           pickerName={'picker name test'}
           selectIndex = {[1,1,0,2]}
-          visible = {true}
           iconStyle={{marginRight: 30}}
           onResult ={(str) => {this.setState({str5:str});}}
         />

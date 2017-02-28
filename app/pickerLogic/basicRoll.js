@@ -85,7 +85,7 @@ class Pickroll extends Component {
     setTimeout(() => {
       this._moveTo(this.initIndex);
       this._onValueChange();
-    }, 0)
+    }, 0);
   }
 
   /**
@@ -104,7 +104,7 @@ class Pickroll extends Component {
       this.moveDy = this.moveDy + marginValue;
       this.refs._scrollView.scrollTo({y: this.moveDy});
       this._onValueChange();
-    } else { return}
+    } else { return;}
   }
 
   /**
@@ -120,20 +120,20 @@ class Pickroll extends Component {
       middleItems[index + 2] = <Animated.Text
         key={'mid' + (index + 2)}
         className={'mid' + (index + 2)}
-        onPress={() => {this._moveTo(index + 2)}}
+        onPress={() => {this._moveTo(index + 2);}}
         style={[rollStyles.middleText, this.state.itemStyle,
-                        {
+          {
                           // todo: when add fontSize, the shaking is too obvious
                           // fontSize:
                           //   total.interpolate({
                           //     inputRange: [(index - 2) * 36, index * 36, (index + 2) * 36],
                           //     outputRange: [20, 22, 20]}),
-                          opacity:
+            opacity:
                             total.interpolate({
                               inputRange: [(index - 2) * 36, index * 36, (index + 2) * 36],
                               outputRange: [0.4, 1.0, 0.4]})
-                        }
-                          ]}>{item.label}
+          }
+        ]}>{item.label}
       </Animated.Text>;
     });
 
@@ -141,26 +141,22 @@ class Pickroll extends Component {
     middleItems[0] = <Text
         key={'mid' + 0}
         className={'mid' + 0}
-        style={[rollStyles.middleText, this.state.itemStyle]}>
-      </Text>;
+        style={[rollStyles.middleText, this.state.itemStyle]} />;
 
     middleItems[1] = <Text
         key={'mid' + 1}
         className={'mid' + 1}
-        style={[rollStyles.middleText, this.state.itemStyle]}>
-      </Text>;
+        style={[rollStyles.middleText, this.state.itemStyle]} />;
 
     middleItems[items.length + 2] = <Text
         key={'mid' + items.length + 2}
         className={'mid' + items.length + 2}
-        style={[rollStyles.middleText, this.state.itemStyle]}>
-      </Text>;
+        style={[rollStyles.middleText, this.state.itemStyle]} />;
 
     middleItems[items.length + 1 + 2] = <Text
         key={'mid' + items.length + 1 + 2}
         className={'mid' + items.length + 1 + 2}
-        style={[rollStyles.middleText, this.state.itemStyle]}>
-      </Text>;
+        style={[rollStyles.middleText, this.state.itemStyle]} />;
     return middleItems;
   }
 
@@ -206,7 +202,7 @@ class Pickroll extends Component {
       if (!this.fingerLeft) {
         this._calculateItemroll('end');
       }
-    }, 0)
+    }, 0);
   }
 
   _detectScrollBegin(event) {
@@ -234,9 +230,9 @@ class Pickroll extends Component {
 
     return (
       <View style={{flex: 1}}>
-      <View style={{position: 'absolute', width: 400, height: 36, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ccc', marginTop: 75}}></View>
+      <View style={{position: 'absolute', width: 400, height: 36, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ccc', marginTop: 75}} />
       <ScrollView
-        ref='_scrollView'
+        ref="_scrollView"
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         onMomentumScrollBegin={(event) => {this._detectScrollBegin(event);}}
@@ -249,7 +245,7 @@ class Pickroll extends Component {
         </View>
       </ScrollView>
       </View>
-        );
+    );
   }
 }
 

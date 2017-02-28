@@ -51,17 +51,16 @@ class InputOuter extends Component {
      */
   render(){
     return (
-          <TouchableWithoutFeedback style={[styles.outerInput, !this.props.enable && {backgroundColor: '#888'}, this.props.inputStyle]} onPress={() => {this.props.onPress()}}>
+          <TouchableWithoutFeedback style={[styles.outerInput, !this.props.enable && {backgroundColor: '#888'}, this.props.inputStyle]} onPress={() => {this.props.onPress();}}>
             <View style={[styles.outerInput, !this.props.enable && {backgroundColor: '#ccc'}, this.props.inputStyle]}>
               <View style={[styles.textInput]}
-                editable = {this.props.enable}
                 style = {[styles.textInput]}
                 placeholder={this.props.placeholder}
                 value={this.props.value}
               >
                 <Text style={[styles.inputLabel, this.props.textStyle]}>{this.props.placeholder}</Text>
               </View>
-              <Icon name={this.props.iconName ? this.props.iconName : "calendar"} size={this.props.iconSize ? this.props.iconSize : 18} color="#666" style={[styles.vectorIcon, this.props.iconStyle]}/>
+              <Icon name={this.props.iconName ? this.props.iconName : 'calendar'} size={this.props.iconSize ? this.props.iconSize : 18} color="#666" style={[styles.vectorIcon, this.props.iconStyle]}/>
               {/*<Image source={require('../img/arrow.png')} style={[styles.icon, this.props.iconStyle]}/>    */}
             </View>
            </TouchableWithoutFeedback>

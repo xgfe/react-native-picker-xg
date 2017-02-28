@@ -53,7 +53,6 @@ let rollStyles = StyleSheet.create({
     paddingBottom: 8,
     color: '#000',
     fontSize: 20,
-    paddingBottom: 0,
     marginTop: 0,
     marginBottom: 0,
   }

@@ -96,7 +96,6 @@ class CascadePicker extends Component {
     this._setModalVisible = this._setModalVisible.bind(this);
 
     this.state = this._stateFromProps(props);
-    //初始化动画参数
     this.state.animatedHeight = new Animated.Value(height);
   }
 
@@ -144,22 +143,17 @@ class CascadePicker extends Component {
       }
     }
 
-    let animationType = props.animationType || 'none';
-    let visible = typeof props.visible === 'undefined' ? false : props.visible;
-    let enable = typeof props.enable === 'undefined' ? true : props.enable;
-    let inputValue = props.inputValue || 'please chose';
-    let confirmBtnText = props.confirmBtnText || '确定';
-    let cancelBtnText = props.cancelBtnText || '取消';
-    return {
+    const {
       visible,
-      animationType,
-      enable,
-      inputValue,
+      inputValue
+    } = props;
+
+    return {
       passData,
       selectIndex,
       selectedValue,
-      confirmBtnText,
-      cancelBtnText
+      inputValue,
+      visible
     };
   }
 
@@ -214,14 +208,14 @@ class CascadePicker extends Component {
    * @private
      */
   _setEventBegin(){
-    if (this.state.enable){
+    if (this.props.enable){
       this._pushOpera(this.state.selectedValue,this.saveChoseValue);
       this._pushOpera(this.state.passData,this.saveData);
       this._pushOpera(this.state.selectIndex,this.saveIndex);
       this.setState({passData:this.state.passData,selectIndex:this.state.selectIndex,selectedValue: this.state.selectedValue});
       this._setModalVisible(true);
       return {saveChoseValue:this.saveChoseValue,saveData:this.saveData,saveIndex:this.saveIndex};
-    }else{
+    } else {
       this.state.visible = false;
     }
   }
@@ -238,7 +232,7 @@ class CascadePicker extends Component {
       Animated.timing(
         this.state.animatedHeight,
         {toValue: height - modalHeight,
-         delay: 300}
+          delay: 300}
       ).start();
     } else {
       Animated.timing(
@@ -281,7 +275,7 @@ class CascadePicker extends Component {
     this.state.selectIndex.length = index;
     this.state.selectedValue.length = index;
     this.state.selectedValue.push(value);
-    this.state.selectIndex.push(this.state.passData[this.state.passData.length -1].indexOf(value));
+    this.state.selectIndex.push(this.state.passData[this.state.passData.length - 1].indexOf(value));
     if (this.props.level - index > 1){
       let data = this.props.data;
       for (let temp = 0; temp <= index; temp++){
@@ -310,10 +304,10 @@ class CascadePicker extends Component {
     return (
       <View style={styles.container}>
         <Modal
-          animationType={this.state.animationType}
+          animationType={this.props.animationType}
           transparent={true}
           visible={this.state.visible}
-          onRequestClose={() => {this._setModalVisible(false, 'cancel')}}
+          onRequestClose={() => {this._setModalVisible(false, 'cancel');}}
         >
           <View style={[styles.modalContainer]}>
             <Animated.View style={[styles.innerContainer,{top:this.state.animatedHeight}]}>
@@ -325,8 +319,8 @@ class CascadePicker extends Component {
                 pickerNameStyle ={this.props.pickerNameStyle}
                 cancelChose = {this._cancelChose}
                 pickerName = {this.props.pickerName}
-                confirmBtnText = {this.state.confirmBtnText}
-                cancelBtnText = {this.state.cancelBtnText}
+                confirmBtnText = {this.props.confirmBtnText}
+                cancelBtnText = {this.props.cancelBtnText}
                 />
               <View style={[styles.pickContainer]} >
                 {that.state.passData.map((item,index) =>{
@@ -342,34 +336,42 @@ class CascadePicker extends Component {
                       pickerStyle = {{flex:1}}
                       data = {that.state.passData[index]}
                       passData = {that.state.passData}
-                      onValueChange={(newValue, newIndex) => {that._changeLayout(newValue,index)}}
+                      onValueChange={(newValue, newIndex) => {that._changeLayout(newValue,index);}}
                     >
-                      { Platform.OS === 'ios' &&((that.state.passData[index]).map((carMake) => (
+                      { Platform.OS === 'ios' && ((that.state.passData[index]).map((carMake) => (
                         <PickerItem
                           key={carMake}
                           value={carMake}
                           label={carMake}
                         />
                       )))}
-                    </PickRoll>)})}
+                    </PickRoll>);})}
               </View>
             </Animated.View>
           </View>
         </Modal>
         <InputOuter
-          enable={this.state.enable}
+          enable={this.props.enable}
           textStyle={this.props.textStyle}
           inputStyle={this.props.inputStyle}
           iconSize={this.props.iconSize}
           iconName={this.props.iconName}
-          onPress={this._setEventBegin}
-          editable={this.state.enable}
-          placeholder={this.state.inputValue}
           iconStyle={this.props.iconStyle}
+          onPress={this._setEventBegin}
+          placeholder={this.state.inputValue}
           value={this.state.inputValue}/>
       </View>
     );
   }
 }
+
+CascadePicker.defaultProps = {
+  animationType: 'none',
+  visible: false,
+  enable: true,
+  inputValue: 'please chose',
+  confirmBtnText: '确定',
+  cancelBtnText: '取消'
+};
 
 export default CascadePicker;
