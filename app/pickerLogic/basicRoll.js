@@ -41,7 +41,6 @@ class Pickroll extends Component {
      */
   constructor(props, context){
     super(props, context);
-    this.state = this._stateFromProps(props);
   }
 
   /**
@@ -50,32 +49,13 @@ class Pickroll extends Component {
    * @returns {{selectedIndex: number, items: Array, pickerStyle:View.propTypes.style, itemStyle:View.propTypes.style, onValueChange: func}}
    * @private
      */
-  _stateFromProps(props){
-    let selectedIndex = props.selectIndex;
-    let items = [];
-    let pickerStyle = props.pickerStyle;
-    let itemStyle = props.itemStyle;
-    let onValueChange = props.onValueChange;
-    Object.keys(props.data).map((child,index) =>{
-      child === props.selectedValue && (selectedIndex = index);
-      items.push({value: child, label: props.data[child].name});
-    });
-    this.moveDy = 0;
-    this.fingerLeft = false;
-    return {
-      selectedIndex,
-      items,
-      pickerStyle,
-      itemStyle,
-      onValueChange
-    };
-  }
+
 
   /**
    * 组件需要渲染前,对手势事件处理进行初始化
    */
   componentWillMount(){
-    this.initIndex = this.state.selectedIndex + 2;
+    this.initIndex = this.props.selectIndex + 2;
     this.index =  2;
   }
 
@@ -117,11 +97,10 @@ class Pickroll extends Component {
     let middleItems = [];
     let total = new Animated.Value(this.moveDy);
     items.forEach((item, index) => {
-      middleItems[index + 2] = <Animated.Text
-        key={'mid' + (index + 2)}
+      middleItems[index + 2] = <View style={rollStyles.textContainer} key={'mid' + (index + 2)}><Animated.Text
         className={'mid' + (index + 2)}
         onPress={() => {this._moveTo(index + 2);}}
-        style={[rollStyles.middleText, this.state.itemStyle,
+        style={[rollStyles.middleText, this.props.itemStyle,
           {
                           // todo: when add fontSize, the shaking is too obvious
                           // fontSize:
@@ -134,29 +113,16 @@ class Pickroll extends Component {
                               outputRange: [0.4, 1.0, 0.4]})
           }
         ]}>{item.label}
-      </Animated.Text>;
+      </Animated.Text></View>;
     });
 
-    // todo 优化
-    middleItems[0] = <Text
-        key={'mid' + 0}
-        className={'mid' + 0}
-        style={[rollStyles.middleText, this.state.itemStyle]} />;
+    let aroundItemArray = [0, 1, items.length + 2, items.length + 1 + 2];
+    aroundItemArray.forEach((item, index) => {
+      middleItems[item] = <View style={rollStyles.textContainer} key={'mid' + item}><Text
+        className={'mid' + item}
+        style={[rollStyles.middleText, this.props.itemStyle]} /></View>;
+    });
 
-    middleItems[1] = <Text
-        key={'mid' + 1}
-        className={'mid' + 1}
-        style={[rollStyles.middleText, this.state.itemStyle]} />;
-
-    middleItems[items.length + 2] = <Text
-        key={'mid' + items.length + 2}
-        className={'mid' + items.length + 2}
-        style={[rollStyles.middleText, this.state.itemStyle]} />;
-
-    middleItems[items.length + 1 + 2] = <Text
-        key={'mid' + items.length + 1 + 2}
-        className={'mid' + items.length + 1 + 2}
-        style={[rollStyles.middleText, this.state.itemStyle]} />;
     return middleItems;
   }
 
@@ -166,10 +132,8 @@ class Pickroll extends Component {
    * @private
    */
   _onValueChange(){
-    console.debug(this.index);
-    console.debug(this.state.items[this.index - 2]);
-    var curItem = this.state.items[this.index - 2];
-    this.state.onValueChange && this.state.onValueChange(curItem.value, this.index - 2);
+    var curItem = this.items[this.index - 2];
+    this.props.onValueChange && this.props.onValueChange(curItem.value, this.index - 2);
   }
 
   /**
@@ -219,14 +183,26 @@ class Pickroll extends Component {
     this._calculateItemroll('scroll');
   }
 
+  _handleData() {
+    this.items = [];
+    Object.keys(this.props.data).map((child,index) =>{
+      child === this.props.selectedValue && (this.selectedIndex = index);
+      this.items.push({value: child, label: this.props.data[child].name});
+    });
+    this.moveDy = 0;
+    this.fingerLeft = false;
+  }
 
   /**
    * 渲染函数
    * @returns {XML}
    */
   render(){
-    let index = this.state.selectedIndex;
-    let length = this.state.items.length;
+
+    if (!this.hack) {
+      this._handleData();
+      this.hack = false;
+    }
 
     return (
       <View style={{flex: 1}}>
@@ -239,9 +215,12 @@ class Pickroll extends Component {
         onMomentumScrollEnd={(event) => {this._detectScrollEnd(event);}}
         pagingEnabled
         onScrollEndDrag={(event) => {this._detectEnd(event);}}
-        onScroll={(event) => {this.moveDy = event.nativeEvent.contentOffset.y; this.forceUpdate();}}>
+        onScroll={(event) => {
+          this.moveDy = event.nativeEvent.contentOffset.y;
+          this.hack = true;
+          this.forceUpdate();}}>
         <View style={[rollStyles.middleView]}>
-          {this._renderItems(this.state.items)}
+          {this._renderItems(this.items)}
         </View>
       </ScrollView>
       </View>

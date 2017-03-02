@@ -44,13 +44,16 @@ let rollStyles = StyleSheet.create({
     borderBottomWidth: 1 / ratio
   },
   middleView: {
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center'
   },
-  middleText: {
+  textContainer: {
     height: 36,
-    paddingTop: 8,
-    paddingBottom: 8,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  middleText: {
     color: '#000',
     fontSize: 20,
     marginTop: 0,

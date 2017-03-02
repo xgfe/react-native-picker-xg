@@ -155,11 +155,10 @@ class Pickroll extends Component {
     let middleItems = [];
     let total = new Animated.Value(this.moveDy);
     items.forEach((item, index) => {
-      middleItems[index + 2] = <Animated.Text
-        key={'mid' + (index + 2)}
+      middleItems[index + 2] = <View style={rollStyles.textContainer} key={'mid' + (index + 2)}><Animated.Text
         className={'mid' + (index + 2)}
         onPress={() => {this._moveTo(index + 2);}}
-        style={[rollStyles.middleText, this.state.itemStyle,
+        style={[rollStyles.middleText, this.props.itemStyle,
           {
                           // todo: when add fontSize, the shaking is too obvious
                           // fontSize:
@@ -172,29 +171,16 @@ class Pickroll extends Component {
                               outputRange: [0.4, 1.0, 0.4]})
           }
         ]}>{item.label}
-      </Animated.Text>;
+      </Animated.Text></View>;
     });
 
-    // todo 优化
-    middleItems[0] = <Text
-        key={'mid' + 0}
-        className={'mid' + 0}
-        style={[rollStyles.middleText, this.state.itemStyle]} />;
+    let aroundItemArray = [0, 1, items.length + 2, items.length + 1 + 2];
+    aroundItemArray.forEach((item, index) => {
+      middleItems[item] = <View style={rollStyles.textContainer} key={'mid' + item}><Text
+        className={'mid' + item}
+        style={[rollStyles.middleText, this.props.itemStyle]} /></View>;
+    });
 
-    middleItems[1] = <Text
-        key={'mid' + 1}
-        className={'mid' + 1}
-        style={[rollStyles.middleText, this.state.itemStyle]} />;
-
-    middleItems[items.length + 2] = <Text
-        key={'mid' + items.length + 2}
-        className={'mid' + items.length + 2}
-        style={[rollStyles.middleText, this.state.itemStyle]} />;
-
-    middleItems[items.length + 1 + 2] = <Text
-        key={'mid' + items.length + 1 + 2}
-        className={'mid' + items.length + 1 + 2}
-        style={[rollStyles.middleText, this.state.itemStyle]} />;
     return middleItems;
   }
 

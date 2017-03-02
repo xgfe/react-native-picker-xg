@@ -166,20 +166,23 @@ class TpickerEx extends Component {
     super(props, context);
     this.state = {
       str:'React Native Picker Demo',
-      str1: 'without showing init chose and custom button words',
-      str2: 'showing init chose',
-      str3: 'cascadePicker with init index',
+      str1: 'with asynchronous request',
+      selectIndex1: [0, 2, 1],
+      str2: 'without showing init chose and custom button words',
+      selectIndex2: [0, 1],
+      str3: 'showing init chose',
+      selectIndex3: [],
+      str5: 'cascadePicker with init index',
       str4: 'cascadePicker without init index',
-      str5: 'cascadePicker with init show and custom styles',
-      str6: 'disabled cascadePicker',
-      str7: 'with asynchronous request',
-      data: []
+      str6: 'cascadePicker with init show and custom styles',
+      str7: 'disabled cascadePicker',
+      data: [],
     };
   }
 
   _getData() {
     let that = this;
-    fetch('http://10.0.0.6:3000/data').then((res) => {
+    fetch('http://172.18.47.119:3000/data').then((res) => {
       return res.json();
     }, (err) => {
       console.debug(err);
@@ -191,55 +194,58 @@ class TpickerEx extends Component {
   }
   // todo: ios can not init show two pickers
   render() {
-    console.debug('---------');
-    console.debug(this.state.data);
     return (
       <ScrollView style={styles.container}>
         <View style={styles.titleContainer}>
         <Text style={styles.title}>{this.state.str}</Text>
         </View>
-        <TouchableWithoutFeedback style={styles.button} onPress={() => {this._getData();}}>
+       <TouchableWithoutFeedback style={styles.button} onPress={() => {this._getData();}}>
           <View style={styles.button}>
             <Text style={{color:'#fff'}}>获取数据</Text>
           </View>
         </TouchableWithoutFeedback>
         <View>
-        <Text style={styles.demoValue}>Basic Picker value: {this.state.str7}</Text>
+        <Text style={styles.demoValue}>Basic Picker value: {this.state.str1}</Text>
         <Test3
-          inputValue ={'basic picker with asynchronous request'}
+          inputValue ={this.state.str1}
           inputStyle = {styles.textInput}
           confirmBtnText = {'confirm'}
           cancelBtnText = {'cancel'}
           data = {this.state.data}
-          selectIndex = {[0,2,1]}
+          selectIndex = {this.state.selectIndex1}
           enable = {this.state.data.length > 0}
-          onResult ={(str) => {this.setState({str7:str});}}
+          onResult ={(str, selectIndex, selectValue) => {
+            this.setState({str1:str, selectIndex1: selectIndex});}}
         />
         </View>
         <View>
-        <Text style={styles.demoValue}>Basic Picker value: {this.state.str1}</Text>
-        <Test3
-          inputValue ={'basic picker without init chose'}
-          inputStyle = {styles.textInput}
-          confirmBtnText = {'confirm'}
-          cancelBtnText = {'cancel'}
-          data = {wheel2}
-          onResult ={(str) => {this.setState({str1:str});}}
-        />
-        </View>
-         <View>
         <Text style={styles.demoValue}>Basic Picker value: {this.state.str2}</Text>
         <Test3
+          inputValue ={this.state.str2}
+          inputStyle = {styles.textInput}
+          confirmBtnText = {'confirm'}
+          selectIndex = {this.state.selectIndex2}
+          cancelBtnText = {'cancel'}
+          data = {wheel2}
+          onResult ={(str, selectIndex, selectValue) => {
+            this.setState({str2:str, selectIndex2: selectIndex});}}
+        />
+        </View>
+        <View>
+        <Text style={styles.demoValue}>Basic Picker value: {this.state.str3}</Text>
+        <Test3
+          inputValue = {this.state.str3}
           inputStyle = {styles.textInput}
           confirmBtnText = {'confirm'}
           cancelBtnText = {'cancel'}
           data = {wheel2}
-          selectIndex = {[0,2]}
-          onResult ={(str) => {this.setState({str2:str});}}
+          selectIndex = {this.state.selectIndex3}
+          onResult ={(str, selectIndex, selectValue) => {
+            this.setState({str3:str, selectIndex3: selectIndex});}}
         />
         </View>
           <View>
-        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str5}</Text>
+        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str4}</Text>
         <CascadePicker
           textStyle = {{color: 'red'}}
           navStyle = {{backgroundColor:'lightblue'}}
@@ -255,26 +261,17 @@ class TpickerEx extends Component {
           pickerName={'picker name test'}
           selectIndex = {[1,1,0,2]}
           iconStyle={{marginRight: 30}}
-          onResult ={(str) => {this.setState({str5:str});}}
+          onResult ={(str) => {this.setState({str4:str});}}
         />
         </View>
          <View>
-        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str3}</Text>
+        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str5}</Text>
         <CascadePicker
           inputValue={'3 level CascadePicker'}
           level = {3}
           selectIndex = {[0,1,0]}
           data = {level3Data}
-          onResult ={(str) => {this.setState({str3:str});}}
-        />
-        </View>
-          <View>
-        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str4}</Text>
-        <CascadePicker
-          inputValue={'2 level CascadePicker'}
-          level = {2}
-          data = {level2Data}
-          onResult ={(str) => {this.setState({str4:str});}}
+          onResult ={(str) => {this.setState({str5:str});}}
         />
         </View>
           <View>
@@ -283,8 +280,17 @@ class TpickerEx extends Component {
           inputValue={'2 level CascadePicker'}
           level = {2}
           data = {level2Data}
-          enable={false}
           onResult ={(str) => {this.setState({str6:str});}}
+        />
+        </View>
+          <View>
+        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str7}</Text>
+        <CascadePicker
+          inputValue={'2 level CascadePicker'}
+          level = {2}
+          data = {level2Data}
+          enable={false}
+          onResult ={(str) => {this.setState({str7:str});}}
         />
         </View>
       </ScrollView>

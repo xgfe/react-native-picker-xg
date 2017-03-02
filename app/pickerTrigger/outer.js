@@ -56,7 +56,6 @@ class InputOuter extends Component {
               <View style={[styles.textInput]}
                 style = {[styles.textInput]}
                 placeholder={this.props.placeholder}
-                value={this.props.value}
               >
                 <Text style={[styles.inputLabel, this.props.textStyle]}>{this.props.placeholder}</Text>
               </View>

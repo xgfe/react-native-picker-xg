@@ -6,8 +6,6 @@ import {
     View,
     Text,
     Dimensions,
-    TouchableOpacity,
-    TextInput,
     Animated,
     Platform,
     PickerIOS,
@@ -86,12 +84,12 @@ class BasicPicker extends Component {
   constructor(props, context){
     super(props, context);
     this._changeAnimateStatus = this._changeAnimateStatus.bind(this);
-    this._pushOpera = this._pushOpera.bind(this);
     this._setEventBegin = this._setEventBegin.bind(this);
     this._confirmChose = this._confirmChose.bind(this);
     this._setModalVisible = this._setModalVisible.bind(this);
 
-    this.state = this._stateFromProps(props);
+    this.state = {};
+    this.state.visible = props.visible;
     this.state.animatedHeight = new Animated.Value(height);
   }
 
@@ -103,39 +101,23 @@ class BasicPicker extends Component {
       this._setEventBegin();
     }
   }
-  /**
-   * 状态初始化
-   * @param props {object} 继承的属性
-   * @returns {{visible: bool, animationType: string, enable: bool, inputValue: string, selectIndex: Array, selectedValue: Array, confirmBtnText: string, cancelBtnText: string}}
-   * @private
-     */
-  _stateFromProps(props){
+
+  _calculateSelecteValue() {
     let selectIndex = [];
     let selectedValue = [];
-    if (typeof props.selectIndex === 'undefined'){
-      for (let item of props.data){
+    if (!this.props.selectIndex){
+      for (let item of this.props.data){
         selectIndex.push(0);
         selectedValue.push(Object.keys(item)[0]);
       }
     } else {
-      selectIndex = props.selectIndex;
-      props.data.map((item,index) =>{
+      selectIndex = this.props.selectIndex.slice();
+      this.props.data.map((item,index) =>{
         selectedValue.push(Object.keys(item)[selectIndex[index]]);
       });
     }
-    const {
-      visible,
-      inputValue
-    } = props;
-
-    return {
-      visible,
-      inputValue,
-      selectIndex,
-      selectedValue,
-    };
+    return {selectIndex: selectIndex, selectedValue: selectedValue};
   }
-
   /**
    * 确定操作
    * @returns {string} 选择的数据
@@ -143,23 +125,10 @@ class BasicPicker extends Component {
      */
   _confirmChose(){
     this.props.data.map((item,index) =>{
-      this.str = this.str +  this.props.data[index][this.state.selectedValue[index]].name;
+      this.str = this.str +  this.props.data[index][this.select.selectedValue[index]].name;
     });
     this. _setModalVisible(false,'confirm');
     return this.str;
-  }
-
-  /**
-   * 数组操作
-   * @param from {array} 拷贝的数组
-   * @param to {array} 待拷贝的数组
-   * @private
-   */
-  _pushOpera(from,to){
-    to.length = 0;
-    for (let item of from){
-      to.push(item);
-    }
   }
 
   /**
@@ -168,12 +137,11 @@ class BasicPicker extends Component {
    * @private
      */
   _setEventBegin(){
+    this.hack = false;
     if (this.props.enable){
       this._setModalVisible(true);
-      this._pushOpera(this.state.selectIndex, this.indexCount);
-      this._pushOpera(this.state.selectedValue,this.valueCount);
       this.str = '';
-      return {valueCount: this.valueCount, indexCount:this.indexCount};
+      return {valueCount: this.select.selectIndex, indexCount:this.select.selectedValue};
     } else {
       this.state.visible = false;
       return 'it is disabled';
@@ -209,13 +177,13 @@ class BasicPicker extends Component {
    * @private
      */
   _changeAnimateStatus(type){
-    if (type === 'confirm'){this.setState({visible:false,inputValue: this.str});
+    if (type === 'confirm'){
       if (this.props.onResult){
-        this.props.onResult(this.str);
-      }}
+        this.props.onResult(this.str, this.select.selectIndex, this.select.selectedValue);
+      }
+      this.setState({visible:false});
+    }
     else if (type === 'cancel'){
-      this._pushOpera(this.indexCount, this.state.selectIndex);
-      this._pushOpera(this.valueCount, this.state.selectedValue);
       this.setState({visible:false});
     }
   }
@@ -225,9 +193,10 @@ class BasicPicker extends Component {
    * @returns {XML}
      */
   render(){
-    console.debug('sasdqwqwqwdqw-------');
-    console.debug(this.state.selectedValue);
-
+    if (!this.hack) {
+      this.select = this._calculateSelecteValue();
+      this.hack = false;
+    }
     return (
       <View style={styles.container}>
         <Modal
@@ -257,15 +226,18 @@ class BasicPicker extends Component {
                         key = {index}
                         style = {{flex:1}}
                         className = {'test' + index}
-                        selectIndex = {this.state.selectIndex[index]}
-                        selectedValue={this.state.selectedValue[index]}
+                        selectIndex = {this.select.selectIndex[index]}
+                        selectedValue={this.select.selectedValue[index]}
                         pickerStyle = {{flex:1}}
                         data = {this.props.data[index]}
                         itemCount = {this.props.data.length}
                         onValueChange={(newValue,newIndex) => {
-                          this.state.selectIndex.splice(index,1,newIndex);
-                          this.state.selectedValue.splice(index,1,newValue);
-                          this.setState({selectIndex:this.state.selectIndex,selectedValue:this.state.selectedValue});
+                          this.select.selectIndex.splice(index,1,newIndex);
+                          this.select.selectedValue.splice(index,1,newValue);
+                          if (Platform.OS === 'ios') {
+                            this.hack = true;
+                            this.forceUpdate();
+                          }
                         }}
                       >{
                         Platform.OS === 'ios' && (
@@ -292,8 +264,7 @@ class BasicPicker extends Component {
           onPress={this._setEventBegin}
           iconStyle={this.props.iconStyle}
           enable={this.props.enable}
-          placeholder={this.state.inputValue}
-          value={this.state.inputValue}/>
+          placeholder={this.props.inputValue}/>
       </View>
     );
   }}
