@@ -43,7 +43,7 @@ class CascadePicker extends Component {
      */
   static propTypes = {
     //传递的数据,cascade类型针对两个轮及其以上的,所以格式为对象
-    data: PropTypes.object,
+    data: PropTypes.any,
     //picker名称样式
     pickerNameStyle: Text.propTypes.style,
     //取消按钮样式
@@ -95,67 +95,19 @@ class CascadePicker extends Component {
     this._confirmChose = this._confirmChose.bind(this);
     this._setModalVisible = this._setModalVisible.bind(this);
 
-    this.state = this._stateFromProps(props);
+    this.state = {};
+    this.state.visible = this.props.visible;
     this.state.animatedHeight = new Animated.Value(height);
+
+    this.choseNumber = [];
   }
 
-  componentWillMount(){
-    this.str = '';
-    this.saveChoseValue = [];
-    this.saveData = [];
-    this.saveIndex = [];
-    if (this.state.visible) {
+  componentDidMount(){
+    if (this.state.visible && this.props.data.length > 0) {
       this._setEventBegin();
     }
   }
-  /**
-   * 状态初始化
-   * @param props {object} 继承的属性
-   * @returns {{visible: bool, animationType: string, enable: bool, inputValue: string, passData: Array, selectIndex: Array, selectedValue: Array, confirmBtnText: string, cancelBtnText: string}}
-   * @private
-     */
-  _stateFromProps(props){
-    let selectIndex = [];
-    let selectedValue = [];
-    let passData = [];
-    if (typeof props.selectIndex === 'undefined'){
-      for (let temp = 0; temp < props.level; temp++){
-        selectIndex.push(0);
-      }
-    } else {
-      selectIndex = props.selectIndex;
-    }
 
-    let tempData = props.data;
-    let finalData = props.data;
-    for (let temp = 0; temp < props.level; temp++){
-      if (temp !== props.level - 1){
-        let data = Object.keys(tempData);
-        let key = data[selectIndex[temp]];
-        selectedValue.push(key);
-        passData.push(data);
-        tempData = tempData[key];
-        finalData = finalData[key];
-      }
-      else {
-        passData.push(finalData);
-        selectedValue.push(finalData[selectIndex[temp]]);
-      }
-    }
-
-    const {
-      visible,
-      inputValue
-    } = props;
-
-    return {
-      passData,
-      selectIndex,
-      selectedValue,
-      inputValue,
-      visible
-    };
-  }
 
   /**
    * 确定操作
@@ -163,16 +115,10 @@ class CascadePicker extends Component {
    * @private
      */
   _confirmChose(){
-    this.str = '';
-    for (let item of this.state.selectedValue){
-      if (!item) {
-        item = '';
-      }
-      this.str = this.str + item + ' ';
+    while (this.choseNumber.length < this.props.level) {
+      this.choseNumber.push(0);
     }
-    this.state.inputValue = this.str;
     this._setModalVisible(false,'confirm');
-    return this.str;
   }
 
   /**
@@ -194,12 +140,8 @@ class CascadePicker extends Component {
    * @private
      */
   _cancelChose(){
-    this._pushOpera(this.saveChoseValue,this.state.selectedValue);
-    this._pushOpera(this.saveData,this.state.passData);
-    this._pushOpera(this.saveIndex,this.state.selectIndex);
+    this.choseNumber = this.beforeOpe.slice();
     this._setModalVisible(false,'cancel');
-    return {saveChoseValue:this.saveChoseValue,saveData:this.saveData,saveIndex:this.saveIndex};
-
   }
 
   /**
@@ -209,12 +151,9 @@ class CascadePicker extends Component {
      */
   _setEventBegin(){
     if (this.props.enable){
-      this._pushOpera(this.state.selectedValue,this.saveChoseValue);
-      this._pushOpera(this.state.passData,this.saveData);
-      this._pushOpera(this.state.selectIndex,this.saveIndex);
-      this.setState({passData:this.state.passData,selectIndex:this.state.selectIndex,selectedValue: this.state.selectedValue});
+      this.beforeData = this.props.data.slice();
+      this.beforeOpe = this.choseNumber.slice();
       this._setModalVisible(true);
-      return {saveChoseValue:this.saveChoseValue,saveData:this.saveData,saveIndex:this.saveIndex};
     } else {
       this.state.visible = false;
     }
@@ -250,15 +189,18 @@ class CascadePicker extends Component {
   _changeAnimateStatus(type){
     if (type === 'confirm'){
       this.setState({visible:false},() => {
-        this.setState({inputValue: this.str});
+        let str = '';
+        this.props.data.forEach((item, index) => {
+          str = str + ' ' + item[this.choseNumber[index]][this.props.name];
+        });
         if (this.props.onResult){
-          this.props.onResult(this.str);
+          this.props.onResult(this.props.data, this.choseNumber, str);
         }
       });
     }
     else if (type === 'cancel'){
       this.setState({visible:false});
-      this.setState({passData: this.state.passData,selectIndex:this.state.selectIndex,selectedValue: this.state.selectedValue});
+      this.props.onCancel && this.props.onCancel(this.beforeData);
     }
   }
 
@@ -268,39 +210,39 @@ class CascadePicker extends Component {
    * @param index {number} 改变的位置
    * @private
      */
-  _changeLayout(value,index){
-    // debugger
-    this.state.selectedValue.splice(index,1,value);
-    this.state.passData.length = index + 1;
-    this.state.selectIndex.length = index;
-    this.state.selectedValue.length = index;
-    this.state.selectedValue.push(value);
-    this.state.selectIndex.push(this.state.passData[this.state.passData.length - 1].indexOf(value));
-    if (this.props.level - index > 1){
-      let data = this.props.data;
-      for (let temp = 0; temp <= index; temp++){
-        data = data[this.state.selectedValue[temp]];
-      }
-      for (let item = 0; item < this.props.level - index - 2; item++){
-        let dataKeys = Object.keys(data);
-        this.state.passData.push(dataKeys);
-        this.state.selectIndex.push(0);
-        this.state.selectedValue.push(dataKeys[0]);
-        data = data[dataKeys[0]];
-      }
-      this.state.passData.push(data);
-      this.state.selectIndex.push(0);
-      this.state.selectedValue.push(data[0]);
-    }
-    this.setState({passData:this.state.passData,selectedValue:this.state.selectedValue,selectIndex:this.state.selectIndex});
+  _changeLayout(value,index, wheelNumber){
+    this.choseNumber[wheelNumber] = index;
+    this.choseNumber.length = (wheelNumber + 1);
+    this.props.onWheelChange && this.props.onWheelChange(value, index, wheelNumber);
+    console.debug(value, index, wheelNumber);
   }
 
+  _handleData() {
+    if (!this.props.data || this.props.data.length <= 0) {
+      return;
+    }
+    this.passData = this.props.data.map((item, index) => {
+      if (item && item.length > 0 && item[0].id === 10) {
+        return item;
+      }
+      let newItem = {
+        [this.props.parentId]: 0,
+        [this.props.id]: 10,
+        [this.props.name]: '请选择'
+      };
+      item.unshift(newItem);
+      return item;
+    });
+  }
   /**
    * 渲染函数
    * @returns {XML}
      */
   render(){
     let that = this;
+
+    this._handleData();
+    console.debug(this.props.data);
     return (
       <View style={styles.container}>
         <Modal
@@ -323,26 +265,27 @@ class CascadePicker extends Component {
                 cancelBtnText = {this.props.cancelBtnText}
                 />
               <View style={[styles.pickContainer]} >
-                {that.state.passData.map((item,index) =>{
-                  that.index = index;
+                {that.passData && that.passData.map((item,index) =>{
                   return (
                     <PickRoll
-                      allIndex = {this.state.passData.length}
+                      id = {this.props.id}
+                      name = {this.props.name}
+                      parentId = {this.props.parentId}
                       key = {index}
-                      className = { 'test' + index}
+                      wheelNumber = {index}
                       style = {{flex:1}}
-                      selectIndex = {that.state.selectIndex[index]}
-                      selectedValue = {that.state.selectedValue[index]}
                       pickerStyle = {{flex:1}}
-                      data = {that.state.passData[index]}
-                      passData = {that.state.passData}
-                      onValueChange={(newValue, newIndex) => {that._changeLayout(newValue,index);}}
+                      data = {that.passData[index]}
+                      passData = {that.passData}
+                      selectedIndex = {that.choseNumber[index]}
+                      onValueChange={(newValue, newIndex) => {
+                        that._changeLayout(newValue,newIndex, index);}}
                     >
-                      { Platform.OS === 'ios' && ((that.state.passData[index]).map((carMake) => (
+                      { Platform.OS === 'ios' && ((that.passData[index]).map((carMake) => (
                         <PickerItem
                           key={carMake}
-                          value={carMake}
-                          label={carMake}
+                          value={carMake[this.props.id]}
+                          label={carMake[this.props.name]}
                         />
                       )))}
                     </PickRoll>);})}
@@ -351,15 +294,14 @@ class CascadePicker extends Component {
           </View>
         </Modal>
         <InputOuter
-          enable={this.props.enable}
+          enable={this.props.enable && (this.props.data.length >= 1)}
           textStyle={this.props.textStyle}
           inputStyle={this.props.inputStyle}
           iconSize={this.props.iconSize}
           iconName={this.props.iconName}
           iconStyle={this.props.iconStyle}
           onPress={this._setEventBegin}
-          placeholder={this.state.inputValue}
-          value={this.state.inputValue}/>
+          placeholder={this.props.inputValue}/>
       </View>
     );
   }
@@ -371,7 +313,10 @@ CascadePicker.defaultProps = {
   enable: true,
   inputValue: 'please chose',
   confirmBtnText: '确定',
-  cancelBtnText: '取消'
+  cancelBtnText: '取消',
+  id: 'id',
+  name: 'name',
+  parentId: 'parentId'
 };
 
 export default CascadePicker;

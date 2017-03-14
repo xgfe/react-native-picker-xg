@@ -41,79 +41,11 @@ class Pickroll extends Component {
      */
   constructor(props, context){
     super(props, context);
-    this.state = this._stateFromProps(props);
-    this.init = false;
-    this.allIndex = this.props.allIndex;
+    this.data = [];
+
+    this._dataHandle = this._dataHandle.bind(this);
   }
 
-  /**
-   * 状态初始化
-   * @param props {object} 继承的属性
-   * @returns {{selectedIndex: number, items: Array, pickerStyle:View.propTypes.style, itemStyle:View.propTypes.style, onValueChange: func}}
-   * @private
-     */
-  _stateFromProps(props){
-    let selectedIndex = props.selectIndex;
-    let items = [];
-    let pickerStyle = props.pickerStyle;
-    let itemStyle = props.itemStyle;
-    let onValueChange = props.onValueChange;
-    // 与basic的唯一区别
-    props.data.map((child,index) =>{
-      child === props.selectedValue && (selectedIndex = index);
-      items.push({value: child, label: child});
-    });
-    this.moveDy = 0;
-    this.fingerLeft = false;
-    return {
-      selectedIndex,
-      items,
-      pickerStyle,
-      itemStyle,
-      onValueChange
-    };
-  }
-
-  /**
-   * 组件需要渲染前,对手势事件处理进行初始化
-   */
-  componentWillMount(){
-    this.initIndex = this.state.selectedIndex + 2;
-    this.index =  2;
-  }
-
-
-
-  componentDidMount() {
-    setTimeout(() => {
-      this._moveTo(this.initIndex);
-      this._onValueChange();
-    }, 0);
-  }
-
-
-  componentWillReceiveProps(nextProps) {
-    // debugger
-    if (!this._compareArray(nextProps.data, this.props.data)) {
-      let tempValue = this.state.items[this.state.selectedIndex];
-      this.state.items = [];
-      nextProps.data.map((child,index) =>{
-        child === nextProps.selectedValue && (this.state.selectedIndex = index);
-        this.state.items.push({value: child, label: child});
-      });
-      if (nextProps.data.indexOf(tempValue) < 0) {
-        console.debug('change');
-        this.state.selectedIndex = 0;
-      }
-    }
-
-    if (this._compareArray(nextProps.data, this.props.data) && (nextProps.selectIndex !== this.props.selectIndex)) {
-      this.state.selectedIndex = nextProps.selectedIndex;
-    }
-    setTimeout(() => {
-      this._moveTo(this.state.selectedIndex + 2);
-    }, 0);
-  }
 
   _compareArray(array1, array2) {
     if (!Array.isArray(array1) || !Array.isArray(array2)) {
@@ -190,13 +122,8 @@ class Pickroll extends Component {
    * @private
    */
   _onValueChange(){
-    // console.debug(this.index);
-    // console.debug(this.state.items[this.index - 2]);
-    if (this.init) {
-      var curItem = this.state.items[this.index - 2];
-      this.state.onValueChange && this.state.onValueChange(curItem.value, this.index - 2);
-    }
-    this.init = true;
+    let curItem = this.items[this.index - 2];
+    this.props.onValueChange && this.props.onValueChange(curItem, this.index - 2, this.props.wheelNumber);
   }
 
   /**
@@ -247,15 +174,28 @@ class Pickroll extends Component {
   }
 
 
+  _dataHandle() {
+    this.items = [];
+    if (!this._compareArray(this.data, this.props.data)) {
+      this.fingerLeft = false;
+      this.moveDy = this.props.selectedIndex * 36;
+      this.index =  this.props.selectedIndex + 2;
+      setTimeout(() => {
+        this.refs._scrollView.scrollTo({y: this.moveDy});
+      },0);
+    }
+    this.data = this.props.data.slice();
+    this.props.data.map((child,index) =>{
+      this.items.push({value: child[this.props.id], label: child[this.props.name], parentId: child[this.props.parentId]});
+    });
+  }
   /**
    * 渲染函数
    * @returns {XML}
    */
   render(){
 
-    let index = this.state.selectedIndex;
-    let length = this.state.items.length;
-
+    this._dataHandle();
     return (
       <View style={{flex: 1}}>
       <View style={{position: 'absolute', width: 400, height: 36, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ccc', marginTop: 75}} />
@@ -269,7 +209,7 @@ class Pickroll extends Component {
         onScrollEndDrag={(event) => {this._detectEnd(event);}}
         onScroll={(event) => {this.moveDy = event.nativeEvent.contentOffset.y; this.forceUpdate();}}>
         <View style={[rollStyles.middleView]}>
-          {this._renderItems(this.state.items)}
+          {this._renderItems(this.items)}
         </View>
       </ScrollView>
       </View>
@@ -277,4 +217,7 @@ class Pickroll extends Component {
   }
 }
 
+Pickroll.defaultProps = {
+  selectedIndex: 0
+};
 export default Pickroll;

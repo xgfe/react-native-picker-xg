@@ -172,11 +172,15 @@ class TpickerEx extends Component {
       selectIndex2: [0, 1],
       str3: 'showing init chose',
       selectIndex3: [],
-      str5: 'cascadePicker with init index',
-      str4: 'cascadePicker without init index',
+      str4: '川菜 重庆小面',
+      // selectIndex4: [1, 1, 0, 2],
+      str5: '地方菜 东北菜',
       str6: 'cascadePicker with init show and custom styles',
       str7: 'disabled cascadePicker',
       data: [],
+      Cdata: [],
+      Cdata1: [],
+      selectIndex4: [],
     };
   }
 
@@ -192,14 +196,101 @@ class TpickerEx extends Component {
       console.debug('fail');
     });
   }
+
+  _getLevel() {
+    let that = this;
+    fetch('http://10.5.234.227:8282/crm/app/category/r/list?parentId=0&bdId=2020529&ua=20200_android&token=623b9e9f6ae38444e945ae53ced523efefed447b3c4c610af6d94d47469cf37f48d192760aef1cc66b06a2e648fa5dcabefe4ff9fafde8fc6d0b275dc76a8ea750a350c95091f814009e635c84fd78f58eadfef564b26c6e3cb223564577486a')
+    .then((res) => {
+      return res.json();
+    }).then((data) => {
+      if (data.data) {
+        that._handle(0, data.data);
+      }
+    });
+  }
+
+  _getLevel2(value, index, wheelNumber) {
+    let that = this;
+    let cateMap = [10003,10002,10004,10000,10005,10001,10006,10007,10008,10009];
+    if (wheelNumber === 0) {
+      if (index === 0) {
+        that._handle2(0, [], 0);
+        return;
+      }
+      console.debug(cateMap[index - 1]);
+      let url = 'http://10.5.234.227:8282/crm/app/category/r/list?parentId=' + cateMap[index - 1] + '&bdId=2020529&ua=20200_android&token=623b9e9f6ae38444e945ae53ced523efefed447b3c4c610af6d94d47469cf37f48d192760aef1cc66b06a2e648fa5dcabefe4ff9fafde8fc6d0b275dc76a8ea750a350c95091f814009e635c84fd78f58eadfef564b26c6e3cb223564577486a';
+      fetch(url)
+      .then((res) => {
+        return res.json();
+      }).then((data) => {
+        that._handle2(0, data.data, index);
+      });
+    }
+  }
+
+  _getLevel3(value, index, wheelNumber) {
+    let that = this;
+    let cateMap = [10003,10002,10004,10000,10005,10001,10006,10007,10008,10009];
+    if (wheelNumber === 0) {
+      if (index === 0) {
+        that.state.Cdata1[1] = [];
+        that.state.Cdata1[2] = [];
+        this.forceUpdate();
+        return;
+      }
+      console.debug(cateMap[index - 1]);
+      let url = 'http://10.5.234.227:8282/crm/app/category/r/list?parentId=' + cateMap[index - 1] + '&bdId=2020529&ua=20200_android&token=623b9e9f6ae38444e945ae53ced523efefed447b3c4c610af6d94d47469cf37f48d192760aef1cc66b06a2e648fa5dcabefe4ff9fafde8fc6d0b275dc76a8ea750a350c95091f814009e635c84fd78f58eadfef564b26c6e3cb223564577486a';
+      fetch(url)
+      .then((res) => {
+        return res.json();
+      }).then((data) => {
+        that.state.Cdata1[1] = data.data;
+        that.state.Cdata1[2] = [];
+        this.forceUpdate();
+      });
+    }
+    if (wheelNumber === 1) {
+      if (index === 0) {
+        that.state.Cdata1[2] = [];
+        this.forceUpdate();
+        return;
+      }
+      let url = 'http://10.5.234.227:8282/crm/app/category/r/list?parentId=' + cateMap[index - 1] + '&bdId=2020529&ua=20200_android&token=623b9e9f6ae38444e945ae53ced523efefed447b3c4c610af6d94d47469cf37f48d192760aef1cc66b06a2e648fa5dcabefe4ff9fafde8fc6d0b275dc76a8ea750a350c95091f814009e635c84fd78f58eadfef564b26c6e3cb223564577486a';
+      fetch(url)
+      .then((res) => {
+        return res.json();
+      }).then((data) => {
+        that.state.Cdata1[2] = data.data;
+        this.forceUpdate();
+      });
+    }
+  }
+  _handle(level, data) {
+    this.setState({Cdata1: [data,[],[]]});
+  }
+  _handle2(level, data, index) {
+    this.state.Cdata[1] = data;
+    this.forceUpdate();
+  }
+  _onResult(data, index, str) {
+    this.state.Cdata1 = data.slice();
+    this.setState({str5: str});
+  }
+
+  _onCancel(data) {
+    this.state.Cdata1 = data.slice();
+    // 一定要有这句否则直接点击传入的数据还是没变
+    this.forceUpdate();
+  }
   // todo: ios can not init show two pickers
   render() {
+    console.debug('1---------1');
     return (
       <ScrollView style={styles.container}>
         <View style={styles.titleContainer}>
         <Text style={styles.title}>{this.state.str}</Text>
         </View>
-       <TouchableWithoutFeedback style={styles.button} onPress={() => {this._getData();}}>
+       <TouchableWithoutFeedback style={styles.button} onPress={() => {this._getLevel();}}>
           <View style={styles.button}>
             <Text style={{color:'#fff'}}>获取数据</Text>
           </View>
@@ -247,11 +338,11 @@ class TpickerEx extends Component {
           <View>
         <Text style={styles.demoValue}>Cascade Picker value: {this.state.str4}</Text>
         <CascadePicker
+          inputValue = {this.state.str4}
           textStyle = {{color: 'red'}}
           navStyle = {{backgroundColor:'lightblue'}}
-          inputValue={'4 level CascadePicker'}
-          level = {4}
-          data = {level4Data}
+          level = {2}
+          data = {this.state.Cdata}
           iconName={'cog'}
           iconSize={14}
           inputStyle = {{borderColor: 'gray'}}
@@ -259,40 +350,25 @@ class TpickerEx extends Component {
           cancelBtnStyle={{color: 'red'}}
           pickerNameStyle={{fontSize: 12}}
           pickerName={'picker name test'}
-          selectIndex = {[1,1,0,2]}
           iconStyle={{marginRight: 30}}
-          onResult ={(str) => {this.setState({str4:str});}}
+          onWheelChange={(value, index, wheelNumber) => {this._getLevel2(value, index, wheelNumber);}}
+          onResult ={(data, index,str) => {this.setState({str4:str});}}
+          onCancel = {() => {this.state.Cdata[1] = [];}}
         />
         </View>
-         <View>
-        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str5}</Text>
+          <View>
+        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str4}</Text>
         <CascadePicker
-          inputValue={'3 level CascadePicker'}
+          inputValue = {this.state.str5}
           level = {3}
-          selectIndex = {[0,1,0]}
-          data = {level3Data}
-          onResult ={(str) => {this.setState({str5:str});}}
+          selectedValue ={this.state.choseValue}
+          data = {this.state.Cdata1}
+          onWheelChange={(value, index, wheelNumber) => {this._getLevel3(value, index, wheelNumber);}}
+          onResult ={(data, index,str) => {this._onResult(data, index, str);}}
+          onCancel = {(data)=>{this._onCancel(data);}}
         />
         </View>
-          <View>
-        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str6}</Text>
-        <CascadePicker
-          inputValue={'2 level CascadePicker'}
-          level = {2}
-          data = {level2Data}
-          onResult ={(str) => {this.setState({str6:str});}}
-        />
-        </View>
-          <View>
-        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str7}</Text>
-        <CascadePicker
-          inputValue={'2 level CascadePicker'}
-          level = {2}
-          data = {level2Data}
-          enable={false}
-          onResult ={(str) => {this.setState({str7:str});}}
-        />
-        </View>
+
       </ScrollView>
 
     );
