@@ -26,9 +26,10 @@ let styles = StyleSheet.create({
     color: '#fff'
   },
   button: {
-    width: 100,
+    width: 200,
     height: 30,
     marginLeft: 20,
+    marginTop: 10,
     backgroundColor: '#f79e80',
     borderRadius: 3,
     borderWidth: 1,

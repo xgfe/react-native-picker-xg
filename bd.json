@@ -1,55 +1,726 @@
 {
-  "data":[
-  {
-    "amc": {
-      "name": "2011年"
-    },
-    "alfa": {
-      "name": "2012年"
-    },
-    "aston": {
-      "name": "2013年"
-    },
-    "audi": {
-      "name": "2014年"
-    },
-    "austin": {
-      "name": "2015年"
-    },
-    "borgward": {
-      "name": "2016年"
-    },
-    "buick": {
-      "name": "2017年"
-    },
-    "cadillac": {
-      "name": "2018年"
-    },
-    "chevrolet": {
-      "name": "2019年"
-    }
+  "10000": {
+    "code": 200,
+    "data": [
+      {
+        "childCategory": null,
+        "id": 10010,
+        "name": "其他快餐",
+        "parentId": 10000
+      },
+      {
+        "childCategory": null,
+        "id": 10011,
+        "name": "黄焖鸡米饭",
+        "parentId": 10000
+      },
+      {
+        "childCategory": null,
+        "id": 10012,
+        "name": "盖浇饭",
+        "parentId": 10000
+      },
+      {
+        "childCategory": null,
+        "id": 10013,
+        "name": "排骨米饭",
+        "parentId": 10000
+      },
+      {
+        "childCategory": null,
+        "id": 10014,
+        "name": "烤肉饭",
+        "parentId": 10000
+      },
+      {
+        "childCategory": null,
+        "id": 10015,
+        "name": "脆皮鸡饭",
+        "parentId": 10000
+      },
+      {
+        "childCategory": null,
+        "id": 10016,
+        "name": "卤肉饭",
+        "parentId": 10000
+      },
+      {
+        "childCategory": null,
+        "id": 10017,
+        "name": "川湘菜",
+        "parentId": 10000
+      },
+      {
+        "childCategory": null,
+        "id": 10018,
+        "name": "菜饭",
+        "parentId": 10000
+      }
+    ],
+    "message": "请求成功",
+    "status": 1
   },
-  {
-    "amc1": {
-      "name": "1月"
-    },
-    "alfa1": {
-      "name": "2月"
-    },
-    "aston1": {
-      "name": "3月"
-    },
-    "audi1": {
-      "name": "4月"
-    }
+  "10001": {
+    "code": 200,
+    "data": [
+      {
+        "childCategory": null,
+        "id": 10019,
+        "name": "其他地方小吃",
+        "parentId": 10001
+      },
+      {
+        "childCategory": null,
+        "id": 10020,
+        "name": "冒菜",
+        "parentId": 10001
+      },
+      {
+        "childCategory": null,
+        "id": 10021,
+        "name": "凉皮凉粉",
+        "parentId": 10001
+      },
+      {
+        "childCategory": null,
+        "id": 10022,
+        "name": "包子/粥",
+        "parentId": 10001
+      },
+      {
+        "childCategory": null,
+        "id": 10023,
+        "name": "沙县小吃",
+        "parentId": 10001
+      },
+      {
+        "childCategory": null,
+        "id": 10024,
+        "name": "炸鸡/鸡排/炸串",
+        "parentId": 10001
+      },
+      {
+        "childCategory": null,
+        "id": 10025,
+        "name": "煲仔饭",
+        "parentId": 10001
+      },
+      {
+        "childCategory": null,
+        "id": 10026,
+        "name": "煎饼",
+        "parentId": 10001
+      },
+      {
+        "childCategory": null,
+        "id": 10027,
+        "name": "生煎锅贴",
+        "parentId": 10001
+      },
+      {
+        "childCategory": null,
+        "id": 10028,
+        "name": "米粉米线",
+        "parentId": 10001
+      },
+      {
+        "childCategory": null,
+        "id": 10029,
+        "name": "羊汤/粉丝汤",
+        "parentId": 10001
+      },
+      {
+        "childCategory": null,
+        "id": 10030,
+        "name": "肉夹馍",
+        "parentId": 10001
+      },
+      {
+        "childCategory": null,
+        "id": 10031,
+        "name": "米粉米线",
+        "parentId": 10001
+      },
+      {
+        "childCategory": null,
+        "id": 10032,
+        "name": "面馆",
+        "parentId": 10001
+      },
+      {
+        "childCategory": null,
+        "id": 10033,
+        "name": "驴肉火烧",
+        "parentId": 10001
+      },
+      {
+        "childCategory": null,
+        "id": 10034,
+        "name": "鸡公煲",
+        "parentId": 10001
+      },
+      {
+        "childCategory": null,
+        "id": 10035,
+        "name": "鸭脖/卤味/熟食",
+        "parentId": 10001
+      },
+      {
+        "childCategory": null,
+        "id": 10036,
+        "name": "麻辣烫/关东煮",
+        "parentId": 10001
+      }
+    ],
+    "message": "请求成功",
+    "status": 1
   },
-  {
-    "cadillac2": {
-      "name": "1号"
+  "10002": {
+    "code": 200,
+    "data": [
+      {
+        "childCategory": null,
+        "id": 10038,
+        "name": "小龙虾",
+        "parentId": 10002
+      },
+      {
+        "childCategory": null,
+        "id": 10039,
+        "name": "拉美烤肉",
+        "parentId": 10002
+      },
+      {
+        "childCategory": null,
+        "id": 10037,
+        "name": "中式烤肉",
+        "parentId": 10002
+      },
+      {
+        "childCategory": null,
+        "id": 10041,
+        "name": "烤串",
+        "parentId": 10002
+      },
+      {
+        "childCategory": null,
+        "id": 10042,
+        "name": "铁板烧",
+        "parentId": 10002
+      },
+      {
+        "childCategory": null,
+        "id": 10040,
+        "name": "海鲜",
+        "parentId": 10002
+      },
+      {
+        "childCategory": null,
+        "id": 10043,
+        "name": "韩式烤肉",
+        "parentId": 10002
+      }
+    ],
+    "message": "请求成功",
+    "status": 1
+  },
+  "10003": {
+    "code": 200,
+    "data": [
+      {
+        "childCategory": null,
+        "id": 10044,
+        "name": "中亚/中东菜",
+        "parentId": 10003
+      },
+      {
+        "childCategory": null,
+        "id": 10045,
+        "name": "俄罗斯菜",
+        "parentId": 10003
+      },
+      {
+        "childCategory": null,
+        "id": 10046,
+        "name": "其他西餐",
+        "parentId": 10003
+      },
+      {
+        "childCategory": null,
+        "id": 10047,
+        "name": "巴西菜",
+        "parentId": 10003
+      },
+      {
+        "childCategory": null,
+        "id": 10048,
+        "name": "意大利菜",
+        "parentId": 10003
+      },
+      {
+        "childCategory": null,
+        "id": 10049,
+        "name": "意面披萨",
+        "parentId": 10003
+      },
+      {
+        "childCategory": null,
+        "id": 10050,
+        "name": "法国菜",
+        "parentId": 10003
+      },
+      {
+        "childCategory": null,
+        "id": 10051,
+        "name": "西式快餐",
+        "parentId": 10003
+      },
+      {
+        "childCategory": null,
+        "id": 10052,
+        "name": "西班牙菜",
+        "parentId": 10003
+      },
+      {
+        "childCategory": null,
+        "id": 10053,
+        "name": "牛排",
+        "parentId": 10003
+      }
+    ],
+    "message": "请求成功",
+    "status": 1
+  },
+  "10004": {
+    "code": 200,
+    "data": [
+      {
+        "childCategory": null,
+        "id": 10054,
+        "name": "烤鱼",
+        "parentId": 10004
+      },
+      {
+        "childCategory": null,
+        "id": 10055,
+        "name": "麻辣香锅",
+        "parentId": 10004
+      }
+    ],
+    "message": "请求成功",
+    "status": 1
+  },
+  "10005": {
+    "code": 200,
+    "data": [
+      {
+        "childCategory": null,
+        "id": 10056,
+        "name": "日式简餐",
+        "parentId": 10005
+      },
+      {
+        "childCategory": null,
+        "id": 10057,
+        "name": "日本料理",
+        "parentId": 10005
+      },
+      {
+        "childCategory": null,
+        "id": 10058,
+        "name": "韩国料理",
+        "parentId": 10005
+      },
+      {
+        "childCategory": null,
+        "id": 10059,
+        "name": "韩式简餐",
+        "parentId": 10005
+      }
+    ],
+    "message": "请求成功",
+    "status": 1
+  },
+  "10006": {
+    "code": 200,
+    "data": [
+      {
+        "childCategory": null,
+        "id": 10060,
+        "name": "其他东南亚菜",
+        "parentId": 10006
+      },
+      {
+        "childCategory": null,
+        "id": 10061,
+        "name": "印度菜",
+        "parentId": 10006
+      },
+      {
+        "childCategory": null,
+        "id": 10062,
+        "name": "新加坡菜",
+        "parentId": 10006
+      },
+      {
+        "childCategory": null,
+        "id": 10063,
+        "name": "泰国菜",
+        "parentId": 10006
+      },
+      {
+        "childCategory": null,
+        "id": 10064,
+        "name": "越南菜",
+        "parentId": 10006
+      },
+      {
+        "childCategory": null,
+        "id": 10065,
+        "name": "马来西亚菜",
+        "parentId": 10006
+      }
+    ],
+    "message": "请求成功",
+    "status": 1
+  },
+  "10007": {
+    "code": 200,
+    "data": [
+      {
+        "childCategory": null,
+        "id": 10066,
+        "name": "东北菜",
+        "parentId": 10007
+      },
+      {
+        "childCategory": null,
+        "id": 10067,
+        "name": "云南菜",
+        "parentId": 10007
+      },
+      {
+        "childCategory": null,
+        "id": 10068,
+        "name": "其他地方菜",
+        "parentId": 10007
+      },
+      {
+        "childCategory": null,
+        "id": 10069,
+        "name": "北京菜",
+        "parentId": 10007
+      },
+      {
+        "childCategory": null,
+        "id": 10070,
+        "name": "台湾菜",
+        "parentId": 10007
+      },
+      {
+        "childCategory": null,
+        "id": 10071,
+        "name": "川湘菜",
+        "parentId": 10007
+      },
+      {
+        "childCategory": null,
+        "id": 10072,
+        "name": "徽菜",
+        "parentId": 10007
+      },
+      {
+        "childCategory": null,
+        "id": 10073,
+        "name": "新疆菜",
+        "parentId": 10007
+      },
+      {
+        "childCategory": null,
+        "id": 10074,
+        "name": "本帮江浙菜",
+        "parentId": 10007
+      },
+      {
+        "childCategory": null,
+        "id": 10075,
+        "name": "江西菜",
+        "parentId": 10007
+      },
+      {
+        "childCategory": null,
+        "id": 10076,
+        "name": "港菜/茶餐厅",
+        "parentId": 10007
+      },
+      {
+        "childCategory": null,
+        "id": 10077,
+        "name": "湖北菜",
+        "parentId": 10007
+      },
+      {
+        "childCategory": null,
+        "id": 10078,
+        "name": "粤菜",
+        "parentId": 10007
+      },
+      {
+        "childCategory": null,
+        "id": 10079,
+        "name": "西北菜",
+        "parentId": 10007
+      },
+      {
+        "childCategory": null,
+        "id": 10080,
+        "name": "贵州菜",
+        "parentId": 10007
+      },
+      {
+        "childCategory": null,
+        "id": 10081,
+        "name": "闽菜",
+        "parentId": 10007
+      },
+      {
+        "childCategory": null,
+        "id": 10082,
+        "name": "鲁菜",
+        "parentId": 10007
+      }
+    ],
+    "message": "请求成功",
+    "status": 1
+  },
+  "10008": {
+    "code": 200,
+    "data": [
+      {
+        "childCategory": null,
+        "id": 10083,
+        "name": "串串香",
+        "parentId": 10008
+      },
+      {
+        "childCategory": null,
+        "id": 10084,
+        "name": "云南火锅",
+        "parentId": 10008
+      },
+      {
+        "childCategory": null,
+        "id": 10085,
+        "name": "其他火锅",
+        "parentId": 10008
+      },
+      {
+        "childCategory": null,
+        "id": 10086,
+        "name": "小火锅",
+        "parentId": 10008
+      },
+      {
+        "childCategory": null,
+        "id": 10087,
+        "name": "川味/重庆火锅",
+        "parentId": 10008
+      },
+      {
+        "childCategory": null,
+        "id": 10088,
+        "name": "港式火锅",
+        "parentId": 10008
+      },
+      {
+        "childCategory": null,
+        "id": 10089,
+        "name": "焖锅",
+        "parentId": 10008
+      },
+      {
+        "childCategory": null,
+        "id": 10090,
+        "name": "羊蝎子火锅",
+        "parentId": 10008
+      },
+      {
+        "childCategory": null,
+        "id": 10091,
+        "name": "老北京火锅",
+        "parentId": 10008
+      },
+      {
+        "childCategory": null,
+        "id": 10092,
+        "name": "豆捞火锅",
+        "parentId": 10008
+      },
+      {
+        "childCategory": null,
+        "id": 10093,
+        "name": "鱼火锅",
+        "parentId": 10008
+      }
+    ],
+    "message": "请求成功",
+    "status": 1
+  },
+  "10009": {
+    "code": 200,
+    "data": [
+      {
+        "childCategory": null,
+        "id": 10094,
+        "name": "农家菜",
+        "parentId": 10009
+      },
+      {
+        "childCategory": null,
+        "id": 10095,
+        "name": "创意/概念菜",
+        "parentId": 10009
+      },
+      {
+        "childCategory": null,
+        "id": 10096,
+        "name": "清真菜",
+        "parentId": 10009
+      },
+      {
+        "childCategory": null,
+        "id": 10097,
+        "name": "私房菜",
+        "parentId": 10009
+      },
+      {
+        "childCategory": null,
+        "id": 10098,
+        "name": "素食",
+        "parentId": 10009
+      }
+    ],
+    "message": "请求成功",
+    "status": 1
+  },
+  "cascade": {
+    "code": 200,
+    "data": [
+      {
+        "childCategory": null,
+        "id": 10002,
+        "name": "海鲜/烧烤",
+        "parentId": 0
+      },
+      {
+        "childCategory": null,
+        "id": 10004,
+        "name": "香锅/烤鱼",
+        "parentId": 0
+      },
+      {
+        "childCategory": null,
+        "id": 10000,
+        "name": "快餐",
+        "parentId": 0
+      },
+      {
+        "childCategory": null,
+        "id": 10003,
+        "name": "西餐",
+        "parentId": 0
+      },
+      {
+        "childCategory": null,
+        "id": 10001,
+        "name": "小吃",
+        "parentId": 0
+      },
+      {
+        "childCategory": null,
+        "id": 10005,
+        "name": "日韩料理",
+        "parentId": 0
+      },
+      {
+        "childCategory": null,
+        "id": 10008,
+        "name": "火锅",
+        "parentId": 0
+      },
+      {
+        "childCategory": null,
+        "id": 10006,
+        "name": "东南亚菜",
+        "parentId": 0
+      },
+      {
+        "childCategory": null,
+        "id": 10007,
+        "name": "地方菜",
+        "parentId": 0
+      },
+      {
+        "childCategory": null,
+        "id": 10009,
+        "name": "特色菜",
+        "parentId": 0
+      }
+    ],
+    "message": "请求成功",
+    "status": 1
+  },
+  "data": [
+    {
+      "alfa": {
+        "name": "2012年"
+      },
+      "amc": {
+        "name": "2011年"
+      },
+      "aston": {
+        "name": "2013年"
+      },
+      "audi": {
+        "name": "2014年"
+      },
+      "austin": {
+        "name": "2015年"
+      },
+      "borgward": {
+        "name": "2016年"
+      },
+      "buick": {
+        "name": "2017年"
+      },
+      "cadillac": {
+        "name": "2018年"
+      },
+      "chevrolet": {
+        "name": "2019年"
+      }
     },
-    "chevrolet2": {
-      "name": "2号"
+    {
+      "alfa1": {
+        "name": "2月"
+      },
+      "amc1": {
+        "name": "1月"
+      },
+      "aston1": {
+        "name": "3月"
+      },
+      "audi1": {
+        "name": "4月"
+      }
+    },
+    {
+      "cadillac2": {
+        "name": "1号"
+      },
+      "chevrolet2": {
+        "name": "2号"
+      }
     }
-  }
-]
+  ]
 }

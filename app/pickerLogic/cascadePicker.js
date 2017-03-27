@@ -13,6 +13,7 @@ import {
   Platform,
   Modal,
   StatusBar,
+  ActivityIndicator,
   Image
 } from 'react-native';
 import Pickroll from './cascadeRoll';
@@ -153,7 +154,7 @@ class CascadePicker extends Component {
    * @private
      */
   _setEventBegin(){
-    if (this.props.enable){
+    if (this.props.enable && (this.props.data.length >= 1)){
       this.beforeData = this.props.data.slice();
       this.beforeOpe = this.choseNumber.slice();
       this.beforeValue = this.choseValue.slice();
@@ -274,8 +275,21 @@ class CascadePicker extends Component {
                 />
               <View style={[styles.pickContainer]} >
                 {that.passData && that.passData.map((item,index) =>{
+                  if (this.props.loading[index]) {
+                    return (
+                      <View key={index} style={[{flex: 1, alignItems: 'center', backgroundColor: 'red', borderWidth:0}, Platform.OS !== 'ios' && {justifyContent: 'center'}]}>
+                        {Platform.OS === 'ios' && <View style={{position: 'absolute', width: 501, height: 35, borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#ddd', marginTop: 90.5, borderLeftWidth: 0}} />}
+                        <ActivityIndicator
+                                animating={true}
+                                size="small"
+                                style={Platform.OS === 'ios' && {marginTop: 96}}
+                        />
+                      </View>
+                    );
+                  }
                   return (
                     <PickRoll
+                      itemStyle={{fontSize: 16}}
                       id = {this.props.id}
                       name = {this.props.name}
                       parentId = {this.props.parentId}

@@ -9,13 +9,12 @@ import {
   View,
   ScrollView,
   TouchableWithoutFeedback,
-  TouchableHighlight,
-  Text,
-  StyleSheet
+  Text
 } from 'react-native';
 import Test3, {CascadePicker} from './app/pickerLogic/picker';
 import styles from './style';
 
+const ip = 'http://172.18.47.119:3000/';
 let wheel2 = [
   {
     amc: {
@@ -181,6 +180,7 @@ class TpickerEx extends Component {
       Cdata: [],
       Cdata1: [],
       selectIndex4: [],
+      loadingState: [false, false, false]
     };
   }
 
@@ -199,7 +199,8 @@ class TpickerEx extends Component {
 
   _getLevel() {
     let that = this;
-    fetch('http://10.5.236.249:8282/crm/app/category/r/list?parentId=0&ua=20200_android&token=716f9d734ba5ee52b11b2088f43e6fcba85f005f6e57066840de2d63d58cc5b948d192760aef1cc66b06a2e648fa5dca965014e78c59985f600ee67b33261fcf2c546b6518e5fb436cf4428ecdb9d5c6c7a2214ccb3b91cbaef7a0951d603648')
+    let url = ip + 'cascade';
+    fetch(url)
     .then((res) => {
       return res.json();
     }).then((data) => {
@@ -209,6 +210,19 @@ class TpickerEx extends Component {
     });
   }
 
+  _getLevel1() {
+    let that = this;
+    let url = ip + 'data';
+    fetch(url)
+    .then((res) => {
+      console.debug(res);
+      return res.json();
+    }).then((data) => {
+      if (data) {
+        that.setState({data: data});
+      }
+    });
+  }
   _getLevel2(value, index, wheelNumber) {
     let that = this;
     let cateMap = [10003,10002,10004,10000,10005,10001,10006,10007,10008,10009];
@@ -218,7 +232,7 @@ class TpickerEx extends Component {
         return;
       }
       console.debug(cateMap[index - 1]);
-      let url = 'http://10.5.236.249:8282/crm/app/category/r/list?parentId=' + cateMap[index - 1] + '&ua=20200_android&token=716f9d734ba5ee52b11b2088f43e6fcba85f005f6e57066840de2d63d58cc5b948d192760aef1cc66b06a2e648fa5dca965014e78c59985f600ee67b33261fcf2c546b6518e5fb436cf4428ecdb9d5c6c7a2214ccb3b91cbaef7a0951d603648';
+      let url = ip + cateMap[index - 1];
       fetch(url)
       .then((res) => {
         return res.json();
@@ -240,13 +254,15 @@ class TpickerEx extends Component {
         return;
       }
       console.debug(cateMap[index - 1]);
-      let url = 'http://10.5.236.249:8282/crm/app/category/r/list?parentId=' + cateMap[index - 1] + '&ua=20200_android&token=716f9d734ba5ee52b11b2088f43e6fcba85f005f6e57066840de2d63d58cc5b948d192760aef1cc66b06a2e648fa5dca965014e78c59985f600ee67b33261fcf2c546b6518e5fb436cf4428ecdb9d5c6c7a2214ccb3b91cbaef7a0951d603648';
+      let url = ip + cateMap[index - 1];
+      this.setState({loadingState: [false, true, true]});
       fetch(url)
       .then((res) => {
         return res.json();
       }).then((data) => {
         that.state.Cdata1[1] = data.data;
         that.state.Cdata1[2] = [];
+        this.state.loadingState = [false, false, false];
         this.forceUpdate();
       });
     }
@@ -256,12 +272,14 @@ class TpickerEx extends Component {
         this.forceUpdate();
         return;
       }
-      let url = 'http://10.5.236.249:8282/crm/app/category/r/list?parentId=' + cateMap[index - 1] + '&ua=20200_android&token=716f9d734ba5ee52b11b2088f43e6fcba85f005f6e57066840de2d63d58cc5b948d192760aef1cc66b06a2e648fa5dca965014e78c59985f600ee67b33261fcf2c546b6518e5fb436cf4428ecdb9d5c6c7a2214ccb3b91cbaef7a0951d603648';
+      let url = ip + cateMap[index - 1];
+      this.setState({loadingState: [false, false, true]});
       fetch(url)
       .then((res) => {
         return res.json();
       }).then((data) => {
         that.state.Cdata1[2] = data.data;
+        this.state.loadingState = [false, false, false];
         this.forceUpdate();
       });
     }
@@ -285,7 +303,7 @@ class TpickerEx extends Component {
   }
   // todo: ios can not init show two pickers
   render() {
-    console.debug('1---------1');
+
     return (
       <ScrollView style={styles.container}>
         <View style={styles.titleContainer}>
@@ -293,10 +311,15 @@ class TpickerEx extends Component {
         </View>
        <TouchableWithoutFeedback style={styles.button} onPress={() => {this._getLevel();}}>
           <View style={styles.button}>
-            <Text style={{color:'#fff'}}>获取数据</Text>
+            <Text style={{color:'#fff'}}>获取联动picker数据</Text>
           </View>
         </TouchableWithoutFeedback>
-       {/* <View>
+        <TouchableWithoutFeedback style={styles.button} onPress={() => {this._getLevel1();}}>
+          <View style={styles.button}>
+            <Text style={{color:'#fff'}}>获取基本picker数据</Text>
+          </View>
+        </TouchableWithoutFeedback>
+       <View>
         <Text style={styles.demoValue}>Basic Picker value: {this.state.str1}</Text>
         <Test3
           inputValue ={this.state.str1}
@@ -357,7 +380,6 @@ class TpickerEx extends Component {
           onCancel = {() => {this.state.Cdata[1] = [];}}
         />
         </View>
-      */}
           <View>
         <Text style={styles.demoValue}>Cascade Picker value: {this.state.str4}</Text>
         <CascadePicker
@@ -368,9 +390,9 @@ class TpickerEx extends Component {
           onWheelChange={(value, index, wheelNumber) => {this._getLevel3(value, index, wheelNumber);}}
           onResult ={(data, index,str) => {this._onResult(data, index, str);}}
           onCancel = {(data)=>{this._onCancel(data);}}
+          loading = {this.state.loadingState}
         />
         </View>
-
       </ScrollView>
 
     );

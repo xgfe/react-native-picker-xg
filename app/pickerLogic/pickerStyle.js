@@ -55,7 +55,7 @@ let rollStyles = StyleSheet.create({
   },
   middleText: {
     color: '#000',
-    fontSize: 20,
+    fontSize: 16,
     marginTop: 0,
     marginBottom: 0,
   }
