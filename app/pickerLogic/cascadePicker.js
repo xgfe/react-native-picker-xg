@@ -100,6 +100,7 @@ class CascadePicker extends Component {
     this.state.animatedHeight = new Animated.Value(height);
 
     this.choseNumber = [];
+    this.choseValue = [];
   }
 
   componentDidMount(){
@@ -141,6 +142,8 @@ class CascadePicker extends Component {
      */
   _cancelChose(){
     this.choseNumber = this.beforeOpe.slice();
+    this.choseValue = this.beforeValue.slice();
+
     this._setModalVisible(false,'cancel');
   }
 
@@ -153,6 +156,8 @@ class CascadePicker extends Component {
     if (this.props.enable){
       this.beforeData = this.props.data.slice();
       this.beforeOpe = this.choseNumber.slice();
+      this.beforeValue = this.choseValue.slice();
+
       this._setModalVisible(true);
     } else {
       this.state.visible = false;
@@ -213,8 +218,12 @@ class CascadePicker extends Component {
   _changeLayout(value,index, wheelNumber){
     this.choseNumber[wheelNumber] = index;
     this.choseNumber.length = (wheelNumber + 1);
+    this.choseValue[wheelNumber] = value;
+    this.choseValue.length = (wheelNumber + 1);
+    if (Platform.OS === 'ios') {
+      this.forceUpdate();
+    }
     this.props.onWheelChange && this.props.onWheelChange(value, index, wheelNumber);
-    console.debug(value, index, wheelNumber);
   }
 
   _handleData() {
@@ -242,7 +251,6 @@ class CascadePicker extends Component {
     let that = this;
 
     this._handleData();
-    console.debug(this.props.data);
     return (
       <View style={styles.container}>
         <Modal
@@ -278,6 +286,7 @@ class CascadePicker extends Component {
                       data = {that.passData[index]}
                       passData = {that.passData}
                       selectedIndex = {that.choseNumber[index]}
+                      selectedValue = {that.choseValue[index]}
                       onValueChange={(newValue, newIndex) => {
                         that._changeLayout(newValue,newIndex, index);}}
                     >

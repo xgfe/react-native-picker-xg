@@ -199,7 +199,7 @@ class TpickerEx extends Component {
 
   _getLevel() {
     let that = this;
-    fetch('http://10.5.234.227:8282/crm/app/category/r/list?parentId=0&bdId=2020529&ua=20200_android&token=623b9e9f6ae38444e945ae53ced523efefed447b3c4c610af6d94d47469cf37f48d192760aef1cc66b06a2e648fa5dcabefe4ff9fafde8fc6d0b275dc76a8ea750a350c95091f814009e635c84fd78f58eadfef564b26c6e3cb223564577486a')
+    fetch('http://10.5.236.249:8282/crm/app/category/r/list?parentId=0&ua=20200_android&token=716f9d734ba5ee52b11b2088f43e6fcba85f005f6e57066840de2d63d58cc5b948d192760aef1cc66b06a2e648fa5dca965014e78c59985f600ee67b33261fcf2c546b6518e5fb436cf4428ecdb9d5c6c7a2214ccb3b91cbaef7a0951d603648')
     .then((res) => {
       return res.json();
     }).then((data) => {
@@ -218,7 +218,7 @@ class TpickerEx extends Component {
         return;
       }
       console.debug(cateMap[index - 1]);
-      let url = 'http://10.5.234.227:8282/crm/app/category/r/list?parentId=' + cateMap[index - 1] + '&bdId=2020529&ua=20200_android&token=623b9e9f6ae38444e945ae53ced523efefed447b3c4c610af6d94d47469cf37f48d192760aef1cc66b06a2e648fa5dcabefe4ff9fafde8fc6d0b275dc76a8ea750a350c95091f814009e635c84fd78f58eadfef564b26c6e3cb223564577486a';
+      let url = 'http://10.5.236.249:8282/crm/app/category/r/list?parentId=' + cateMap[index - 1] + '&ua=20200_android&token=716f9d734ba5ee52b11b2088f43e6fcba85f005f6e57066840de2d63d58cc5b948d192760aef1cc66b06a2e648fa5dca965014e78c59985f600ee67b33261fcf2c546b6518e5fb436cf4428ecdb9d5c6c7a2214ccb3b91cbaef7a0951d603648';
       fetch(url)
       .then((res) => {
         return res.json();
@@ -230,6 +230,7 @@ class TpickerEx extends Component {
 
   _getLevel3(value, index, wheelNumber) {
     let that = this;
+    console.debug('trigger');
     let cateMap = [10003,10002,10004,10000,10005,10001,10006,10007,10008,10009];
     if (wheelNumber === 0) {
       if (index === 0) {
@@ -239,7 +240,7 @@ class TpickerEx extends Component {
         return;
       }
       console.debug(cateMap[index - 1]);
-      let url = 'http://10.5.234.227:8282/crm/app/category/r/list?parentId=' + cateMap[index - 1] + '&bdId=2020529&ua=20200_android&token=623b9e9f6ae38444e945ae53ced523efefed447b3c4c610af6d94d47469cf37f48d192760aef1cc66b06a2e648fa5dcabefe4ff9fafde8fc6d0b275dc76a8ea750a350c95091f814009e635c84fd78f58eadfef564b26c6e3cb223564577486a';
+      let url = 'http://10.5.236.249:8282/crm/app/category/r/list?parentId=' + cateMap[index - 1] + '&ua=20200_android&token=716f9d734ba5ee52b11b2088f43e6fcba85f005f6e57066840de2d63d58cc5b948d192760aef1cc66b06a2e648fa5dca965014e78c59985f600ee67b33261fcf2c546b6518e5fb436cf4428ecdb9d5c6c7a2214ccb3b91cbaef7a0951d603648';
       fetch(url)
       .then((res) => {
         return res.json();
@@ -255,7 +256,7 @@ class TpickerEx extends Component {
         this.forceUpdate();
         return;
       }
-      let url = 'http://10.5.234.227:8282/crm/app/category/r/list?parentId=' + cateMap[index - 1] + '&bdId=2020529&ua=20200_android&token=623b9e9f6ae38444e945ae53ced523efefed447b3c4c610af6d94d47469cf37f48d192760aef1cc66b06a2e648fa5dcabefe4ff9fafde8fc6d0b275dc76a8ea750a350c95091f814009e635c84fd78f58eadfef564b26c6e3cb223564577486a';
+      let url = 'http://10.5.236.249:8282/crm/app/category/r/list?parentId=' + cateMap[index - 1] + '&ua=20200_android&token=716f9d734ba5ee52b11b2088f43e6fcba85f005f6e57066840de2d63d58cc5b948d192760aef1cc66b06a2e648fa5dca965014e78c59985f600ee67b33261fcf2c546b6518e5fb436cf4428ecdb9d5c6c7a2214ccb3b91cbaef7a0951d603648';
       fetch(url)
       .then((res) => {
         return res.json();
@@ -295,7 +296,7 @@ class TpickerEx extends Component {
             <Text style={{color:'#fff'}}>获取数据</Text>
           </View>
         </TouchableWithoutFeedback>
-        <View>
+       {/* <View>
         <Text style={styles.demoValue}>Basic Picker value: {this.state.str1}</Text>
         <Test3
           inputValue ={this.state.str1}
@@ -356,6 +357,7 @@ class TpickerEx extends Component {
           onCancel = {() => {this.state.Cdata[1] = [];}}
         />
         </View>
+      */}
           <View>
         <Text style={styles.demoValue}>Cascade Picker value: {this.state.str4}</Text>
         <CascadePicker
