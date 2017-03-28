@@ -1,0 +1,4 @@
+ target 'newpicker' do
+     pod 'Reveal-SDK', :configurations => ['Debug']
+ end
+
