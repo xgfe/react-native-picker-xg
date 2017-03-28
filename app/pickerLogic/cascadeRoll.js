@@ -90,6 +90,7 @@ class Pickroll extends Component {
       middleItems[index + 2] = <View style={rollStyles.textContainer} key={'mid' + (index + 2)}><Animated.Text
         className={'mid' + (index + 2)}
         onPress={() => {this._moveTo(index + 2);}}
+        numberOfLines={1}
         style={[rollStyles.middleText, this.props.itemStyle,
           {
                           // todo: when add fontSize, the shaking is too obvious

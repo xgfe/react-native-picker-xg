@@ -277,8 +277,8 @@ class CascadePicker extends Component {
                 {that.passData && that.passData.map((item,index) =>{
                   if (this.props.loading[index]) {
                     return (
-                      <View key={index} style={[{flex: 1, alignItems: 'center', backgroundColor: 'red', borderWidth:0}, Platform.OS !== 'ios' && {justifyContent: 'center'}]}>
-                        {Platform.OS === 'ios' && <View style={{position: 'absolute', width: 501, height: 35, borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#ddd', marginTop: 90.5, borderLeftWidth: 0}} />}
+                      <View key={index} style={[{flex: 1, alignItems: 'center', borderWidth:0}, Platform.OS !== 'ios' && {justifyContent: 'center'}]}>
+                        {Platform.OS === 'ios' && <View style={{position: 'absolute', width: 500, height: 36, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ddd', marginTop: 90}} />}
                         <ActivityIndicator
                                 animating={true}
                                 size="small"
@@ -287,6 +287,7 @@ class CascadePicker extends Component {
                       </View>
                     );
                   }
+                  console.debug(index);
                   return (
                     <PickRoll
                       itemStyle={{fontSize: 16}}

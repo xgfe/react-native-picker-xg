@@ -250,42 +250,63 @@ class TpickerEx extends Component {
       if (index === 0) {
         that.state.Cdata1[1] = [];
         that.state.Cdata1[2] = [];
+        that.state.Cdata1[3] = [];
         this.forceUpdate();
         return;
       }
       console.debug(cateMap[index - 1]);
       let url = ip + cateMap[index - 1];
-      this.setState({loadingState: [false, true, true]});
+      this.setState({loadingState: [false, true, true, true]});
       fetch(url)
       .then((res) => {
         return res.json();
       }).then((data) => {
         that.state.Cdata1[1] = data.data;
         that.state.Cdata1[2] = [];
-        this.state.loadingState = [false, false, false];
+        that.state.Cdata1[3] = [];
+        this.state.loadingState = [false, false, false, false];
         this.forceUpdate();
       });
     }
     if (wheelNumber === 1) {
       if (index === 0) {
         that.state.Cdata1[2] = [];
+        that.state.Cdata1[3] = [];
         this.forceUpdate();
         return;
       }
       let url = ip + cateMap[index - 1];
-      this.setState({loadingState: [false, false, true]});
+      this.setState({loadingState: [false, false, true, true]});
       fetch(url)
       .then((res) => {
         return res.json();
       }).then((data) => {
         that.state.Cdata1[2] = data.data;
-        this.state.loadingState = [false, false, false];
+        that.state.Cdata1[3] = [];
+        this.state.loadingState = [false, false, false, false];
+        this.forceUpdate();
+      });
+    }
+    if (wheelNumber === 2) {
+      if (index === 0) {
+        that.state.Cdata1[3] = [];
+        this.forceUpdate();
+        return;
+      }
+      let url = ip + cateMap[index - 1];
+      this.setState({loadingState: [false, false, false, true]});
+      fetch(url)
+      .then((res) => {
+        return res.json();
+      }).then((data) => {
+        that.state.Cdata1[3] = data.data;
+        this.state.loadingState = [false, false, false, false];
         this.forceUpdate();
       });
     }
   }
   _handle(level, data) {
-    this.setState({Cdata1: [data,[],[]]});
+    this.setState({Cdata1: [data,[],[],[]]});
   }
   _handle2(level, data, index) {
     this.state.Cdata[1] = data;
@@ -384,7 +405,7 @@ class TpickerEx extends Component {
         <Text style={styles.demoValue}>Cascade Picker value: {this.state.str4}</Text>
         <CascadePicker
           inputValue = {this.state.str5}
-          level = {3}
+          level = {4}
           selectedValue ={this.state.choseValue}
           data = {this.state.Cdata1}
           onWheelChange={(value, index, wheelNumber) => {this._getLevel3(value, index, wheelNumber);}}
