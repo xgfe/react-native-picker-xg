@@ -1,7 +1,7 @@
 {
   "name": "newpicker",
-  "version": "0.0.1",
-  "private": true,
+  "version": "1.0.0",
+  "private": false,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
@@ -32,7 +32,11 @@
     }
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/example/"
+    ]
   },
   "pre-commit": [
     "lint"
