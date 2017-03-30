@@ -1,5 +1,5 @@
 {
-  "name": "newpicker",
+  "name": "react-native-picker-xg",
   "version": "1.0.0",
   "private": false,
   "main": "app/pickerLogic/picker.js",
