@@ -80,6 +80,7 @@ npm install react-native-picker-xg --save
 * Step2--init an react-native project
 * Step3--copy the zip's content into your project
 * Step4--change the index.android.js's last line ``AppRegistry.registerComponent('widgets', () => TpickerEx);``'s widgets into your project's name.
-* Step5--npm install
+* Step5--change the yourownip in line 19 in example/index.js to your own ip
+* Step6--npm install
 
  

@@ -14,7 +14,9 @@ import {
 import Test3, {CascadePicker} from '../app/pickerLogic/picker';
 import styles from './style';
 import {wheel2} from './data';
-const ip = 'http://172.18.47.119:3000/';
+
+// your own ip
+const ip = 'http://yourownip:3000/';
 
 
 export default class TpickerEx extends Component {
