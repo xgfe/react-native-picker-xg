@@ -6,8 +6,6 @@ import {
   View,
   Text,
   Dimensions,
-  TouchableOpacity,
-  TextInput,
   Animated,
   PickerIOS,
   Platform,
@@ -275,7 +273,7 @@ class CascadePicker extends Component {
                 />
               <View style={[styles.pickContainer]} >
                 {that.passData && that.passData.map((item,index) =>{
-                  if (this.props.loading[index]) {
+                  if (this.props.loading.length > 0 && this.props.loading[index] && Platform.OS === 'android') {
                     return (
                       <View key={index} style={[{flex: 1, alignItems: 'center', borderWidth:0}, Platform.OS !== 'ios' && {justifyContent: 'center'}]}>
                         {Platform.OS === 'ios' && <View style={{position: 'absolute', width: 500, height: 36, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ddd', marginTop: 90}} />}
@@ -287,7 +285,6 @@ class CascadePicker extends Component {
                       </View>
                     );
                   }
-                  console.debug(index);
                   return (
                     <PickRoll
                       itemStyle={{fontSize: 16}}
@@ -305,13 +302,20 @@ class CascadePicker extends Component {
                       onValueChange={(newValue, newIndex) => {
                         that._changeLayout(newValue,newIndex, index);}}
                     >
-                      { Platform.OS === 'ios' && ((that.passData[index]).map((carMake) => (
-                        <PickerItem
-                          key={carMake}
-                          value={carMake[this.props.id]}
-                          label={carMake[this.props.name]}
-                        />
-                      )))}
+                    {Platform.OS === 'ios' && this.props.loading.length > 0 && this.props.loading[index] && (
+                      <PickerItem
+                        key={'loading'}
+                        value={'loading'}
+                        label={'loading'}
+                      />
+                      )}
+                    {Platform.OS === 'ios' && !this.props.loading[index] && ((that.passData[index]).map((carMake) => (
+                      <PickerItem
+                        key={carMake}
+                        value={carMake[this.props.id]}
+                        label={carMake[this.props.name]}
+                      />
+                    )))}
                     </PickRoll>);})}
               </View>
             </Animated.View>
@@ -340,7 +344,8 @@ CascadePicker.defaultProps = {
   cancelBtnText: '取消',
   id: 'id',
   name: 'name',
-  parentId: 'parentId'
+  parentId: 'parentId',
+  loading: []
 };
 
 export default CascadePicker;

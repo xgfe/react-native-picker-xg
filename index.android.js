@@ -13,152 +13,9 @@ import {
 } from 'react-native';
 import Test3, {CascadePicker} from './app/pickerLogic/picker';
 import styles from './style';
-
+import {wheel2} from './data';
 const ip = 'http://172.18.47.119:3000/';
-let wheel2 = [
-  {
-    amc: {
-      name: '2011年'
-    },
-    alfa: {
-      name: '2012年'
-    },
-    aston: {
-      name: '2013年'
-    },
-    audi: {
-      name: '2014年'
-    },
-    austin: {
-      name: '2015年'
-    },
-    borgward: {
-      name: '2016年'
-    },
-    buick: {
-      name: '2017年'
-    },
-    cadillac: {
-      name: '2018年'
-    },
-    chevrolet: {
-      name: '2019年'
-    }
-  },
-  {
-    amc1: {
-      name: '1月'
-    },
-    alfa1: {
-      name: '2月'
-    },
-    aston1: {
-      name: '3月'
-    },
-    audi1: {
-      name: '4月'
-    }
-  }
-];
 
-let wheel3 = [
-  {
-    amc: {
-      name: '2011年'
-    },
-    alfa: {
-      name: '2012年'
-    },
-    aston: {
-      name: '2013年'
-    },
-    audi: {
-      name: '2014年'
-    },
-    austin: {
-      name: '2015年'
-    },
-    borgward: {
-      name: '2016年'
-    },
-    buick: {
-      name: '2017年'
-    },
-    cadillac: {
-      name: '2018年'
-    },
-    chevrolet: {
-      name: '2019年'
-    }
-  },
-  {
-    amc1: {
-      name: '1月'
-    },
-    alfa1: {
-      name: '2月'
-    },
-    aston1: {
-      name: '3月'
-    },
-    audi1: {
-      name: '4月'
-    }
-  },
-  {
-    cadillac2: {
-      name: '1号'
-    },
-    chevrolet2: {
-      name: '2号'
-    }
-  }
-];
-
-let level3Data =
-  {
-    '四川':{
-      '成都':['青羊区','武侯区','温江区'],
-      '绵阳':['涪城区','安州区', '三台县', '平武县'],
-      '广安':['容县','武胜']
-    },
-    '浙江':{
-      '杭州':['西湖','银泰','玉泉'],
-      '绍兴':['越城区','柯桥区','上虞区'],
-      '温州':['鹿城区','瓯海区','瑞安市','永嘉县','苍南县']
-    },
-    '北京':{
-      '朝阳区':[''],
-      '海淀区':[''],
-      '东城区':['']
-    }
-  };
-let level2Data = {
-  'American':['Alabama','Arizona','California', 'Connecticut', 'Georgia', 'Maine'],
-  'Australia':['NSW','QLD','TAS']
-};
-let level4Data = {
-  '1':{
-    '11':{
-      '111':['1111','1112','1113'],
-      '112':['1121','1122']
-    },
-    '12':{
-      '121':['1211','1212','1213'],
-      '122':['1221','1222']
-    }
-  },
-  '2':{
-    '21':{
-      '211':['2111','2112','2113'],
-      '212':['2121','2122','2123']
-    },
-    '22':{
-      '221':['2211','2212','2213'],
-      '222':['2221','2222','2223']
-    }
-  }
-};
 
 class TpickerEx extends Component {
   constructor(props, context){
@@ -167,12 +24,11 @@ class TpickerEx extends Component {
       str:'React Native Picker Demo',
       str1: 'with asynchronous request',
       selectIndex1: [0, 2, 1],
-      str2: 'without showing init chose and custom button words',
+      str3: 'without showing init chose and custom button words',
       selectIndex2: [0, 1],
-      str3: 'showing init chose',
+      str2: 'showing init chose',
       selectIndex3: [],
       str4: '川菜 重庆小面',
-      // selectIndex4: [1, 1, 0, 2],
       str5: '地方菜 东北菜',
       str6: 'cascadePicker with init show and custom styles',
       str7: 'disabled cascadePicker',
@@ -180,7 +36,7 @@ class TpickerEx extends Component {
       Cdata: [],
       Cdata1: [],
       selectIndex4: [],
-      loadingState: [false, false, false]
+      loadingState: [false, false, false, false]
     };
   }
 
@@ -244,7 +100,6 @@ class TpickerEx extends Component {
 
   _getLevel3(value, index, wheelNumber) {
     let that = this;
-    console.debug('trigger');
     let cateMap = [10003,10002,10004,10000,10005,10001,10006,10007,10008,10009];
     if (wheelNumber === 0) {
       if (index === 0) {
@@ -254,7 +109,6 @@ class TpickerEx extends Component {
         this.forceUpdate();
         return;
       }
-      console.debug(cateMap[index - 1]);
       let url = ip + cateMap[index - 1];
       this.setState({loadingState: [false, true, true, true]});
       fetch(url)
@@ -402,7 +256,7 @@ class TpickerEx extends Component {
         />
         </View>
           <View>
-        <Text style={styles.demoValue}>Cascade Picker value: {this.state.str4}</Text>
+        <Text style={styles.demoValue}>Cascade Picker</Text>
         <CascadePicker
           inputValue = {this.state.str5}
           level = {4}
