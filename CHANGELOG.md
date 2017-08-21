@@ -1,3 +1,20 @@
+<a name="0.0.1"></a>
+## [0.0.1](https://github.com/xgfe/react-native-picker-xg/compare/v0.0.4...v0.0.1) (2017-03-30)
+
+
+### Features
+
+* **basic picker:** add click to item ([f1db741](https://github.com/xgfe/react-native-picker-xg/commit/f1db741))
+* **basic picker:** change the realize of wheel ([fdca711](https://github.com/xgfe/react-native-picker-xg/commit/fdca711))
+* **basic picker new version:** basic picker new version first commit ([a801fce](https://github.com/xgfe/react-native-picker-xg/commit/a801fce))
+* **BasicPicker:** change to one way data ([ffd94df](https://github.com/xgfe/react-native-picker-xg/commit/ffd94df))
+* **CascadePicker:** add example ([49c939c](https://github.com/xgfe/react-native-picker-xg/commit/49c939c))
+* **CascadePicker:** Compatible with iOS ([2bd28b8](https://github.com/xgfe/react-native-picker-xg/commit/2bd28b8))
+* **CascadePicker:** limit the Android picker to one line ([d3e2ff8](https://github.com/xgfe/react-native-picker-xg/commit/d3e2ff8))
+* **GLOBAL:** add ios android ([a42d5bd](https://github.com/xgfe/react-native-picker-xg/commit/a42d5bd))
+
+
+
 <a name="0.0.7"></a>
 ## [0.0.7](https://github.com/xgfe/react-native-picker-xg/compare/v0.0.3...v0.0.7) (2016-08-26)
 

@@ -1,8 +1,8 @@
-###The React-Native-Picker [![Build Status](https://travis-ci.org/xgfe/react-native-picker-xg.svg?branch=master)](https://travis-ci.org/xgfe/react-native-picker-xg) [![Coverage Status](https://coveralls.io/repos/github/xgfe/react-native-picker-xg/badge.svg?branch=master)](https://coveralls.io/github/xgfe/react-native-picker-xg?branch=master)
+### The React-Native-Picker
+
 react native Picker component for both Android and iOS based on pure JavaScript.
 
 ### Main 
-* The drawing of the wheel of the android come from [react-native-picker-android](https://github.com/beefe/react-native-picker-android).
 * For the iOS, using PickerIOS as the basic.
 * This whole picker includes two types of pickers, one is the basic wheel picker which the wheels have no connection with each other, another is the cascade wheel picker which the whees have connection with each other.
 
@@ -11,7 +11,7 @@ react native Picker component for both Android and iOS based on pure JavaScript.
 npm install react-native-picker-xg --save
 ```
 ### Example
-![image](https://raw.githubusercontent.com/lulutia/react-native-tpicker/master/show.gif)
+![image](https://raw.githubusercontent.com/lulutia/images/master/react-native-components/Screen-Capture-50.gif)
 
 ### Properties 
   * For the cascade wheel Picker:
@@ -21,15 +21,21 @@ npm install react-native-picker-xg --save
      * cancelBtnStyle: CSS-layout, the style of the cancel button
      * confirmBtnStyle: CSS-layout, the confirm button's style
      * iconStyle: CSS-layout, the right downdrop button's style
+     * iconName: string, the name of the icon
+     * iconSize: number, the size of the icon
      * inputStyle: CSS-layout, the textInput's style
      * navStyle: CSS-layout, the style of the nav of the picker
      * textStyle: CSS-layout, the style of the inputText's inner text
      * pickerName: string, the text of the picker's name
      * inputValue: string, the initial text of the textInput
-     * selectIndex: [number] ,initial selected item
      * enable: bool, to enable or disable the textInput
      * confirmBtnText: string, the text of the confirm button
      * cancelBtnText: string, the text of the cancel button
+     * visible: bool, init to show the wheels, when 'enable' is false, nomatter the value of 'visible', the wheels will not show. And there should not be more than 1 wheels with 'visible' is true in one page.
+     * id: string, the id of your data
+     * name: string, the label of your data
+     * parentId: string, the parentId of your data
+     * loading: array, the array of loading status
       
   * For the basic wheel picker:
     * data: [array, for more details to see the data structure part], the content of the picker.[Mandatory]
@@ -42,192 +48,39 @@ npm install react-native-picker-xg --save
     * iconStyle: CSS-layout, the right downdrop button's style
     * pickerName: string, the text of the picker's name
     * inputValue: string, the initial text of the textInput
-    * selectIndex: [number] ,initial selected item
     * enable: bool, to enable or disable the textInput
     * confirmBtnText: string, the text of the confirm button
     * cancelBtnText: string, the text of the cancel button
+    * selectIndex: [number] ,initial selected item
+    * visible: bool, init to show the wheels, when 'enable' is false, nomatter the value of 'visible', the wheels will not show. And there should not be more than 1 wheels with 'visible' is true in one page.
+    
 
-###Method
-* onResult: function, to expose the result you chose.
+### Method
+  
+  * For the cascade wheel Picker: we believe in the One-way flow of data, so, all the data is depend on you. And the picker is just the reflection of the data.
 
-###Data structure
-Basicly, you can realize as more as wheels as you like if you follow the data structure we set for you. However, take the size of the phone into consideration, we do not recommend more than 4 wheels.
-* For the basic pickers: It's an array, the count of the wheel depends on how many objects you have. And the content of the wheel depends on the name of one objects of the outer objects.
-By default we export the basic wheel picker, if you want to use the cascade wheel Picker you can do as follows:
-```
-let wheel3 = [
-  {
-    amc: {
-      name: '2011年'
-    },
-    cadillac: {
-      name: '2018年'
-    },
-    chevrolet: {
-      name: '2019年'
-    }
-  },
-  {
-    amc1: {
-      name: '1月'
-    },
-    audi1: {
-      name: '4月'
-    }
-  },
-  {
-    cadillac2: {
-      name: '1号'
-    },
-    chevrolet2: {
-      name: '2号'
-    }
-  }
-];
-```
+    * onresult: function, to get the final chose
+    * onWheelChange: function, when wheel changes
+    * onCancel: function, when you cancel the chose
 
-* For the cascade wheels: It'a an object in total, and the keys of one object become the content of the wheel. The last wheel's content is an array.
-```
-let level4Data = {
-  '1':{
-    '11':{
-      '10':['a1','b1','c1'],
-      '01':['d1','f1']
-    },
-    '22':{
-      '20':['w','d','qq'],
-      '21':['wp','c']
-    }
-  },
-  '2':{
-    '33':{
-      '34':['e','qd','cd'],
-      '56':['dw','vf','we']
-    },
-    '09':{
-      'v':['bb','t','bd'],
-      'p':['vd','der','f']
-    }
-  }
-};
-```
-###Usage
+  * For the basic data:
+    * on Result: function, to get the final chose
+
+### Usage: you can see the example file to know how to use the component
 We provide two ways for you to use this component.
-####The first one
-* Step1--initial and install
+
+#### The first one
+
 ```
-react-native init XXX
 npm install react-native-picker-xg --save
 ```
-* Step2--import and use in project
-```
-import React, { Component } from 'react';
-import {
-  AppRegistry,
-  View,
-  Text,
-  StyleSheet
-} from 'react-native';
-import Test3, {Cpicker}from './app/picker';
-let wheel2 = [
-  {
-    amc: {
-      name: '2011年'
-    },
-    chevrolet: {
-      name: '2019年'
-    }
-  },
-  {
-    amc1: {
-      name: '1月'
-    },
-    audi1: {
-      name: '4月'
-    }
-  }
-];
 
-let level4Data = {
-  '1':{
-    '11':{
-      '10':['a1','b1','c1'],
-      '01':['d1','f1']
-    },
-    '22':{
-      '20':['w','d','qq'],
-      '21':['wp','c']
-    }
-  },
-  '2':{
-    '33':{
-      '34':['e','qd','cd'],
-      '56':['dw','vf','we']
-    },
-    '09':{
-      'v':['bb','t','bd'],
-      'p':['vd','der','f']
-    }
-  }
-};
-
-class TpickerEx extends Component {
-  constructor(props, context){
-    super(props, context);
-    this.state = {
-      str:'just a test',
-      str1: 'just a test'
-    };
-  }
-
-
-  render() {
-    return (
-      <View style={testStyle.container}>
-        <Text style={{margin:10}}>{this.state.str}</Text>
-        <Cpicker
-          pickerNameStyle = {{color:'red'}}
-          cancelBtnStyle = {{color:'blue'}}
-          pickerName = {'just a test'}
-          inputValue={'4 level picker'}
-          level = {4}
-          selectIndex = {[0,1,1,0]}
-          data = {level4Data}
-          onResult = {(str)=>{
-            this.setState({str:str});
-          }}
-        />
-        <Test3
-          inputValue ={'2 wheel picker'}
-          inputStyle = {testStyle.textInput}
-          confirmBtnText = {'confirm'}
-          cancelBtnText = {'cancel'}
-          data = {wheel2}
-          selectIndex = {[0,1]}
-          onResult ={(str) => {this.setState({str1:str});}}
-          visible = {false}
-        />
-        <Text style={{margin:10}}>{this.state.str1}</Text>
-      </View>
-
-    );
-  }
-}
-
-const testStyle = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});
-
-AppRegistry.registerComponent('widgets', () => TpickerEx);
-
-```
-####The second one
+#### The second one
 * Step1--download the zip from the [github](https://github.com/xgfe/react-native-picker-xg)
 * Step2--init an react-native project
 * Step3--copy the zip's content into your project
 * Step4--change the index.android.js's last line ``AppRegistry.registerComponent('widgets', () => TpickerEx);``'s widgets into your project's name.
-* Step5--npm install
+* Step5--change the yourownip in line 19 in example/index.js to your own ip
+* Step6--npm install
 
  
