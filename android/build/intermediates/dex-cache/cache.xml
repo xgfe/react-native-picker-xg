@@ -2,32 +2,25 @@
 <items version="2" >
 
     <item
-        jar="/Users/lulutia/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/libs/internal_impl-23.4.0.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
-        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/library-2.4.0-0ec9f06279ea031578c5768fc777283c970aba27.jar" />
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/internal_impl-23.4.0-77d16906f394fe39e3e392098da5c6ebbb067906.jar" />
     </item>
     <item
-        jar="/Users/lulutia/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
+        jar="/Users/lulutia/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp-ws/3.4.1/8ace66ef7002d98f633377c9e67daeeb196d8c3b/okhttp-ws-3.4.1.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="6975da39a7040257bd51d21a231b76c915872d38">
-        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/javax.inject-1-0ceff39a4b2d8e7f9ad624a871a694d783a7331e.jar" />
+        sha1="8ace66ef7002d98f633377c9e67daeeb196d8c3b">
+        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/okhttp-ws-3.4.1-a226e26576b140ff166fb24aada9b427600ef8bd.jar" />
     </item>
     <item
-        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.41.2/jars/classes.jar"
+        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/newpicker/react-native-vector-icons/unspecified/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="b49a04a3016689b372ecbb77f0c33e486e768cca">
-        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-0c36b00481d29ef5de5685595923a0379f632c00.jar" />
-    </item>
-    <item
-        jar="/Users/lulutia/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.4.1/c7c4f9e35c2fd5900da24f9872e3971801f08ce0/okhttp-3.4.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="c7c4f9e35c2fd5900da24f9872e3971801f08ce0">
-        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/okhttp-3.4.1-6011b70a46eafd1bfc425f38053bc501f8c77d01.jar" />
+        sha1="2c0f650624ee5d1966b9c9e287caf1bc39834762">
+        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-6c7f5265e29302ed0f7de3ec74d2ac8cc262ef73.jar" />
     </item>
     <item
         jar="/Users/lulutia/.gradle/caches/modules-2/files-2.1/com.facebook.fbui.textlayoutbuilder/staticlayout-proxy/1.0/f162442a19fff13995fbd51ba414d9ee05579080/staticlayout-proxy-1.0.jar"
@@ -44,11 +37,39 @@
         <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/okhttp-urlconnection-3.4.1-8b0dbbd4d9f55b2efdc1ed0e733a740c76430e01.jar" />
     </item>
     <item
-        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-base/0.11.0/jars/classes.jar"
+        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="ca63c521b5745ae9a09629d7ca67ff6bc2a967fe">
-        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-9ad1c5f45f2cb34aaf3240066ac74d794228171d.jar" />
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-83ff16e7a5ca556cf9f6b58a2bd2bdb27461c1c8.jar" />
+    </item>
+    <item
+        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.facebook.fbui.textlayoutbuilder/textlayoutbuilder/1.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="f90b593491e4044903f0bbf68dc3fa2790b151b9">
+        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-2c93e6473503c70ba069d53273d32b8134604b59.jar" />
+    </item>
+    <item
+        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-okhttp3/0.11.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="2b8a01ad9da5d26d0067894c22e87597bca2c500">
+        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-7aa21fa6124784a3ebbcb2918d2ea4761ecf53ab.jar" />
+    </item>
+    <item
+        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.41.2/jars/libs/infer-annotations-1.5.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="dcac634e137395f79693ec760f081a86eb2bd84e">
+        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/infer-annotations-1.5-ff512a18884a5abe067d6bd170f4c8fc4a2b7712.jar" />
+    </item>
+    <item
+        jar="/Users/lulutia/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/bolts-tasks-1.4.0-6584e526f53c5afb7d9c68e0890d149673e3a5db.jar" />
     </item>
     <item
         jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/0.11.0/jars/classes.jar"
@@ -58,11 +79,53 @@
         <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-547b3f0733167cfbc62dd18bd2758de7923432fd.jar" />
     </item>
     <item
+        jar="/Users/lulutia/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.4.1/c7c4f9e35c2fd5900da24f9872e3971801f08ce0/okhttp-3.4.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c7c4f9e35c2fd5900da24f9872e3971801f08ce0">
+        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/okhttp-3.4.1-6011b70a46eafd1bfc425f38053bc501f8c77d01.jar" />
+    </item>
+    <item
+        jar="/usr/local/opt/android-sdk/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/support-annotations-23.4.0-cff744a20a183c3ee3bde7040286b1eb5bb3626e.jar" />
+    </item>
+    <item
+        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fbcore/0.11.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="98786c1770b531b9194fb6448b2a2692c64074b6">
+        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-dd01b6181185b568e068240d45277d00c6b84737.jar" />
+    </item>
+    <item
         jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fresco/0.11.0/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="d31aadf33187c37a7cd63dc1b769f8c6e33f78c3">
         <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-1050c0957aad5ef2fcad1e1c4f58438205214017.jar" />
+    </item>
+    <item
+        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.41.2/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="b49a04a3016689b372ecbb77f0c33e486e768cca">
+        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-0c36b00481d29ef5de5685595923a0379f632c00.jar" />
+    </item>
+    <item
+        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-base/0.11.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ca63c521b5745ae9a09629d7ca67ff6bc2a967fe">
+        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-9ad1c5f45f2cb34aaf3240066ac74d794228171d.jar" />
+    </item>
+    <item
+        jar="/Users/lulutia/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.9.0/f824591a0016efbaeddb8300bee54832a1398cfa/okio-1.9.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="f824591a0016efbaeddb8300bee54832a1398cfa">
+        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/okio-1.9.0-230ff7eaf440aa912b6481f4d5f807849615e8e2.jar" />
     </item>
     <item
         jar="/Users/lulutia/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.0/5871fb60dc68d67da54a663c3fd636a10a532948/jsr305-3.0.0.jar"
@@ -79,11 +142,11 @@
         <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-18d68bf8e7131985d647aa9d6b0da5d970431956.jar" />
     </item>
     <item
-        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fbcore/0.11.0/jars/classes.jar"
+        jar="/Users/lulutia/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="98786c1770b531b9194fb6448b2a2692c64074b6">
-        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-dd01b6181185b568e068240d45277d00c6b84737.jar" />
+        sha1="6975da39a7040257bd51d21a231b76c915872d38">
+        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/javax.inject-1-0ceff39a4b2d8e7f9ad624a871a694d783a7331e.jar" />
     </item>
     <item
         jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.facebook.soloader/soloader/0.1.0/jars/classes.jar"
@@ -93,11 +156,11 @@
         <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-4a59fa60c9c1df3489b2b0ed2d829bdb72a86918.jar" />
     </item>
     <item
-        jar="/usr/local/opt/android-sdk/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
+        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
-        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/support-annotations-23.4.0-cff744a20a183c3ee3bde7040286b1eb5bb3626e.jar" />
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-033264a89e3018ca76625dd6b046aefb85019b68.jar" />
     </item>
     <item
         jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.facebook.fresco/drawee/0.11.0/jars/classes.jar"
@@ -107,74 +170,11 @@
         <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-d0b00e1b005e1547b02f12f372816f284c07ee7c.jar" />
     </item>
     <item
-        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/jars/classes.jar"
+        jar="/Users/lulutia/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
-        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-033264a89e3018ca76625dd6b046aefb85019b68.jar" />
-    </item>
-    <item
-        jar="/Users/lulutia/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp-ws/3.4.1/8ace66ef7002d98f633377c9e67daeeb196d8c3b/okhttp-ws-3.4.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="8ace66ef7002d98f633377c9e67daeeb196d8c3b">
-        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/okhttp-ws-3.4.1-a226e26576b140ff166fb24aada9b427600ef8bd.jar" />
-    </item>
-    <item
-        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/libs/internal_impl-23.4.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
-        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/internal_impl-23.4.0-77d16906f394fe39e3e392098da5c6ebbb067906.jar" />
-    </item>
-    <item
-        jar="/Users/lulutia/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.9.0/f824591a0016efbaeddb8300bee54832a1398cfa/okio-1.9.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="f824591a0016efbaeddb8300bee54832a1398cfa">
-        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/okio-1.9.0-230ff7eaf440aa912b6481f4d5f807849615e8e2.jar" />
-    </item>
-    <item
-        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
-        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-83ff16e7a5ca556cf9f6b58a2bd2bdb27461c1c8.jar" />
-    </item>
-    <item
-        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/newpicker/react-native-vector-icons/unspecified/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="9ac777d4ae017a1db9a05bc6e8d5e0736787ef50">
-        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-6c7f5265e29302ed0f7de3ec74d2ac8cc262ef73.jar" />
-    </item>
-    <item
-        jar="/Users/lulutia/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
-        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/bolts-tasks-1.4.0-6584e526f53c5afb7d9c68e0890d149673e3a5db.jar" />
-    </item>
-    <item
-        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.41.2/jars/libs/infer-annotations-1.5.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="dcac634e137395f79693ec760f081a86eb2bd84e">
-        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/infer-annotations-1.5-ff512a18884a5abe067d6bd170f4c8fc4a2b7712.jar" />
-    </item>
-    <item
-        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.facebook.fbui.textlayoutbuilder/textlayoutbuilder/1.0.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="f90b593491e4044903f0bbf68dc3fa2790b151b9">
-        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-2c93e6473503c70ba069d53273d32b8134604b59.jar" />
-    </item>
-    <item
-        jar="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-okhttp3/0.11.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="2b8a01ad9da5d26d0067894c22e87597bca2c500">
-        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/classes-7aa21fa6124784a3ebbcb2918d2ea4761ecf53ab.jar" />
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="/Users/lulutia/muriel/react-native-picker-xg/android/app/build/intermediates/pre-dexed/debug/library-2.4.0-0ec9f06279ea031578c5768fc777283c970aba27.jar" />
     </item>
 
 </items>
