@@ -22,20 +22,27 @@
     "coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {
-    "react": "15.4.2",
-    "react-native": "^0.41.2",
     "react-native-vector-icons": "^4.0.0"
   },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
     "babel-jest": "18.0.0",
     "babel-preset-react-native": "1.9.1",
     "cz-conventional-changelog": "^2.0.0",
     "enzyme": "^2.7.1",
+    "eslint": "^3.19.0",
+    "eslint-plugin-react": "^6.10.3",
     "jest": "18.1.0",
     "jsdom": "^9.11.0",
     "pre-commit": "^1.2.2",
+    "react": "15.4.2",
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-native": "^0.41.2",
     "react-test-renderer": "15.4.2"
   },
   "config": {
